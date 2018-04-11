@@ -63,7 +63,7 @@ namespace CharByDNA
             {
 
                 g = "Female";
-                tempname = charname.GenName(g);
+                tempname = charname.GenFname(g);
 
             }
 
@@ -71,7 +71,7 @@ namespace CharByDNA
             {
 
                 g = "Male";
-                tempname = charname.GenName(g);
+                tempname = charname.GenFname(g);
 
             }
 
@@ -486,7 +486,7 @@ namespace CharByDNA
             {
 
                 g = "Female";
-                tempname = charname.GenName(g);
+                tempname = charname.GenFname(g);
 
             }
 
@@ -494,7 +494,7 @@ namespace CharByDNA
             {
 
                 g = "Male";
-                tempname = charname.GenName(g);
+                tempname = charname.GenFname(g);
 
             }
 

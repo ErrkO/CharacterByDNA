@@ -82,8 +82,8 @@ namespace CharByDNA
                 Console.WriteLine("\n" + dad.ToString());
                 Console.WriteLine("\n" + mom.ToString());
 
-                List<int> dstrand = dad.Dna.Mieosis();
-                List<int> mstrand = mom.Dna.Mieosis();
+                List<int> dstrand = dad.Dna.Miosis();
+                List<int> mstrand = mom.Dna.Miosis();
 
                 DNA cdna = new DNA(dstrand, mstrand);
 

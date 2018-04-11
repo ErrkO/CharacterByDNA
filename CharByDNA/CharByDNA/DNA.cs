@@ -6,13 +6,28 @@ using System.Threading.Tasks;
 
 namespace CharByDNA
 {
-
+    ///<summary>
+    /// Struct that holds a pair of nucleotides
+    ///</summary>
     public struct Tuple
     {
-
+        
+        ///<summary>
+        /// the left nucleotide
+        ///</summary>
         public int left;
+        
+        ///<summary>
+        /// the right nucleotide
+        ///</summary>
         public int right;
 
+        ///<summary>
+        /// the struct constructor
+        ///</summary>
+        ///<value>
+        /// Accepts an integer for the left and right strands
+        ///</value>
         public Tuple(int one, int two)
         {
 
@@ -22,16 +37,39 @@ namespace CharByDNA
         }
 
     }
+
+    ///<summary>
+    /// Class that contains the information for DNA
+    ///</summary>
     public class DNA
     {
 
+        ///<summary>
+        /// This is the number of genes in a strand of DNA
+        ///</summary>
         public const int LENGTH = 52;
 
+        ///<summary>
+        /// The random number generator
+        ///</summary>
+        ///<remarks>
+        /// All Praise RNGESUS!!!
+        ///</remarks>
         private Random rngesus = new Random();
 
+        ///<summary>
+        /// The property that contains a list of the left strand nucleotides
+        ///</summary>
         public List<int> Left {get;set;}
+        
+        ///<summary>
+        /// The property that contains a list of the right strand nucleotides
+        ///</summary>
         public List<int> Right {get;set;}
 
+        ///<summary>
+        /// The default constructor. It just sets the strands to null
+        ///</summary>
         public DNA()
         {
 
@@ -40,6 +78,12 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        /// This constructor builds the dna object by decoding a string and turning it into the strands
+        ///</summary>
+        ///<value>
+        /// Accepts a string that represents the DNA
+        ///</value>
         public DNA(string codeddna)
         {
 
@@ -61,6 +105,12 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        /// This constructor builds the dna object from the DNA of the dad and mom strands
+        ///</summary>
+        ///<value>
+        /// Accepts a strand from the dad and the mom
+        ///</value>
         public DNA(List<int> dad, List<int> mom)
         {
 
@@ -71,7 +121,13 @@ namespace CharByDNA
 
         }
 
-        public List<int> Mieosis()
+        ///<summary>
+        /// This method randomly selects a strand of dna to give for reproduction
+        ///</summary>
+        ///<returns>
+        /// Returns a list of integers representing the strand of DNA
+        ///</returns>
+        public List<int> Miosis()
         {
 
             int choice = rngesus.Next(1,3);
@@ -92,7 +148,19 @@ namespace CharByDNA
 
         }
 
-        public bool CheckPair(int pos)
+        ///<summary>
+        /// This method checks to see if the nucleotides are matching pairs
+        ///</summary>
+        ///<example>
+        /// 1-3, 3-1, 2-4, 4-2 are all matching pairs
+        ///</example>
+        ///<value>
+        /// Accepts an integer that gives the position on the strands
+        ///</value>
+        ///<returns>
+        /// Returns true if the pair is a matching pair
+        ///</returns>
+        private bool CheckPair(int pos)
         {
 
             if (this.Left[pos] == 1 && this.Right[pos] == 3)
@@ -127,7 +195,19 @@ namespace CharByDNA
 
         }
 
-        public bool CheckPair(int left, int right)
+        ///<summary>
+        /// This method checks to see if the nucleotides are matching pairs
+        ///</summary>
+        ///<example>
+        /// 1-3, 3-1, 2-4, 4-2 are all matching pairs
+        ///</example>
+        ///<value>
+        /// Accepts two integers that represent the left and right nucleotides
+        ///</value>
+        ///<returns>
+        /// Returns true if the pair is a matching pair
+        ///</returns>
+        private bool CheckPair(int left, int right)
         {
 
             if (left == 1 && right == 3)
@@ -162,7 +242,19 @@ namespace CharByDNA
 
         }
 
-        public int Opposite(int half)
+        ///<summary>
+        /// This method takes a nucleotide and flips it
+        ///</summary>
+        ///<example>
+        /// EX: in: 1 out: 3, in: 2 out: 4 and the reverse
+        ///</example>
+        ///<value>
+        /// Accepts a nucleotide as an integer
+        ///</value>
+        ///<returns>
+        /// Returns the opposite of the value
+        ///</returns>
+        private int Opposite(int half)
         {
 
             if (half == 1)
@@ -190,7 +282,16 @@ namespace CharByDNA
 
         }
 
-        public Tuple DecodeDNA(string code)
+        ///<summary>
+        /// This method converts a coded pair into a tuple object
+        ///</summary>
+        ///<value>
+        /// Accepts a string that represents the coded pair
+        ///</value>
+        ///<returns>
+        /// Returns a tuple object that contains the numerical pairs
+        ///</returns>
+        private Tuple DecodeDNA(string code)
         {
 
             Tuple tup = new Tuple(0,0);
@@ -227,7 +328,19 @@ namespace CharByDNA
 
         }
 
-        public String EncodePair(int left, int right)
+        ///<summary>
+        /// This method turns a nucleotide pair into a coded pair
+        ///</summary>
+        ///<example>
+        /// EX: 1-3 -> 4, 3-1 -> 3, 2-4 -> 6, 4-2 -> 8
+        ///</example>
+        ///<value>
+        /// Accepts two integers that represent the nucleotide pair
+        ///</value>
+        ///<returns>
+        /// Returns a string that contains the coded pair
+        ///</returns>
+        private String EncodePair(int left, int right)
         {
 
             if (CheckPair(left,right))
@@ -257,6 +370,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        /// 
+        ///</summary>
         public int EncodePairValue(int left, int right)
         {
 
@@ -284,6 +400,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        /// 
+        ///</summary>
         public String EncodeDNA(DNA dna)
         {
 
@@ -312,6 +431,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        /// 
+        ///</summary>
         public void FixDNA(DNA dna)
         {
 
@@ -343,6 +465,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        /// 
+        ///</summary>
         public void FixDNA()
         {
 
@@ -374,6 +499,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        /// 
+        ///</summary>
         public void CompleteDNA(List<int> strand)
         {
 
@@ -393,6 +521,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        /// 
+        ///</summary>
         public override string ToString()
         {
 
@@ -409,6 +540,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        /// 
+        ///</summary>
         public int GetLength()
         {
 
