@@ -8,50 +8,71 @@ using System.IO;
 namespace CharByDNA
 {
 
-    public class Name
+    ///<summary>
+    /// A class that contains all of the names that will be used for now
+    ///</summary>
+    public class Names
     {
 
-        List<string> ffnames,mfnames,lnames;
-        string fname, lname,fullname;
+        ///<summary>
+        /// The random number generator
+        ///</summary>
+        ///<remarks>
+        /// All Praise RNGESUS!!!
+        ///</remarks>
         Random rngesus = new Random();
+
+        ///<summary>
+        /// The filename that contains the female first names
+        ///</summary>
         string ffcon = "FFNames.txt";
+
+        ///<summary>
+        /// The filename that contains the male first names
+        ///</summary>
         string mfcon = "MFNames.txt";
+
+        ///<summary>
+        /// The filename that contains the last names
+        ///</summary>
         string lcon = "LNames.txt";
 
-        public Name()
+        ///<summary>
+        /// The List that contains all of the female first names
+        ///</summary>
+        private List<string> Ffnames { get; set; }
+
+        ///<summary>
+        /// the list that contains all of the male first names
+        ///</summary>
+        private List<string> Mfnames { get; set; }
+
+        ///<summary>
+        /// The list that contains all of the last names
+        ///</summary>
+        private List<string> Lnames { get; set; }
+
+        ///<summary>
+        /// The default constructor. It fills the lists with their respective values
+        ///</summary>
+        public Names()
         {
 
-            this.ffnames = File.ReadLines(ffcon).ToList();
-            this.mfnames = File.ReadLines(mfcon).ToList();
-            this.lnames = File.ReadLines(lcon).ToList();
+            this.Ffnames = File.ReadLines(ffcon).ToList();
+            this.Mfnames = File.ReadLines(mfcon).ToList();
+            this.Lnames = File.ReadLines(lcon).ToList();
 
         }
 
-        public string GenName(string gender)
-        {
-
-            if (gender == "Female")
-            {
-
-                fname = ffnames[ rngesus.Next(0, ffnames.Count)];
-
-            }
-
-            else
-            {
-
-                fname = mfnames[rngesus.Next(0, mfnames.Count)];
-
-            }
-
-            lname = lnames[rngesus.Next(0, ffnames.Count)];
-
-            fullname = fname + " " + lname;
-
-            return fullname;
-
-        }
-
+        ///<summary>
+        /// This Method generates a first name based on a given gender
+        ///</summary>
+        ///<value>
+        ///
+        ///</value>
+        ///<return>
+        ///
+        ///</return>
         public string GenFname(string gender)
         {
 
@@ -60,14 +81,14 @@ namespace CharByDNA
             if (gender == "Female")
             {
 
-                fname = ffnames[ rngesus.Next(0, ffnames.Count)];
+                fname = this.Ffnames[ rngesus.Next(0, this.Ffnames.Count)];
 
             }
 
             else
             {
 
-                fname = mfnames[rngesus.Next(0, mfnames.Count)];
+                fname = this.Mfnames[rngesus.Next(0, this.Mfnames.Count)];
 
             }
 
@@ -75,10 +96,13 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        /// 
+        ///</summary>
         public string GenLname()
         {
 
-            return lnames[rngesus.Next(0, ffnames.Count)];
+            return this.Lnames[rngesus.Next(0, this.Lnames.Count)];
 
         }
 

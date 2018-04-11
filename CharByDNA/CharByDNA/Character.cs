@@ -11,7 +11,7 @@ namespace CharByDNA
     {
 
         Random rngesus = new Random();
-        Name charname = new Name();
+        Names charname = new Names();
         Race race;
 
         public string FirstName { get; set; }
