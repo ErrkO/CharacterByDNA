@@ -89,7 +89,7 @@ namespace CharByDNA
         /// The Constructor that takes the different parameters and creates a race object
         ///</summary>
         ///<value>
-        /// name value is the new race name. mh is the male base height. fh is the female base height. s is the strength modifier. i is the intelligence modifier.!-- 
+        /// name value is the new race name. mh is the male base height. fh is the female base height. s is the strength modifier. i is the intelligence modifier. a is the agility modifier. c is the constitution modifier. w is the wisdom modifier. l is the luck modifier. ch is the charisma modifier
         ///</value>
         ///<remarks>
         /// This method should only be used by the class to fill the list of races
@@ -113,9 +113,9 @@ namespace CharByDNA
         ///<summary>
         /// This method reads in the filename and creates a list of all the race information
         ///</summary>
-        ///<return>
+        ///<returns>
         /// returns a list containing all of the races
-        ///</return>
+        ///</returns>
         private List<Race> GetRaces()
         {
 

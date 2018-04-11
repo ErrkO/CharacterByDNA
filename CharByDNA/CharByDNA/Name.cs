@@ -68,11 +68,14 @@ namespace CharByDNA
         /// This Method generates a first name based on a given gender
         ///</summary>
         ///<value>
-        ///
+        /// accepts a value for the gender
         ///</value>
-        ///<return>
-        ///
-        ///</return>
+        ///<returns>
+        /// returns a string contianing the first name
+        ///</returns>
+        ///<remarks>
+        /// debating on whether I should change gender to a boolean
+        ///</remarks>
         public string GenFname(string gender)
         {
 
@@ -97,8 +100,11 @@ namespace CharByDNA
         }
 
         ///<summary>
-        /// 
+        /// This method generates a last name
         ///</summary>
+        ///<returns>
+        /// returns a string containing the last name
+        ///</returns>
         public string GenLname()
         {
 
