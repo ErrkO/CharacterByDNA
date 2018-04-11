@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Character.cs" />
     <Compile Include="DNA.cs" />
+    <Compile Include="DNAMath.cs" />
     <Compile Include="Name.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

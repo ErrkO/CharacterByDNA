@@ -18,24 +18,7 @@ namespace CharByDNA
 
         public string LastName { get; set; }
 
-        public Race Racee
-        {
-
-            get
-            {
-
-                return this.race;
-
-            }
-
-            set
-            {
-
-                this.race = value;
-
-            }
-
-        }
+        public Race Racee { get; set; }
 
         public string Gender { get; set; }
 
@@ -68,25 +51,6 @@ namespace CharByDNA
         public string EyeColor { get; set; }
 
         public string SkinColor { get; set; }
-
-        /*public Character()
-        {
-
-            Name = "";
-            race = null;
-            Hptotal = 0;
-            HpCurrent = Hptotal;
-            gender = "";
-            Str = 0;
-            Int = 0;
-            Agi = 0;
-            Con = 0;
-            Wis = 0;
-            Luk = 0;
-            Cha = 0;
-            Baseattk = -1;
-
-        } */
 
         public Character()
         {
@@ -658,10 +622,26 @@ namespace CharByDNA
 
         }
 
+        public string HeightToString()
+        {
+
+            int ft; 
+            int inch;
+
+            ft = Convert.ToInt32(Math.Floor(Convert.ToDouble(this.Height/12)));
+
+            inch = this.Height % 12;
+
+            string str = string.Format("{0}\' {1}\"",ft,inch);
+
+            return str;
+
+        }
+
         public override string ToString()
         {
 
-            string ret = string.Format("{0} {1} is a {2} of the {3} race with a height of {4} inches, {5} hair, {6} eyes, {7} skin color,str: {8}, int: {9}, agi: {10}, con: {11}, wis: {12}, luk: {13}, cha: {14}", this.FirstName, this.LastName, this.Gender, this.Racee.Racename, this.Height, this.HairColor, this.EyeColor, this.SkinColor, this.Str, this.Int, this.Agi, this.Con, this.Wis, this.Luk, this.Cha);
+            string ret = string.Format("{0} {1} is a {2} of the {3} race with a height of {4}, {5} hair, {6} eyes, {7} skin color,str: {8}, int: {9}, agi: {10}, con: {11}, wis: {12}, luk: {13}, cha: {14}", this.FirstName, this.LastName, this.Gender, this.Racee.Racename, HeightToString(), this.HairColor, this.EyeColor, this.SkinColor, this.Str, this.Int, this.Agi, this.Con, this.Wis, this.Luk, this.Cha);
             return ret;
 
         }

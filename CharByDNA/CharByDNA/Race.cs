@@ -9,59 +9,110 @@ using System.IO;
 namespace CharByDNA
 {
 
+    ///<summary>
+    /// The Race class contains all the information for the different races
+    ///</summary>
     public class Race
     {
 
-        //string conn_string = "Data Source=C:/Users/Eric/Documents/GitHub/Rpg/Database/RPG.mdb";
-        //string conn_string = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:/Users/Eric/Documents/GitHub/Rpg/Database/RPG.mdb;Jet OLEDB:Database Password=Shadow13;Persist Security Info=True";
+        ///<summary>
+        /// Contains the filename for the race information
+        ///</sumamry>
+        private string rconn = "Races.txt";
 
-        private int int_mod, str_mod, agi_mod, con_mod, wis_mod, luk_mod, cha_mod;
-        private string racename;
-        private List<Race> races;
-        private string rconn = "C:/Users/erico/Documents/Github/Rpg/RPGTester/Races.txt";
-
-        public int Int_mod { get; set; }
-
-        public int Str_mod { get; set; }
-
-        public int Agi_mod { get; set; }
-
-        public int Con_mod { get; set; }
-
-        public int Wis_mod { get; set; }
-
-        public int Luk_mod { get; set; }
-
-        public int Cha_mod { get; set; }
-
+        ///<summary>
+        /// The property that contains the name of the race
+        ///</summary>
         public string Racename { get; set; }
 
+        ///<summary>
+        /// The property that contains the base height for males
+        ///</summary>
+        public int MHeightBase { get; set; }
+
+        ///<summary>
+        /// The property that contains the base height for females
+        ///</summary>
+        public int FHeightBase { get; set; }
+
+        ///<summary>
+        /// The property that contains the intelligence modifier
+        ///</summary>
+        public int Int_mod { get; set; }
+
+        ///<summary>
+        /// The property that contains the strength modifier
+        ///</summary>
+        public int Str_mod { get; set; }
+
+        ///<summary>
+        /// The property that contains the agility modifier
+        ///</summary>
+        public int Agi_mod { get; set; }
+
+        ///<summary>
+        /// The property that contains the constitution modifier
+        ///</summary>
+        public int Con_mod { get; set; }
+
+        ///<summary>
+        /// The property that contains the wisdon modifier
+        ///</summary>
+        public int Wis_mod { get; set; }
+
+        ///<summary>
+        /// The property that contains the luck modifier
+        ///</summary>
+        public int Luk_mod { get; set; }
+
+        ///<summary>
+        /// The property that contains the charisma modifier
+        ///</summary>
+        public int Cha_mod { get; set; }
+
+        ///<summary>
+        /// The property that contains the list of all races
+        ///</summary>
         public List<Race> Races { get; set; }
 
+        ///<summary>
+        /// The default constructor for the race class. It creates a list of all the races and stores that information
+        ///</summary>
         public Race()
         {
             
-            Races = GetRaces();
+            this.Races = GetRaces();
 
         }
 
-        public Race(string name,int s, int i, int a, int c, int w, int l, int ch)
+        ///<summary>
+        /// The Constructor that takes the different parameters and creates a race object
+        ///</summary>
+        ///<remarks>
+        /// This method should only be used by the class to fill the list of races
+        ///</remarks>
+        private Race(string name,int mh, int fh, int s, int i, int a, int c, int w, int l, int ch)
         {
 
-            Int_mod = i;
-            Str_mod = s;
-            Agi_mod = a;
-            Con_mod = c;
-            Wis_mod = w;
-            Luk_mod = l;
-            Cha_mod = ch;
-            Racename = name;
+            this.Racename = name;
+            this.MHeightBase = mh;
+            this.FHeightBase = fh;
+            this.Int_mod = i;
+            this.Str_mod = s;
+            this.Agi_mod = a;
+            this.Con_mod = c;
+            this.Wis_mod = w;
+            this.Luk_mod = l;
+            this.Cha_mod = ch;
 
         }
 
-        //public Race()
-
-        // text file get races
+        ///<summary>
+        /// This method reads in the filename and creates a list of all the race information
+        ///</summary>
+        ///<return>
+        /// returns a list containing all of the races
+        ///</return>
         private List<Race> GetRaces()
         {
 
@@ -75,18 +126,20 @@ namespace CharByDNA
             {
 
                 string name;
-                int s, i, a, w, c, l, ch;
+                int mh, fh, s, i, a, w, c, l, ch;
                 string[] parts = line.Split(',');
                 name = parts[0];
-                s = Convert.ToInt32(parts[1]);
-                i = Convert.ToInt32(parts[2]);
-                a = Convert.ToInt32(parts[3]);
-                c = Convert.ToInt32(parts[4]);
-                w = Convert.ToInt32(parts[5]);
-                l = Convert.ToInt32(parts[6]);
-                ch = Convert.ToInt32(parts[7]);
+                mh = Convert.ToInt32(parts[1]);
+                fh = Convert.ToInt32(parts[2]);
+                s = Convert.ToInt32(parts[3]);
+                i = Convert.ToInt32(parts[4]);
+                a = Convert.ToInt32(parts[5]);
+                c = Convert.ToInt32(parts[6]);
+                w = Convert.ToInt32(parts[7]);
+                l = Convert.ToInt32(parts[8]);
+                ch = Convert.ToInt32(parts[9]);
 
-                races.Add(new Race(name, s, i, a, c, w, l, ch));
+                races.Add(new Race(name, mh, fh, s, i, a, c, w, l, ch));
 
             }
 
@@ -94,44 +147,13 @@ namespace CharByDNA
 
         }
 
-        //database getraces
-        /* private List<Race> GetRaces()
-        {
-
-            List<Race> races = new List<Race>();
-
-            using (OleDbConnection cn = new OleDbConnection(conn_string))
-            {
-                cn.Open();
-                OleDbCommand sqlCommand = new OleDbCommand("SELECT * FROM RACE", cn);
-                OleDbDataReader reader = sqlCommand.ExecuteReader();
-                while (reader.Read())
-                {
-
-                    Race r = new Race();
-                    r.Race_id = (int)reader["RACE_ID"];
-                    r.Str_mod = (int)reader["STR_MOD"];
-                    r.Int_mod = (int)reader["INT_MOD"];
-                    r.Agi_mod = (int)reader["AGI_MOD"];
-
-                    r.Racename = (string)reader["RACE"];
-
-                    races.Add(r);
-
-                }
-
-                cn.Close();
-
-            }
-
-            return races;
-
-        } */
-
+        ///<summary>
+        /// The Overridden ToString method to display a specific race
+        ///</summary>
         public override string ToString()
         {
 
-            string str = string.Format("{0} str: {1} int: {2} agi: {3} con: {4} wis: {5} luk: {6} cha: {7}",this.Racename,this.Str_mod,this.Int_mod,this.Agi_mod,this.Con_mod,this.Wis_mod,this.Luk_mod,this.Cha_mod );
+            string str = string.Format("{0} Male Base Height: {1} Female Base Height: {2} str: {3} int: {4} agi: {5} con: {6} wis: {7} luk: {8} cha: {9}",this.Racename,this.MHeightBase,this.FHeightBase,this.Str_mod,this.Int_mod,this.Agi_mod,this.Con_mod,this.Wis_mod,this.Luk_mod,this.Cha_mod );
 
             return str;
 

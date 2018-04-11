@@ -22,13 +22,17 @@ namespace CharByDNA
 
             int choice;
 
+            Console.Clear();
             Console.WriteLine("");
             Console.WriteLine("1. Generate Character by DNA");
             Console.WriteLine("2. Generate Child from Parent DNA.");
             Console.WriteLine("3. Show all races and mods");
-            Console.WriteLine("4. Return to the main menu");
+            Console.WriteLine("4. Generate and Display all Unique Alleles");
+            Console.WriteLine("5. Generate and Display all Unique Sums of Alleles");
+            Console.WriteLine("6. Return to the main menu");
             Console.Write("Please enter your choice: ");
             choice = Convert.ToInt32(Console.ReadLine());
+            Console.Clear();
 
             if (choice == 1)
             {
@@ -46,6 +50,8 @@ namespace CharByDNA
                 Character chara = new Character(dna);
 
                 Console.WriteLine(chara.ToString());
+
+                Console.ReadKey();
 
                 CharMenu();
 
@@ -87,6 +93,8 @@ namespace CharByDNA
 
                 //Console.WriteLine(child.Dna.ToString());
 
+                Console.ReadKey();
+
                 CharMenu();
 
             }
@@ -113,7 +121,48 @@ namespace CharByDNA
             else if (choice == 4)
             {
 
+                Console.WriteLine("\nGenerating...");
+                DNAMath dnam = new DNAMath();
+
+                List<Allele> ualle = dnam.GenerateAllPossibleUniqueAlleles();
+
+                Console.WriteLine(dnam.AlleleListToString(ualle));
+                Console.WriteLine("\nTotal Alleles: " + ualle.Count);
+
+                Console.ReadKey();
+                CharMenu();
+
+            }
+
+            else if (choice == 5)
+            {
+
+                Console.WriteLine("\nGenerating...");
+                DNAMath dnam = new DNAMath();
+
+                List<Allele> ualle = dnam.GenerateAllPossibleUniqueAlleles();
+
+                List<int> sums = dnam.GenerateAllPossibleUniqueAlleleSums(ualle);
+
+                for (int i = 0; i < sums.Count; i++)
+                {
+
+                    Console.WriteLine(sums[i]);
+
+                }
+
+                Console.WriteLine("\nTotal Sums: " + sums.Count);
+
+                Console.ReadKey();
+                CharMenu();
+
+            }
+
+            else if (choice == 6)
+            {
+
                 Console.WriteLine("Exiting....");
+                Console.ReadKey();
 
             }
 
