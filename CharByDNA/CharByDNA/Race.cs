@@ -88,9 +88,16 @@ namespace CharByDNA
         ///<summary>
         /// The Constructor that takes the different parameters and creates a race object
         ///</summary>
-        ///<value>
-        /// name value is the new race name. mh is the male base height. fh is the female base height. s is the strength modifier. i is the intelligence modifier. a is the agility modifier. c is the constitution modifier. w is the wisdom modifier. l is the luck modifier. ch is the charisma modifier
-        ///</value>
+        ///<param name="name"> string: the race name </param>
+        ///<param name="mh"> int: the male base height </param>
+        ///<param name="fh"> int: the female base height </param>
+        ///<param name="s"> int: strength modifier </param>
+        ///<param name="i"> int: intelligence modifier </param>
+        ///<param name="a"> int: agility modifier </param>
+        ///<param name="c"> int: constitution modifier </param>
+        ///<param name="w"> int: wisdom modifier </param>
+        ///<param name="l"> int: luck modifier </param>
+        ///<param name="ch"> int: charisma modifier </param>
         ///<remarks>
         /// This method should only be used by the class to fill the list of races
         ///</remarks>
