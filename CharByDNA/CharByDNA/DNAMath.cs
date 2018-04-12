@@ -7,30 +7,6 @@ using System.Threading.Tasks;
 namespace CharByDNA
 {
 
-    public struct Allele
-    {
-
-        public int one, two, three, four;
-
-        public Allele(int one, int two, int three, int four)
-        {
-
-            this.one = one;
-            this.two = two;
-            this.three = three;
-            this.four = four;
-
-        }
-
-        public List<int> ToList()
-        {
-
-            return new List<int>() {this.one, this.two, this.three, this.four};
-
-        }
-
-    }
-
     class DNAMath
     {
 

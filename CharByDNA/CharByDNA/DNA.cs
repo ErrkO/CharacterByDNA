@@ -634,8 +634,11 @@ namespace CharByDNA
         }
 
         ///<summary>
-        ///
+        /// This method returns a list of all the alleles in the strand of DNA
         ///</summary>
+        ///<returns>
+        /// Returns a list of all the alleles
+        ///</returns>
         public List<Allele> GetAlleles()
         {
 
@@ -685,7 +688,7 @@ namespace CharByDNA
         /// The getter method for constant length
         ///</summary>
         ///<returns>
-        /// Returns an integer of the constant length
+        /// Returns an integer of the constant LENGTH
         ///</returns>
         public int GetLength()
         {
@@ -695,10 +698,10 @@ namespace CharByDNA
         }
 
         ///<summary>
-        /// 
+        /// The getter method for the constant number of alleles
         ///</summary>
         ///<returns>
-        ///
+        /// Returns an integer of the constant NUMALLELES
         ///</returns>
         public int GetNumberOfAlleles()
         {
@@ -708,10 +711,10 @@ namespace CharByDNA
         }
 
         ///<summary>
-        ///
+        /// The getter method for the constant number nucleotides in alleles
         ///</summary>
         ///<returns>
-        ///
+        /// Returns an integer of the constant NUMINALES
         ///</returns>
         public int GetNumberOfNucleoInAlleles()
         {
