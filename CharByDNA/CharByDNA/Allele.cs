@@ -62,30 +62,33 @@ namespace CharByDNA
         public const int NUMINALES = 4;
 
         ///<summary>
-        /// The values of the alleles
+        /// The property that holds the first value
         ///</summary>
         public int One { get; set; }
 
         ///<summary>
-        /// The values of the alleles
+        /// The property that holds the second value
         ///</summary>
         public int Two { get; set; }
 
         ///<summary>
-        /// The values of the alleles
+        /// The property that holds the third value
         ///</summary>
         public int Three { get; set; }
 
         ///<summary>
-        /// The values of the alleles
+        /// The property that holds the fourth value
         ///</summary>
         public int Four { get; set; }
 
+        ///<summary>
+        /// The property that holds the nucleotide information
+        ///</summary>
         public Nucleotide Nucleo { get; set; }
 
-        ///
-        ///
-        ///
+        ///<summary>
+        /// The default constructor that just instantiates a new object
+        ///</summary>
         public Allele()
         {
 
@@ -112,9 +115,13 @@ namespace CharByDNA
 
         }
 
-        ///
-        ///
-        ///
+        ///<summary>
+        /// The method that takes a gender value and generates 4 random codes that fit that gender
+        ///</summary>
+        ///<param name="gender"> bool: True for male </param>
+        ///<returns>
+        /// Returns an allele object
+        ///</returns>
         public Allele GenerateGenderAllele(bool gender)
         {
 
@@ -176,9 +183,12 @@ namespace CharByDNA
 
         }
 
-        ///
-        ///
-        ///
+        ///<summary>
+        /// The method that generates a random allele
+        ///</summary>
+        ///<returns>
+        /// Returns an allele object
+        ///</returns>
         public Allele GenerateRandomAllele()
         {
 
