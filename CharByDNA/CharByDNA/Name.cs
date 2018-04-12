@@ -67,9 +67,7 @@ namespace CharByDNA
         ///<summary>
         /// This Method generates a first name based on a given gender
         ///</summary>
-        ///<value>
-        /// accepts a value for the gender
-        ///</value>
+        ///<param name="gender"> string: gender value </param>
         ///<returns>
         /// returns a string contianing the first name
         ///</returns>

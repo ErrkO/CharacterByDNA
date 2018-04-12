@@ -7,15 +7,35 @@ using System.Threading.Tasks;
 namespace CharByDNA
 {
 
+    ///<summary>
+    ///
+    ///</summary>
     public class Character
     {
 
+        ///<summary>
+        ///
+        ///</summary>
         Random rngesus = new Random();
+        
+        ///<summary>
+        ///
+        ///</summary>
         Names charname = new Names();
+        
+        ///<summary>
+        ///
+        ///</summary>
         Race race;
 
+        ///<summary>
+        ///
+        ///</summary>
         public string FirstName { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public string LastName { get; set; }
 
         public Race Racee { get; set; }
