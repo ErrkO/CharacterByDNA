@@ -14,8 +14,11 @@ namespace CharByDNA
     {
 
         ///<summary>
-        ///
+        /// The random number generator
         ///</summary>
+        ///<remarks>
+        /// All Praise RNGESUS!!!
+        ///</remarks>
         Random rngesus = new Random();
         
         ///<summary>
@@ -48,40 +51,7 @@ namespace CharByDNA
         ///</summary>
         public string Gender { get; set; }
 
-        ///<summary>
-        ///
-        ///</summary>
-        public int Str { get; set; }
-
-        ///<summary>
-        ///
-        ///</summary>
-        public int Int { get; set; }
-
-        ///<summary>
-        ///
-        ///</summary>
-        public int Agi { get; set; }
-
-        ///<summary>
-        ///
-        ///</summary>
-        public int Con { get; set; }
-
-        ///<summary>
-        ///
-        ///</summary>
-        public int Wis {get; set;}
-
-        ///<summary>
-        ///
-        ///</summary>
-        public int Luk { get; set; }
-
-        ///<summary>
-        ///
-        ///</summary>
-        public int Cha { get; set; }
+        public Attributes Attrib { get; set; }
 
         ///<summary>
         ///
@@ -133,6 +103,7 @@ namespace CharByDNA
 
         }
 
+        /*
         ///<summary>
         ///
         ///</summary>
@@ -146,7 +117,7 @@ namespace CharByDNA
             HpCurrent = Hptotal;
             Str = s;
             Int = i;
-            Agi = a;
+            Dex = a;
             Con = c;
             Wis = w;
             Luk = l;
@@ -154,6 +125,7 @@ namespace CharByDNA
             Baseattk = battk;
 
         }
+        */
 
         ///<summary>
         ///
@@ -171,6 +143,7 @@ namespace CharByDNA
             this.Dna = dna;
 
             race = new Race();
+            Attrib = new Attributes();
 
             // allele 1
             if (allelevalues[0] > 20)
@@ -215,25 +188,27 @@ namespace CharByDNA
             this.SkinColor = GetProperty(allelevalues[5],skincolors);
 
             // allele 7
-            this.Str = GetAbiScore(alleles[0]) + GetScoreMod(allelevalues[6]);
+            int str = Attrib.GetAbiScore(alleles[0]) + GetScoreMod(allelevalues[6]);
 
             // allele 8
-            this.Int = GetAbiScore(alleles[1]) + GetScoreMod(allelevalues[7]);
+            int inte = Attrib.GetAbiScore(alleles[1]) + GetScoreMod(allelevalues[7]);
 
             // allele 9
-            this.Agi = GetAbiScore(alleles[3]) + GetScoreMod(allelevalues[8]);
+            int dex = Attrib.GetAbiScore(alleles[3]) + GetScoreMod(allelevalues[8]);
 
             // allele 10
-            this.Con = GetAbiScore(alleles[4]) + GetScoreMod(allelevalues[9]);
+            int con = Attrib.GetAbiScore(alleles[4]) + GetScoreMod(allelevalues[9]);
 
             // allele 11
-            this.Wis = GetAbiScore(alleles[5]) + GetScoreMod(allelevalues[10]);
+            int wis = Attrib.GetAbiScore(alleles[5]) + GetScoreMod(allelevalues[10]);
 
             // allele 12
-            this.Luk = GetAbiScore(alleles[6]) + GetScoreMod(allelevalues[11]);
+            int luk = Attrib.GetAbiScore(alleles[6]) + GetScoreMod(allelevalues[11]);
 
             // allele 13
-            this.Cha = GetAbiScore(alleles[7]) + GetScoreMod(allelevalues[12]);
+            int cha = Attrib.GetAbiScore(alleles[7]) + GetScoreMod(allelevalues[12]);
+
+            Attrib = new Attributes(str,inte,dex,con,wis,luk,cha);
 
             this.FirstName = charname.GenFname(this.Gender);
 
@@ -250,125 +225,6 @@ namespace CharByDNA
                 this.LastName = charname.GenLname();
 
             }  
-
-        }
-
-        ///<summary>
-        ///
-        ///</summary>
-        public int GetAbiScore()
-        {
-
-            List<int> dicerolls = new List<int>();
-
-            int minus = 0;
-            int total = 0;
-
-            for (int i = 0; i < 4; i++)
-            {
-
-                dicerolls.Add(rngesus.Next(1, 7));
-
-                if (i == 0)
-                {
-
-                    minus = dicerolls[i];
-
-                }
-
-                if (minus > dicerolls[i])
-                {
-
-                    minus = dicerolls[i];
-
-                }
-
-                total = total + dicerolls[i];
-
-            }
-
-            return total - minus;
-
-        }
-
-        ///<summary>
-        ///
-        ///</summary>
-        public int GetAbiScore(List<int> rolls)
-        {
-
-            int minus = rolls[0];
-            int total = 0;
-
-            for (int i = 0; i < 4; i++)
-            {
-
-                if (rolls[i] > 6)
-                {
-
-                    rolls[i] = 6;
-
-                }
-
-                if (minus > rolls[i])
-                {
-
-                    minus = rolls[i];
-
-                }
-
-                total += rolls[i];
-
-            }
-
-            return total - minus;
-
-        }
-
-        public int GetAbiScore(Allele allele)
-        {
-
-            int minus = allele.one;
-            int total = 0;
-            List<int> aleval = allele.ToList();
-
-            for (int i = 0; i < 4; i++)
-            {
-
-                if (aleval[i] > 6)
-                {
-
-                    aleval[i] = 6;
-
-                }
-
-                if (minus > aleval[i])
-                {
-
-                    minus = aleval[i];
-
-                }
-
-                total += aleval[i];
-
-            }
-
-            return total - minus;
-
-
-        }
-
-        ///<summary>
-        ///
-        ///</summary>
-        public int GetMod(int score)
-        {
-
-            double temp = (score/2);
-
-            int temp2 = Convert.ToInt32(Math.Floor(temp));
-
-            return temp2 - 5;
 
         }
 
@@ -508,7 +364,7 @@ namespace CharByDNA
         public override string ToString()
         {
 
-            string ret = string.Format("{0} {1} is a {2} of the {3} race with a height of {4}, {5} hair, {6} eyes, {7} skin color,str: {8}, int: {9}, agi: {10}, con: {11}, wis: {12}, luk: {13}, cha: {14}", this.FirstName, this.LastName, this.Gender, this.Racee.Racename, HeightToString(), this.HairColor, this.EyeColor, this.SkinColor, this.Str, this.Int, this.Agi, this.Con, this.Wis, this.Luk, this.Cha);
+            string ret = string.Format("{0} {1} is a {2} of the {3} race with a height of {4}, {5} hair, {6} eyes, {7} skin color,str: {8}, int: {9}, agi: {10}, con: {11}, wis: {12}, luk: {13}, cha: {14}", this.FirstName, this.LastName, this.Gender, this.Racee.Racename, HeightToString(), this.HairColor, this.EyeColor, this.SkinColor, this.Attrib.Str, this.Attrib.Int, this.Attrib.Dex, this.Attrib.Con, this.Attrib.Wis, this.Attrib.Luk, this.Attrib.Cha);
             return ret;
 
         }

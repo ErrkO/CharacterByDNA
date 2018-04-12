@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CharByDNA
 {
-    class Attributes
+    public class Attributes
     {
 
         #region Base stats
