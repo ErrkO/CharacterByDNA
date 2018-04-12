@@ -163,7 +163,6 @@ namespace CharByDNA
 
             List<int> allelevalues = dna.GetAllelesvalues();
             List<Allele> alleles = dna.GetAlleles();
-            int sum = 0;
 
             List<string> haircolors = new List<string>() {"Red","Auburn","Brown","Blonde","Black","Grey"};
             List<string> eyecolors = new List<string>() {"Amber","Blue","Brown","Grey","Green","Hazel"};
@@ -263,7 +262,6 @@ namespace CharByDNA
             List<int> dicerolls = new List<int>();
 
             int minus = 0;
-            bool found = false;
             int total = 0;
 
             for (int i = 0; i < 4; i++)

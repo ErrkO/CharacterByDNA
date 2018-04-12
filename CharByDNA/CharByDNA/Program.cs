@@ -23,6 +23,7 @@ namespace CharByDNA
             int choice;
 
             Console.Clear();
+            Console.WriteLine("Welcome to the character builder");
             Console.WriteLine("");
             Console.WriteLine("1. Generate Character by DNA");
             Console.WriteLine("2. Generate Child from Parent DNA.");
@@ -162,7 +163,6 @@ namespace CharByDNA
             {
 
                 Console.WriteLine("Exiting....");
-                Console.ReadKey();
 
             }
 
@@ -170,6 +170,7 @@ namespace CharByDNA
             {
 
                 Console.WriteLine("Please enter a valid choice");
+                Console.ReadKey();
 
                 CharMenu();
 

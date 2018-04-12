@@ -596,7 +596,7 @@ namespace CharByDNA
                 for (int j = NUMINALES * i; j < NUMINALES * (i + 1); j++)
                 {
 
-                    ales.Add(EncodePairValue(this.Left[i],this.Right[i]));
+                    ales.Add(EncodePairValue(this.Left[j],this.Right[j]));
 
                 }
 
