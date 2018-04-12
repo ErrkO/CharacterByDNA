@@ -22,6 +22,13 @@ namespace CharByDNA
 
         }
 
+        public List<int> ToList()
+        {
+
+            return new List<int>() {this.one, this.two, this.three, this.four};
+
+        }
+
     }
 
     class DNAMath

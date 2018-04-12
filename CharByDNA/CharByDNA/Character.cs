@@ -37,41 +37,95 @@ namespace CharByDNA
         ///
         ///</summary>
         public string LastName { get; set; }
-
+        
+        ///<summary>
+        ///
+        ///</summary>
         public Race Racee { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public string Gender { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public int Str { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public int Int { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public int Agi { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public int Con { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public int Wis {get; set;}
 
+        ///<summary>
+        ///
+        ///</summary>
         public int Luk { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public int Cha { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public int Baseattk { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public int Hptotal { get; private set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public int HpCurrent { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public DNA Dna { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public int Height { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public string HairColor { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public string EyeColor { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public string SkinColor { get; set; }
 
+        ///<summary>
+        ///
+        ///</summary>
         public Character()
         {
 
@@ -114,6 +168,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        ///
+        ///</summary>
         public Character(string nam, int hp, Race rac, string gen, int s, int i, int a, int c, int w, int l, int ch, int battk)
         {
 
@@ -133,10 +190,14 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        ///
+        ///</summary>
         public Character(DNA dna, Character dad = null)
         {
 
-            List<int> allele = new List<int>();
+            List<int> allelevalues = dna.GetAllelesvalues();
+            List<Allele> alleles = dna.GetAlleles();
             int sum = 0;
 
             List<string> haircolors = new List<string>() {"Red","Auburn","Brown","Blonde","Black","Grey"};
@@ -147,228 +208,68 @@ namespace CharByDNA
 
             race = new Race();
 
-            for (int i = 0; i < dna.GetLength(); i++)
+            // allele 1
+            if (allelevalues[0] > 20)
             {
 
-                if (i == 4 * 1)
-                {
-
-                    if (sum > 20)
-                    {
-
-                        Gender = "Female";
-
-                    }
-
-                    else
-                    {
-
-                        Gender = "Male";
-
-                    }
-
-                    sum = 0;
-                    sum += dna.EncodePairValue(dna.Left[i], dna.Right[i]);
-                    allele.Clear();
-                    allele.Add(dna.EncodePairValue(dna.Left[i], dna.Right[i]));
-
-                }
-
-                else if (i == 4 * 2)
-                {
-
-                    Racee = race.Races[0];
-
-                    sum = 0;
-                    sum += dna.EncodePairValue(dna.Left[i], dna.Right[i]);
-                    allele.Clear();
-                    allele.Add(dna.EncodePairValue(dna.Left[i], dna.Right[i]));
-
-                }
-
-                else if (i == 4 * 3)
-                {
-
-                    if (Gender == "Male")
-                    {
-
-                        Height = 50 + sum;
-
-                    }
-
-                    else
-                    {
-
-                        Height = 47 + sum;
-
-                    }
-
-                    sum = 0;
-                    sum += dna.EncodePairValue(dna.Left[i], dna.Right[i]);
-                    allele.Clear();
-                    allele.Add(dna.EncodePairValue(dna.Left[i], dna.Right[i]));
-
-                }
-
-                else if (i == 4 * 4)
-                {
-
-                    HairColor = GetProperty(sum,haircolors);
-
-                    sum = 0;
-                    sum += dna.EncodePairValue(dna.Left[i], dna.Right[i]);
-                    allele.Clear();
-                    allele.Add(dna.EncodePairValue(dna.Left[i], dna.Right[i]));
-
-                }
-
-                else if (i == 4 * 5)
-                {
-
-                    EyeColor = GetProperty(sum,eyecolors);
-
-                    sum = 0;
-                    sum += dna.EncodePairValue(dna.Left[i], dna.Right[i]);
-                    allele.Clear();
-                    allele.Add(dna.EncodePairValue(dna.Left[i], dna.Right[i]));
-
-                }
-
-                else if (i == 4 * 6)
-                {
-
-                    SkinColor = GetProperty(sum,skincolors);
-
-                    sum = 0;
-                    sum += dna.EncodePairValue(dna.Left[i], dna.Right[i]);
-                    allele.Clear();
-                    allele.Add(dna.EncodePairValue(dna.Left[i], dna.Right[i]));
-
-                }
-
-                else if (i == 4 * 7)
-                {
-
-                    int score = GetAbiScore(allele);
-
-                    score += GetScoreMod(sum);
-
-                    Str = score;
-
-                    sum = 0;
-                    sum += dna.EncodePairValue(dna.Left[i], dna.Right[i]);
-                    allele.Clear();
-                    allele.Add(dna.EncodePairValue(dna.Left[i], dna.Right[i]));
-
-                }
-
-                else if (i == 4 * 8)
-                {
-
-                    int score = GetAbiScore(allele);
-
-                    score += GetScoreMod(sum);
-
-                    Int = score;
-
-                    sum = 0;
-                    sum += dna.EncodePairValue(dna.Left[i], dna.Right[i]);
-                    allele.Clear();
-                    allele.Add(dna.EncodePairValue(dna.Left[i], dna.Right[i]));
-
-                }
-
-                else if (i == 4 * 9)
-                {
-
-                    int score = GetAbiScore(allele);
-
-                    score += GetScoreMod(sum);
-
-                    Agi = score;
-
-                    sum = 0;
-                    sum += dna.EncodePairValue(dna.Left[i], dna.Right[i]);
-                    allele.Clear();
-                    allele.Add(dna.EncodePairValue(dna.Left[i], dna.Right[i]));
-
-                }
-
-                else if (i == 4 * 10)
-                {
-
-                    int score = GetAbiScore(allele);
-
-                    score += GetScoreMod(sum);
-
-                    Con = score;
-
-                    sum = 0;
-                    sum += dna.EncodePairValue(dna.Left[i], dna.Right[i]);
-                    allele.Clear();
-                    allele.Add(dna.EncodePairValue(dna.Left[i], dna.Right[i]));
-
-                }
-
-                else if (i == 4 * 11)
-                {
-
-                    int score = GetAbiScore(allele);
-
-                    score += GetScoreMod(sum);
-
-                    Wis = score;
-
-                    sum = 0;
-                    sum += dna.EncodePairValue(dna.Left[i], dna.Right[i]);
-                    allele.Clear();
-                    allele.Add(dna.EncodePairValue(dna.Left[i], dna.Right[i]));
-
-                }
-
-                else if (i == 4 * 12)
-                {
-
-                    int score = GetAbiScore(allele);
-
-                    score += GetScoreMod(sum);
-
-                    Luk = score;
-
-                    sum = 0;
-                    sum += dna.EncodePairValue(dna.Left[i], dna.Right[i]);
-                    allele.Clear();
-                    allele.Add(dna.EncodePairValue(dna.Left[i], dna.Right[i]));
-
-                }
-
-                else if (i == (4 * 13) - 1)
-                {
-
-                    sum += dna.EncodePairValue(dna.Left[i], dna.Right[i]);
-                    allele.Add(dna.EncodePairValue(dna.Left[i], dna.Right[i]));
-
-                    int score = GetAbiScore(allele);
-
-                    score += GetScoreMod(sum);
-
-                    Cha = score;
-
-                    sum = 0;
-                    sum += dna.EncodePairValue(dna.Left[i], dna.Right[i]);
-                    allele.Clear();
-
-                }
-
-                else
-                {
-
-                    sum += dna.EncodePairValue(dna.Left[i], dna.Right[i]);
-                    allele.Add(dna.EncodePairValue(dna.Left[i], dna.Right[i]));
-
-                }
+                this.Gender = "Female";
 
             }
+
+            else
+            {
+
+                this.Gender = "Male";
+
+            }
+
+            // allele 2
+            this.Racee = race.Races[0];
+
+            // allele 3
+            if (this.Gender == "Male")
+            {
+
+                this.Height = this.Racee.MHeightBase + allelevalues[2];
+
+            }
+
+            else
+            {
+
+                this.Height = this.Racee.FHeightBase + allelevalues[2];
+
+            }
+
+            // allele 4
+            this.HairColor = GetProperty(allelevalues[3],haircolors);
+
+            // allele 5
+            this.EyeColor = GetProperty(allelevalues[4],eyecolors);
+
+            // allele 6
+            this.SkinColor = GetProperty(allelevalues[5],skincolors);
+
+            // allele 7
+            this.Str = GetAbiScore(alleles[0]) + GetScoreMod(allelevalues[6]);
+
+            // allele 8
+            this.Int = GetAbiScore(alleles[1]) + GetScoreMod(allelevalues[7]);
+
+            // allele 9
+            this.Agi = GetAbiScore(alleles[3]) + GetScoreMod(allelevalues[8]);
+
+            // allele 10
+            this.Con = GetAbiScore(alleles[4]) + GetScoreMod(allelevalues[9]);
+
+            // allele 11
+            this.Wis = GetAbiScore(alleles[5]) + GetScoreMod(allelevalues[10]);
+
+            // allele 12
+            this.Luk = GetAbiScore(alleles[6]) + GetScoreMod(allelevalues[11]);
+
+            // allele 13
+            this.Cha = GetAbiScore(alleles[7]) + GetScoreMod(allelevalues[12]);
 
             this.FirstName = charname.GenFname(this.Gender);
 
@@ -388,6 +289,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        ///
+        ///</summary>
         public int GetAbiScore()
         {
 
@@ -430,6 +334,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        ///
+        ///</summary>
         public int GetAbiScore(List<int> rolls)
         {
 
@@ -484,6 +391,43 @@ namespace CharByDNA
 
         }
 
+        public int GetAbiScore(Allele allele)
+        {
+
+            int minus = 0;
+            bool found = false;
+            int total = 0;
+            List<int> aleval = allele.ToList();
+
+            for (int i = 0; i < 4; i++)
+            {
+
+                if (aleval[i] > 6)
+                {
+
+                    aleval[i] = 6;
+
+                }
+
+                if (minus > aleval[i])
+                {
+
+                    minus = aleval[i];
+
+                }
+
+                total += aleval[i];
+
+            }
+
+            return total - minus;
+
+
+        }
+
+        ///<summary>
+        ///
+        ///</summary>
         public int GetMod(int score)
         {
 
@@ -495,6 +439,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        ///
+        ///</summary>
         public Character CharGen()
         {
 
@@ -537,6 +484,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        ///
+        ///</summary>
         public string GetProperty(int value, List<string> properties)
         {
 
@@ -586,6 +536,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        ///
+        ///</summary>
         public int GetScoreMod(int value)
         {
 
@@ -642,6 +595,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        ///
+        ///</summary>
         public string HeightToString()
         {
 
@@ -658,6 +614,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        ///
+        ///</summary>
         public override string ToString()
         {
 

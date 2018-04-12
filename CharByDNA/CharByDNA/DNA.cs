@@ -536,6 +536,33 @@ namespace CharByDNA
 
         }
 
+        public List<int> GetAllelesvalues()
+        {
+
+            List<int> allelevalues = new List<int>();
+
+            int sum = 0;
+
+            for (int i = 0; i < 13; i++)
+            {
+
+                sum = 0;
+
+                for (int j = 4 * i; j < 4 * (i+1); j++)
+                {
+
+                    sum += this.EncodePairValue(this.Left[j],this.Right[j]);                    
+
+                }
+
+                allelevalues.Add(sum);
+
+            }
+
+            return allelevalues;
+
+        }
+
         ///<summary>
         /// This is the override method to display the DNA object
         ///</summary>
