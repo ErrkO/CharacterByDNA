@@ -45,12 +45,28 @@ namespace CharByDNA
     {
 
         ///<summary>
-        /// This is the number of genes in a strand of DNA
+        /// This is the number of nucleotides in a strand of DNA
         ///</summary>
+        ///<value>
+        /// 52
+        ///</value>
         public const int LENGTH = 52;
 
-
+        ///<summary>
+        /// This is the number of alleles in DNA
+        ///</summary>
+        ///<value>
+        /// 13
+        ///</value>
         public const int NUMALLELES = 13;
+
+        ///<summary>
+        /// This is the number of nucleotides in an allele
+        ///</summary>
+        ///<value>
+        /// 4
+        ///</value>
+        public const int NUMINALES = 4;
 
         ///<summary>
         /// The random number generator
@@ -551,7 +567,7 @@ namespace CharByDNA
 
                 sum = 0;
 
-                for (int j = 4 * i; j < 4 * (i+1); j++)
+                for (int j = NUMINALES * i; j < NUMINALES * (i+1); j++)
                 {
 
                     sum += EncodePairValue(this.Left[j],this.Right[j]);                    
@@ -577,7 +593,7 @@ namespace CharByDNA
 
                 ales.Clear();
 
-                for (int j = 4 * i; j < 4 * (i + 1); j++)
+                for (int j = NUMINALES * i; j < NUMINALES * (i + 1); j++)
                 {
 
                     ales.Add(EncodePairValue(this.Left[i],this.Right[i]));
@@ -621,6 +637,20 @@ namespace CharByDNA
         {
 
             return LENGTH;
+
+        }
+
+        public int GetNumberOfAlleles()
+        {
+
+            return NUMALLELES;
+
+        }
+
+        public int GetNumberOfNucleoInAlleles()
+        {
+
+            return NUMINALES;
 
         }
 
