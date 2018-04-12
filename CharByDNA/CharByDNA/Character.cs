@@ -129,42 +129,7 @@ namespace CharByDNA
         public Character()
         {
 
-            string tempname,g;
-            int s, i, a, c, w, l, ch;
-            int temp = rngesus.Next(0, 2);
-
-            if (temp == 0)
-            {
-
-                g = "Female";
-                tempname = charname.GenFname(g);
-
-            }
-
-            else
-            {
-
-                g = "Male";
-                tempname = charname.GenFname(g);
-
-            }
-
-            Race rac = new Race();
-            //List<Race> races = rac.GetRaces();
-
-            int rnum = rngesus.Next(1, rac.Races.Count);
-
-            s = GetAbiScore() + rac.Races[rnum].Str_mod;
-            i = GetAbiScore() + rac.Races[rnum].Int_mod;
-            a = GetAbiScore() + rac.Races[rnum].Agi_mod;
-            c = GetAbiScore() + rac.Races[rnum].Con_mod;
-            w = GetAbiScore() + rac.Races[rnum].Wis_mod;
-            l = GetAbiScore() + rac.Races[rnum].Luk_mod;
-            ch = GetAbiScore() + rac.Races[rnum].Cha_mod;
-
-            int hp = 10 + GetMod(c);
-
-
+            ;
 
         }
 
@@ -305,28 +270,22 @@ namespace CharByDNA
             {
 
                 dicerolls.Add(rngesus.Next(1, 7));
-                total = total + dicerolls[i];
 
-            }
-
-            while(found != true)
-            {
-
-                minus = dicerolls[0];
-
-                for (int i = 1; i < 4; i++)
+                if (i == 0)
                 {
 
-                    if (minus > dicerolls[i])
-                    {
-
-                        minus = dicerolls[i];
-
-                    }
+                    minus = dicerolls[i];
 
                 }
 
-                found = true;
+                if (minus > dicerolls[i])
+                {
+
+                    minus = dicerolls[i];
+
+                }
+
+                total = total + dicerolls[i];
 
             }
 
@@ -340,8 +299,7 @@ namespace CharByDNA
         public int GetAbiScore(List<int> rolls)
         {
 
-            int minus = 0;
-            bool found = false;
+            int minus = rolls[0];
             int total = 0;
 
             for (int i = 0; i < 4; i++)
@@ -352,50 +310,27 @@ namespace CharByDNA
 
                     rolls[i] = 6;
 
-                    total += 6;
-
                 }
 
-                else
+                if (minus > rolls[i])
                 {
 
-                    total += rolls[i];
+                    minus = rolls[i];
 
                 }
 
-            }
-
-            while(found != true)
-            {
-
-                minus = rolls[0];
-
-                for (int i = 1; i < 4; i++)
-                {
-
-                    if (minus > rolls[i])
-                    {
-
-                        minus = rolls[i];
-
-                    }
-
-                }
-
-                found = true;
+                total += rolls[i];
 
             }
 
             return total - minus;
-
 
         }
 
         public int GetAbiScore(Allele allele)
         {
 
-            int minus = 0;
-            bool found = false;
+            int minus = allele.one;
             int total = 0;
             List<int> aleval = allele.ToList();
 
@@ -436,51 +371,6 @@ namespace CharByDNA
             int temp2 = Convert.ToInt32(Math.Floor(temp));
 
             return temp2 - 5;
-
-        }
-
-        ///<summary>
-        ///
-        ///</summary>
-        public Character CharGen()
-        {
-
-            string tempname,g;
-            int s, i, a, c, w, l, ch;
-            int temp = rngesus.Next(0, 2);
-
-            if (temp == 0)
-            {
-
-                g = "Female";
-                tempname = charname.GenFname(g);
-
-            }
-
-            else
-            {
-
-                g = "Male";
-                tempname = charname.GenFname(g);
-
-            }
-
-            Race rac = new Race();
-            //List<Race> races = rac.GetRaces();
-
-            int rnum = rngesus.Next(1, rac.Races.Count);
-
-            s = GetAbiScore() + rac.Races[rnum].Str_mod;
-            i = GetAbiScore() + rac.Races[rnum].Int_mod;
-            a = GetAbiScore() + rac.Races[rnum].Agi_mod;
-            c = GetAbiScore() + rac.Races[rnum].Con_mod;
-            w = GetAbiScore() + rac.Races[rnum].Wis_mod;
-            l = GetAbiScore() + rac.Races[rnum].Luk_mod;
-            ch = GetAbiScore() + rac.Races[rnum].Cha_mod;
-
-            int hp = 10 + GetMod(c);
-
-            return new Character(tempname, hp, rac.Races[rnum], g, s, i, a, c,w,l,ch,1);
 
         }
 
