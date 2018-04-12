@@ -67,19 +67,16 @@ namespace CharByDNA
         ///<summary>
         /// This Method generates a first name based on a given gender
         ///</summary>
-        ///<param name="gender"> string: gender value </param>
+        ///<param name="gender"> bool: gender value | True for male </param>
         ///<returns>
         /// returns a string contianing the first name
         ///</returns>
-        ///<remarks>
-        /// debating on whether I should change gender to a boolean
-        ///</remarks>
-        public string GenFname(string gender)
+        public string GenFname(bool gender)
         {
 
             string fname;
 
-            if (gender == "Female")
+            if (!gender)
             {
 
                 fname = this.Ffnames[ rngesus.Next(0, this.Ffnames.Count)];

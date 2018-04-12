@@ -91,9 +91,9 @@ namespace CharByDNA
         public int Cha_mod { get; private set; }
         #endregion
 
+        ///<summary>
         ///
-        ///
-        ///
+        ///</summary>
         public Attributes()
         {
 
@@ -101,10 +101,10 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
         ///
-        ///
-        ///
-        public Attributes(int s, int i, int d, int c, int w, int l, int ch)
+        ///</summary>
+        public void SetStats(int s, int i, int d, int c, int w, int l, int ch)
         {
 
             this.Str = s;
@@ -122,6 +122,22 @@ namespace CharByDNA
             this.Luk_mod = GetMod(this.Luk);
             this.Cha_mod = GetMod(this.Cha);
 
+        }
+
+        ///<summary>
+        ///
+        ///</summary>
+        public void SetMods(int sm, int im, int dm, int cm, int wm, int lm, int chm)
+        {
+
+            this.Str_mod = sm;
+            this.Int_mod = im;
+            this.Dex_mod = dm;
+            this.Con_mod = cm;
+            this.Wis_mod = wm;
+            this.Luk_mod = lm;
+            this.Cha_mod = chm;
+            
         }
 
         ///<summary>
@@ -199,7 +215,7 @@ namespace CharByDNA
         public int GetAbiScore(Allele allele)
         {
 
-            int minus = allele.one;
+            int minus = allele.One;
             int total = 0;
             List<int> aleval = allele.ToList();
 

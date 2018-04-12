@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="DNA.cs" />
     <Compile Include="DNAMath.cs" />

@@ -35,40 +35,7 @@ namespace CharByDNA
         ///</summary>
         public int FHeightBase { get; set; }
 
-        ///<summary>
-        /// The property that contains the intelligence modifier
-        ///</summary>
-        public int Int_mod { get; set; }
-
-        ///<summary>
-        /// The property that contains the strength modifier
-        ///</summary>
-        public int Str_mod { get; set; }
-
-        ///<summary>
-        /// The property that contains the agility modifier
-        ///</summary>
-        public int Agi_mod { get; set; }
-
-        ///<summary>
-        /// The property that contains the constitution modifier
-        ///</summary>
-        public int Con_mod { get; set; }
-
-        ///<summary>
-        /// The property that contains the wisdon modifier
-        ///</summary>
-        public int Wis_mod { get; set; }
-
-        ///<summary>
-        /// The property that contains the luck modifier
-        ///</summary>
-        public int Luk_mod { get; set; }
-
-        ///<summary>
-        /// The property that contains the charisma modifier
-        ///</summary>
-        public int Cha_mod { get; set; }
+        public Attributes Attrib { get; set; }
 
         ///<summary>
         /// The property that contains the list of all races
@@ -93,7 +60,7 @@ namespace CharByDNA
         ///<param name="fh"> int: the female base height </param>
         ///<param name="s"> int: strength modifier </param>
         ///<param name="i"> int: intelligence modifier </param>
-        ///<param name="a"> int: agility modifier </param>
+        ///<param name="d"> int: dexterity modifier </param>
         ///<param name="c"> int: constitution modifier </param>
         ///<param name="w"> int: wisdom modifier </param>
         ///<param name="l"> int: luck modifier </param>
@@ -101,19 +68,15 @@ namespace CharByDNA
         ///<remarks>
         /// This method should only be used by the class to fill the list of races
         ///</remarks>
-        private Race(string name,int mh, int fh, int s, int i, int a, int c, int w, int l, int ch)
+        private Race(string name,int mh, int fh, int s, int i, int d, int c, int w, int l, int ch)
         {
+
+            this.Attrib = new Attributes();
 
             this.Racename = name;
             this.MHeightBase = mh;
             this.FHeightBase = fh;
-            this.Int_mod = i;
-            this.Str_mod = s;
-            this.Agi_mod = a;
-            this.Con_mod = c;
-            this.Wis_mod = w;
-            this.Luk_mod = l;
-            this.Cha_mod = ch;
+            this.Attrib.SetMods(s,i,d,c,w,l,ch);
 
         }
 
@@ -163,7 +126,7 @@ namespace CharByDNA
         public override string ToString()
         {
 
-            string str = string.Format("{0} Male Base Height: {1} Female Base Height: {2} str: {3} int: {4} agi: {5} con: {6} wis: {7} luk: {8} cha: {9}",this.Racename,this.MHeightBase,this.FHeightBase,this.Str_mod,this.Int_mod,this.Agi_mod,this.Con_mod,this.Wis_mod,this.Luk_mod,this.Cha_mod );
+            string str = string.Format("{0} Male Base Height: {1} Female Base Height: {2} str: {3} int: {4} agi: {5} con: {6} wis: {7} luk: {8} cha: {9}",this.Racename,this.MHeightBase,this.FHeightBase,this.Attrib.Str_mod,this.Attrib.Int_mod,this.Attrib.Dex_mod,this.Attrib.Con_mod,this.Attrib.Wis_mod,this.Attrib.Luk_mod,this.Attrib.Cha_mod );
 
             return str;
 

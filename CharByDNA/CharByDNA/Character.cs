@@ -12,14 +12,6 @@ namespace CharByDNA
     ///</summary>
     public class Character
     {
-
-        ///<summary>
-        /// The random number generator
-        ///</summary>
-        ///<remarks>
-        /// All Praise RNGESUS!!!
-        ///</remarks>
-        Random rngesus = new Random();
         
         ///<summary>
         ///
@@ -49,7 +41,7 @@ namespace CharByDNA
         ///<summary>
         ///
         ///</summary>
-        public string Gender { get; set; }
+        public bool Gender { get; set; }
 
         public Attributes Attrib { get; set; }
 
@@ -149,14 +141,14 @@ namespace CharByDNA
             if (allelevalues[0] > 20)
             {
 
-                this.Gender = "Female";
+                this.Gender = false;
 
             }
 
             else
             {
 
-                this.Gender = "Male";
+                this.Gender = true;
 
             }
 
@@ -164,7 +156,7 @@ namespace CharByDNA
             this.Racee = race.Races[0];
 
             // allele 3
-            if (this.Gender == "Male")
+            if (this.Gender)
             {
 
                 this.Height = this.Racee.MHeightBase + allelevalues[2];
@@ -208,7 +200,7 @@ namespace CharByDNA
             // allele 13
             int cha = Attrib.GetAbiScore(alleles[7]) + GetScoreMod(allelevalues[12]);
 
-            Attrib = new Attributes(str,inte,dex,con,wis,luk,cha);
+            Attrib.SetStats(str,inte,dex,con,wis,luk,cha);
 
             this.FirstName = charname.GenFname(this.Gender);
 
@@ -364,7 +356,23 @@ namespace CharByDNA
         public override string ToString()
         {
 
-            string ret = string.Format("{0} {1} is a {2} of the {3} race with a height of {4}, {5} hair, {6} eyes, {7} skin color,str: {8}, int: {9}, agi: {10}, con: {11}, wis: {12}, luk: {13}, cha: {14}", this.FirstName, this.LastName, this.Gender, this.Racee.Racename, HeightToString(), this.HairColor, this.EyeColor, this.SkinColor, this.Attrib.Str, this.Attrib.Int, this.Attrib.Dex, this.Attrib.Con, this.Attrib.Wis, this.Attrib.Luk, this.Attrib.Cha);
+            string gen = "";
+
+            if (this.Gender)
+            {
+
+                gen = "male";
+
+            }
+
+            else
+            {
+
+                gen = "female";
+
+            }
+
+            string ret = string.Format("{0} {1} is a {2} of the {3} race with a height of {4}, {5} hair, {6} eyes, {7} skin color,str: {8}, int: {9}, agi: {10}, con: {11}, wis: {12}, luk: {13}, cha: {14}", this.FirstName, this.LastName, gen, this.Racee.Racename, HeightToString(), this.HairColor, this.EyeColor, this.SkinColor, this.Attrib.Str, this.Attrib.Int, this.Attrib.Dex, this.Attrib.Con, this.Attrib.Wis, this.Attrib.Luk, this.Attrib.Cha);
             return ret;
 
         }

@@ -66,7 +66,7 @@ namespace CharByDNA
 
                 Allele allele = alleles[i];
 
-                sum += allele.one + allele.two + allele.three + allele.four;
+                sum += allele.One + allele.Two + allele.Three + allele.Four;
 
                 allsums.Add(sum);
 
@@ -114,7 +114,7 @@ namespace CharByDNA
         public string AlleleToString(Allele a)
         {
 
-            return Convert.ToString(a.one + "" + a.two + "" + a.three + "" + a.four);
+            return Convert.ToString(a.One + "" + a.Two + "" + a.Three + "" + a.Four);
 
         }
 
