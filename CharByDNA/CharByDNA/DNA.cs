@@ -49,6 +49,9 @@ namespace CharByDNA
         ///</summary>
         public const int LENGTH = 52;
 
+
+        public const int NUMALLELES = 13;
+
         ///<summary>
         /// The random number generator
         ///</summary>
@@ -543,7 +546,7 @@ namespace CharByDNA
 
             int sum = 0;
 
-            for (int i = 0; i < 13; i++)
+            for (int i = 0; i < NUMALLELES; i++)
             {
 
                 sum = 0;
@@ -551,7 +554,7 @@ namespace CharByDNA
                 for (int j = 4 * i; j < 4 * (i+1); j++)
                 {
 
-                    sum += this.EncodePairValue(this.Left[j],this.Right[j]);                    
+                    sum += EncodePairValue(this.Left[j],this.Right[j]);                    
 
                 }
 
@@ -560,6 +563,32 @@ namespace CharByDNA
             }
 
             return allelevalues;
+
+        }
+
+        public List<Allele> GetAlleles()
+        {
+
+            List<Allele> alleles = new List<Allele>();
+            List<int> ales = new List<int>();
+
+            for (int i = 0; i < NUMALLELES; i++)
+            {
+
+                ales.Clear();
+
+                for (int j = 4 * i; j < 4 * (i + 1); j++)
+                {
+
+                    ales.Add(EncodePairValue(this.Left[i],this.Right[i]));
+
+                }
+
+                alleles.Add(new Allele(ales[0],ales[1],ales[2],ales[3]));
+
+            }
+
+            return alleles;
 
         }
 
