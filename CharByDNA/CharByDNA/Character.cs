@@ -8,23 +8,23 @@ namespace CharByDNA
 {
 
     ///<summary>
-    ///
+    /// The class that contains the information for a character
     ///</summary>
     public class Character
     {
         
         ///<summary>
-        ///
+        /// The Names class object
         ///</summary>
         Names charname = new Names();
         
         ///<summary>
-        ///
+        /// The Race class object
         ///</summary>
         Race race;
 
         ///<summary>
-        ///
+        /// The property that holds the first name
         ///</summary>
         public string FirstName { get; set; }
 
@@ -217,6 +217,103 @@ namespace CharByDNA
                 this.LastName = charname.GenLname();
 
             }  
+
+        }
+
+        ///<summary>
+        /// This constructor generates a new Character based on the given gender
+        ///</summary>
+        ///<param name="gender"> bool: True is male </param>
+        public Character(bool gender)
+        {
+
+            this.Dna = new DNA(gender);
+            race = new Race();
+            this.Attrib = new Attributes();
+
+            List<int> allelevalues = this.Dna.GetAllelesvalues();
+            List<Allele> alleles = this.Dna.GetAlleles();
+
+            List<string> haircolors = new List<string>() {"Red","Auburn","Brown","Blonde","Black","Grey"};
+            List<string> eyecolors = new List<string>() {"Amber","Blue","Brown","Grey","Green","Hazel"};
+            List<string> skincolors = new List<string>() {"Albino","Pale","White","Tan","Brown","Black"};
+
+            // allele 1
+            if (allelevalues[0] > 20)
+            {
+
+                this.Gender = false;
+
+            }
+
+            else
+            {
+
+                this.Gender = true;
+
+            }
+
+            if (this.Gender != gender)
+            {
+
+                Console.WriteLine("I should never happen");
+
+            }
+
+            // allele 2
+            this.Racee = race.Races[0];
+
+            // allele 3
+            if (this.Gender)
+            {
+
+                this.Height = this.Racee.MHeightBase + allelevalues[2];
+
+            }
+
+            else
+            {
+
+                this.Height = this.Racee.FHeightBase + allelevalues[2];
+
+            }
+
+            // allele 4
+            this.HairColor = GetProperty(allelevalues[3],haircolors);
+
+            // allele 5
+            this.EyeColor = GetProperty(allelevalues[4],eyecolors);
+
+            // allele 6
+            this.SkinColor = GetProperty(allelevalues[5],skincolors);
+
+            // allele 7
+            int str = Attrib.GetAbiScore(alleles[0]) + GetScoreMod(allelevalues[6]);
+
+            // allele 8
+            int inte = Attrib.GetAbiScore(alleles[1]) + GetScoreMod(allelevalues[7]);
+
+            // allele 9
+            int dex = Attrib.GetAbiScore(alleles[3]) + GetScoreMod(allelevalues[8]);
+
+            // allele 10
+            int con = Attrib.GetAbiScore(alleles[4]) + GetScoreMod(allelevalues[9]);
+
+            // allele 11
+            int wis = Attrib.GetAbiScore(alleles[5]) + GetScoreMod(allelevalues[10]);
+
+            // allele 12
+            int luk = Attrib.GetAbiScore(alleles[6]) + GetScoreMod(allelevalues[11]);
+
+            // allele 13
+            int cha = Attrib.GetAbiScore(alleles[7]) + GetScoreMod(allelevalues[12]);
+
+            Attrib.SetStats(str,inte,dex,con,wis,luk,cha);
+
+            this.FirstName = charname.GenFname(this.Gender);
+
+            this.LastName = charname.GenLname();
+
 
         }
 

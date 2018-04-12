@@ -92,7 +92,7 @@ namespace CharByDNA
         public Allele()
         {
 
-            ;
+            this.Nucleo = new Nucleotide();
 
         }
 
@@ -135,10 +135,10 @@ namespace CharByDNA
                 do
                 {
 
-                    one = rngesus.Next(0,2);
-                    two = rngesus.Next(0,2);
-                    three = rngesus.Next(0,3);
-                    four = rngesus.Next(0,4);
+                    one = Nucleo.TranslateComboNum(rngesus.Next(0,2));
+                    two = Nucleo.TranslateComboNum(rngesus.Next(0,2));
+                    three = Nucleo.TranslateComboNum(rngesus.Next(0,3));
+                    four = Nucleo.TranslateComboNum(rngesus.Next(0,4));
 
                     int sum = one + two + three + four;
 
@@ -151,7 +151,7 @@ namespace CharByDNA
                     
                 } while(!correctstring);
 
-                return new Allele(Nucleo.TranslateComboNum(one),Nucleo.TranslateComboNum(two),Nucleo.TranslateComboNum(three),Nucleo.TranslateComboNum(four));
+                return new Allele(one,two,three,four);
 
             }
 
@@ -161,10 +161,10 @@ namespace CharByDNA
                 do
                 {
 
-                    one = rngesus.Next(0,2);
-                    two = rngesus.Next(0,2);
-                    three = rngesus.Next(0,3);
-                    four = rngesus.Next(0,4);
+                    one = Nucleo.TranslateComboNum(rngesus.Next(3,4));
+                    two = Nucleo.TranslateComboNum(rngesus.Next(3,4));
+                    three = Nucleo.TranslateComboNum(rngesus.Next(1,4));
+                    four = Nucleo.TranslateComboNum(rngesus.Next(0,4));
 
                     int sum = one + two + three + four;
 
@@ -177,7 +177,7 @@ namespace CharByDNA
                     
                 } while(!correctstring);
 
-                return new Allele(Nucleo.TranslateComboNum(one),Nucleo.TranslateComboNum(two),Nucleo.TranslateComboNum(three),Nucleo.TranslateComboNum(four));
+                return new Allele(one,two,three,four);
 
             }
 

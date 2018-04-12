@@ -27,10 +27,11 @@ namespace CharByDNA
             Console.WriteLine("");
             Console.WriteLine("1. Generate Character by DNA");
             Console.WriteLine("2. Generate Child from Parent DNA.");
-            Console.WriteLine("3. Show all races and mods");
-            Console.WriteLine("4. Generate and Display all Unique Alleles");
-            Console.WriteLine("5. Generate and Display all Unique Sums of Alleles");
-            Console.WriteLine("6. Return to the main menu");
+            Console.WriteLine("3. Generate random character from gender.");
+            Console.WriteLine("4. Show all races and mods");
+            Console.WriteLine("5. Generate and Display all Unique Alleles");
+            Console.WriteLine("6. Generate and Display all Unique Sums of Alleles");
+            Console.WriteLine("7. Return to the main menu");
             Console.Write("Please enter your choice: ");
             choice = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
@@ -103,6 +104,38 @@ namespace CharByDNA
             else if (choice == 3)
             {
 
+                Console.Write("Please enter a gender: ");
+                string gen = Console.ReadLine();
+                bool gender;
+
+                List<char> input = gen.ToList<char>();
+
+                if (input[0] == 'm' || input[0] == 'M')
+                {
+
+                    gender = true;
+
+                }
+
+                else
+                {
+
+                    gender = false;
+
+                }
+
+                Character a = new Character(gender);
+
+                Console.WriteLine("\n" + a.ToString());
+
+                Console.ReadKey();
+                CharMenu();
+
+            }
+
+            else if (choice == 4)
+            {
+
                 Console.WriteLine("");
 
                 Race r = new Race();
@@ -119,7 +152,7 @@ namespace CharByDNA
 
             }
 
-            else if (choice == 4)
+            else if (choice == 5)
             {
 
                 Console.WriteLine("\nGenerating...");
@@ -135,7 +168,7 @@ namespace CharByDNA
 
             }
 
-            else if (choice == 5)
+            else if (choice == 6)
             {
 
                 Console.WriteLine("\nGenerating...");
@@ -159,7 +192,7 @@ namespace CharByDNA
 
             }
 
-            else if (choice == 6)
+            else if (choice == 7)
             {
 
                 Console.WriteLine("Exiting....");
