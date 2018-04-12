@@ -39,6 +39,48 @@ namespace CharByDNA
     }
 
     ///<summary>
+    /// Structure that holds the values of 4 nucleotide pairs
+    ///</summary>
+    public struct Allele
+    {
+        ///<summary>
+        /// The values of the alleles
+        ///</summary>
+        public int one, two, three, four;
+
+        ///<summary>
+        /// The basic Constructor that creates an allele object
+        ///</summary>
+        ///<param name="one"> int: value in the first position </param>
+        ///<param name="two"> int: value in the second position </param>
+        ///<param name="three"> int: value in the third position </param>
+        ///<param name="four"> int: value in the fourth position </param>
+        public Allele(int one, int two, int three, int four)
+        {
+
+            this.one = one;
+            this.two = two;
+            this.three = three;
+            this.four = four;
+
+        }
+
+        ///<summary>
+        /// This method returns the allele in the form of a list
+        ///</summary>
+        ///<returns>
+        /// Returns a list of the alleles in thier positions
+        ///</returns>
+        public List<int> ToList()
+        {
+
+            return new List<int>() {this.one, this.two, this.three, this.four};
+
+        }
+
+    }
+
+    ///<summary>
     /// Class that contains the information for DNA
     ///</summary>
     public class DNA
@@ -555,6 +597,15 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        /// This method returns all of the allele values. It should have a length of NUMALLELES
+        ///</summary>
+        ///<example>
+        /// 3333 -> 12
+        ///</example>
+        ///<returns>
+        /// Returns a List containing all of the alleles condensed into a number
+        ///</returns>
         public List<int> GetAllelesvalues()
         {
 
@@ -582,6 +633,9 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        ///
+        ///</summary>
         public List<Allele> GetAlleles()
         {
 
@@ -640,6 +694,12 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        /// 
+        ///</summary>
+        ///<returns>
+        ///
+        ///</returns>
         public int GetNumberOfAlleles()
         {
 
@@ -647,6 +707,12 @@ namespace CharByDNA
 
         }
 
+        ///<summary>
+        ///
+        ///</summary>
+        ///<returns>
+        ///
+        ///</returns>
         public int GetNumberOfNucleoInAlleles()
         {
 
