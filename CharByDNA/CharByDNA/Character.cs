@@ -193,6 +193,8 @@ namespace CharByDNA
             this.LastName = dad.LastName;
             this.Family.SetDad(dad);
             this.Family.SetMom(mom);
+            dad.Family.AddChildren(this);
+            mom.Family.AddChildren(this);
 
         }
 
