@@ -75,11 +75,8 @@ namespace CharByDNA
                 Console.Write("Enter Mom DNA: ");
                 string cmdna = Console.ReadLine();
 
-                DNA ddna = new DNA(cddna);
-                DNA mdna = new DNA(cmdna);
-
-                Character dad = new Character(ddna);
-                Character mom = new Character(mdna);
+                Character dad = new Character(new DNA(cddna));
+                Character mom = new Character(new DNA(cmdna));
 
                 Console.WriteLine("\n" + dad.ToString());
                 Console.WriteLine("\n" + mom.ToString());
@@ -87,9 +84,7 @@ namespace CharByDNA
                 List<int> dstrand = dad.Dna.Miosis();
                 List<int> mstrand = mom.Dna.Miosis();
 
-                DNA cdna = new DNA(dstrand, mstrand);
-
-                Character child = new Character(cdna, dad);
+                Character child = new Character(new DNA(dstrand, mstrand), dad);
 
                 Console.WriteLine("\n" + child.ToString());
 

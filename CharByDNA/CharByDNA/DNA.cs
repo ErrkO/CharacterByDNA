@@ -182,37 +182,7 @@ namespace CharByDNA
         private Tuple DecodeDNA(string code)
         {
 
-            Tuple tup = new Tuple(0,0);
-
-            if (code == "3")
-            {
-
-                tup = new Tuple(3,1);
-
-            }
-
-            else if (code == "4")
-            {
-
-                tup = new Tuple(1,3);
-
-            }
-
-            else if (code == "6")
-            {
-
-                tup = new Tuple(2,4);
-                
-            }
-
-            else if (code == "8")
-            {
-
-                tup = new Tuple(4,2);
-                
-            }
-
-            return tup;
+            return DecodeDNA(Convert.ToInt32(code));
 
         }
 
@@ -255,18 +225,6 @@ namespace CharByDNA
             return tup;
 
         }
-
-        ///<summary>
-        /// This method turns a nucleotide pair into a coded pair (string)
-        ///</summary>
-        ///<example>
-        /// EX: 1-3 -> 4 | 3-1 -> 3 | 2-4 -> 6 | 4-2 -> 8
-        ///</example>
-        ///<param name="left"> int: Value of the left strand </param>
-        ///<param name="right"> int: Value of the right strand </param>
-        ///<returns>
-        /// Returns the encoded pair as a string
-        ///</returns>
 
         ///<summary>
         /// This method turns the DNA object into a coded string
@@ -313,7 +271,14 @@ namespace CharByDNA
             for (int i = 0; i < LENGTH; i++)
             {
 
-                if (!Alle.Nucleo.CheckPair(dna.Left[i],dna.Right[i]))
+                if (i >= 4 && i <=7 )
+                {
+
+                    dna.Right[i] = Alle.Nucleo.Opposite(dna.Left[i]);
+
+                }
+
+                else if (!Alle.Nucleo.CheckPair(dna.Left[i],dna.Right[i]))
                 {
 
                     int choice = rngesus.Next(1,3);
@@ -344,31 +309,7 @@ namespace CharByDNA
         public void FixDNA()
         {
 
-            for (int i = 0; i < LENGTH; i++)
-            {
-
-                if (!Alle.Nucleo.CheckPair(this.Left[i],this.Right[i]))
-                {
-
-                    int choice = rngesus.Next(1,3);
-
-                    if (choice == 1)
-                    {
-
-                        this.Right[i] = Alle.Nucleo.Opposite(this.Left[i]);
-
-                    }
-
-                    else
-                    {
-
-                        this.Left[i] = Alle.Nucleo.Opposite(this.Right[i]);
-
-                    }
-
-                }
-
-            }
+            FixDNA(this);
 
         }
 

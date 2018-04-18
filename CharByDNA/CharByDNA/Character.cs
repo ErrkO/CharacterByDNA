@@ -91,6 +91,8 @@ namespace CharByDNA
         ///</summary>
         public string SkinColor { get; set; }
 
+        public FamilyTree Family { get; private set; }
+
         ///<summary>
         ///
         ///</summary>
@@ -104,11 +106,13 @@ namespace CharByDNA
         ///<summary>
         ///
         ///</summary>
-        public Character(DNA dna, Character dad = null)
+        public Character(DNA dna)
         {
 
             List<int> allelevalues = dna.GetAllelesvalues();
             List<Allele> alleles = dna.GetAlleles();
+
+            this.Family = new FamilyTree(this);
 
             this.Dna = dna;
 
@@ -180,21 +184,15 @@ namespace CharByDNA
 
             Attrib.SetStats(str,inte,dex,con,wis,luk,cha);
 
+        }
+
+        public Character(Character dad, Character mom) : this(new DNA(dad.Dna.Miosis(),mom.Dna.Miosis()))
+        {
+
             this.FirstName = charname.GenFname(this.Gender);
-
-            if (dad != null)
-            {
-
-                this.LastName = dad.LastName;
-
-            }
-
-            else
-            {
-
-                this.LastName = charname.GenLname();
-
-            }  
+            this.LastName = dad.LastName;
+            this.Family.SetDad(dad);
+            this.Family.SetMom(mom);
 
         }
 
@@ -202,91 +200,9 @@ namespace CharByDNA
         /// This constructor generates a new Character based on the given gender
         ///</summary>
         ///<param name="gender"> bool: True is male </param>
-        public Character(bool gender)
+        public Character(bool gender) : this(new DNA(gender))
         {
 
-            this.Dna = new DNA(gender);
-            race = new Race();
-            this.Attrib = new Attributes();
-
-            List<int> allelevalues = this.Dna.GetAllelesvalues();
-            List<Allele> alleles = this.Dna.GetAlleles();
-
-            // allele 1
-            if (allelevalues[0] > 20)
-            {
-
-                this.Gender = false;
-
-            }
-
-            else
-            {
-
-                this.Gender = true;
-
-            }
-
-            if (this.Gender != gender)
-            {
-
-                Console.WriteLine("I should never happen");
-
-            }
-
-            // allele 2
-            this.Racee = race.Races[0];
-
-            // allele 3
-            if (this.Gender)
-            {
-
-                this.Height = this.Racee.MHeightBase + allelevalues[2];
-
-            }
-
-            else
-            {
-
-                this.Height = this.Racee.FHeightBase + allelevalues[2];
-
-            }
-
-            // allele 4
-            this.HairColor = GetProperty(allelevalues[3],race.HairColors);
-
-            // allele 5
-            this.EyeColor = GetProperty(allelevalues[4],race.EyeColors);
-
-            // allele 6
-            this.SkinColor = GetProperty(allelevalues[5],race.SkinColors);
-
-            // allele 7
-            int str = Attrib.GetAbiScore(alleles[0]) + GetScoreMod(allelevalues[6]) + race.Attrib.Str_mod;
-
-            // allele 8
-            int inte = Attrib.GetAbiScore(alleles[1]) + GetScoreMod(allelevalues[7]) + race.Attrib.Int_mod;
-
-            // allele 9
-            int dex = Attrib.GetAbiScore(alleles[3]) + GetScoreMod(allelevalues[8]) + race.Attrib.Dex_mod;
-
-            // allele 10
-            int con = Attrib.GetAbiScore(alleles[4]) + GetScoreMod(allelevalues[9]) + race.Attrib.Con_mod;
-
-            // allele 11
-            int wis = Attrib.GetAbiScore(alleles[5]) + GetScoreMod(allelevalues[10]) + race.Attrib.Wis_mod;
-
-            // allele 12
-            int luk = Attrib.GetAbiScore(alleles[6]) + GetScoreMod(allelevalues[11]) + race.Attrib.Luk_mod;
-
-            // allele 13
-            int cha = Attrib.GetAbiScore(alleles[7]) + GetScoreMod(allelevalues[12]) + race.Attrib.Cha_mod;
-
-            Attrib.SetStats(str,inte,dex,con,wis,luk,cha);
-
-            this.FirstName = charname.GenFname(this.Gender);
-
-            this.LastName = charname.GenLname();
 
 
         }
