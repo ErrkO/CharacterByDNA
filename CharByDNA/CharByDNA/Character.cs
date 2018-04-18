@@ -29,44 +29,50 @@ namespace CharByDNA
         public string FirstName { get; set; }
 
         ///<summary>
-        ///
+        /// The property that holds the last name
         ///</summary>
         public string LastName { get; set; }
         
         ///<summary>
-        ///
+        /// The property that holds the Race class object
         ///</summary>
         public Race Racee { get; set; }
 
         ///<summary>
-        ///
+        /// The property that holds the gender value
         ///</summary>
+        ///<example>
+        /// True = male
+        ///</example>
         public bool Gender { get; set; }
 
+        ///<summary>
+        /// The property that holds the Attributes object
+        ///</summary>
         public Attributes Attrib { get; set; }
 
         ///<summary>
-        ///
+        /// The property that holds the base attack value
         ///</summary>
         public int Baseattk { get; set; }
 
         ///<summary>
-        ///
+        /// The property that holds the health point total of the character
         ///</summary>
         public int Hptotal { get; private set; }
 
         ///<summary>
-        ///
+        /// The Property that holds the current amount of health points
         ///</summary>
         public int HpCurrent { get; set; }
 
         ///<summary>
-        ///
+        /// The property that holds the DNA class object
         ///</summary>
         public DNA Dna { get; set; }
 
         ///<summary>
-        ///
+        /// 
         ///</summary>
         public int Height { get; set; }
 
@@ -95,30 +101,6 @@ namespace CharByDNA
 
         }
 
-        /*
-        ///<summary>
-        ///
-        ///</summary>
-        public Character(string nam, int hp, Race rac, string gen, int s, int i, int a, int c, int w, int l, int ch, int battk)
-        {
-
-            FirstName = nam;
-            Racee = rac;
-            Gender = gen;
-            Hptotal = hp;
-            HpCurrent = Hptotal;
-            Str = s;
-            Int = i;
-            Dex = a;
-            Con = c;
-            Wis = w;
-            Luk = l;
-            Cha = ch;
-            Baseattk = battk;
-
-        }
-        */
-
         ///<summary>
         ///
         ///</summary>
@@ -127,10 +109,6 @@ namespace CharByDNA
 
             List<int> allelevalues = dna.GetAllelesvalues();
             List<Allele> alleles = dna.GetAlleles();
-
-            List<string> haircolors = new List<string>() {"Red","Auburn","Brown","Blonde","Black","Grey"};
-            List<string> eyecolors = new List<string>() {"Amber","Blue","Brown","Grey","Green","Hazel"};
-            List<string> skincolors = new List<string>() {"Albino","Pale","White","Tan","Brown","Black"};
 
             this.Dna = dna;
 
@@ -171,34 +149,34 @@ namespace CharByDNA
             }
 
             // allele 4
-            this.HairColor = GetProperty(allelevalues[3],haircolors);
+            this.HairColor = GetProperty(allelevalues[3], race.HairColors);
 
             // allele 5
-            this.EyeColor = GetProperty(allelevalues[4],eyecolors);
+            this.EyeColor = GetProperty(allelevalues[4],race.EyeColors);
 
             // allele 6
-            this.SkinColor = GetProperty(allelevalues[5],skincolors);
+            this.SkinColor = GetProperty(allelevalues[5],race.SkinColors);
 
             // allele 7
-            int str = Attrib.GetAbiScore(alleles[0]) + GetScoreMod(allelevalues[6]);
+            int str = Attrib.GetAbiScore(alleles[0]) + GetScoreMod(allelevalues[6]) + race.Attrib.Str_mod;
 
             // allele 8
-            int inte = Attrib.GetAbiScore(alleles[1]) + GetScoreMod(allelevalues[7]);
+            int inte = Attrib.GetAbiScore(alleles[1]) + GetScoreMod(allelevalues[7]) + race.Attrib.Int_mod;
 
             // allele 9
-            int dex = Attrib.GetAbiScore(alleles[3]) + GetScoreMod(allelevalues[8]);
+            int dex = Attrib.GetAbiScore(alleles[3]) + GetScoreMod(allelevalues[8]) + race.Attrib.Dex_mod;
 
             // allele 10
-            int con = Attrib.GetAbiScore(alleles[4]) + GetScoreMod(allelevalues[9]);
+            int con = Attrib.GetAbiScore(alleles[4]) + GetScoreMod(allelevalues[9]) + race.Attrib.Con_mod;
 
             // allele 11
-            int wis = Attrib.GetAbiScore(alleles[5]) + GetScoreMod(allelevalues[10]);
+            int wis = Attrib.GetAbiScore(alleles[5]) + GetScoreMod(allelevalues[10]) + race.Attrib.Wis_mod;
 
             // allele 12
-            int luk = Attrib.GetAbiScore(alleles[6]) + GetScoreMod(allelevalues[11]);
+            int luk = Attrib.GetAbiScore(alleles[6]) + GetScoreMod(allelevalues[11]) + race.Attrib.Luk_mod;
 
             // allele 13
-            int cha = Attrib.GetAbiScore(alleles[7]) + GetScoreMod(allelevalues[12]);
+            int cha = Attrib.GetAbiScore(alleles[7]) + GetScoreMod(allelevalues[12]) + race.Attrib.Cha_mod;
 
             Attrib.SetStats(str,inte,dex,con,wis,luk,cha);
 
@@ -233,10 +211,6 @@ namespace CharByDNA
 
             List<int> allelevalues = this.Dna.GetAllelesvalues();
             List<Allele> alleles = this.Dna.GetAlleles();
-
-            List<string> haircolors = new List<string>() {"Red","Auburn","Brown","Blonde","Black","Grey"};
-            List<string> eyecolors = new List<string>() {"Amber","Blue","Brown","Grey","Green","Hazel"};
-            List<string> skincolors = new List<string>() {"Albino","Pale","White","Tan","Brown","Black"};
 
             // allele 1
             if (allelevalues[0] > 20)
@@ -279,34 +253,34 @@ namespace CharByDNA
             }
 
             // allele 4
-            this.HairColor = GetProperty(allelevalues[3],haircolors);
+            this.HairColor = GetProperty(allelevalues[3],race.HairColors);
 
             // allele 5
-            this.EyeColor = GetProperty(allelevalues[4],eyecolors);
+            this.EyeColor = GetProperty(allelevalues[4],race.EyeColors);
 
             // allele 6
-            this.SkinColor = GetProperty(allelevalues[5],skincolors);
+            this.SkinColor = GetProperty(allelevalues[5],race.SkinColors);
 
             // allele 7
-            int str = Attrib.GetAbiScore(alleles[0]) + GetScoreMod(allelevalues[6]);
+            int str = Attrib.GetAbiScore(alleles[0]) + GetScoreMod(allelevalues[6]) + race.Attrib.Str_mod;
 
             // allele 8
-            int inte = Attrib.GetAbiScore(alleles[1]) + GetScoreMod(allelevalues[7]);
+            int inte = Attrib.GetAbiScore(alleles[1]) + GetScoreMod(allelevalues[7]) + race.Attrib.Int_mod;
 
             // allele 9
-            int dex = Attrib.GetAbiScore(alleles[3]) + GetScoreMod(allelevalues[8]);
+            int dex = Attrib.GetAbiScore(alleles[3]) + GetScoreMod(allelevalues[8]) + race.Attrib.Dex_mod;
 
             // allele 10
-            int con = Attrib.GetAbiScore(alleles[4]) + GetScoreMod(allelevalues[9]);
+            int con = Attrib.GetAbiScore(alleles[4]) + GetScoreMod(allelevalues[9]) + race.Attrib.Con_mod;
 
             // allele 11
-            int wis = Attrib.GetAbiScore(alleles[5]) + GetScoreMod(allelevalues[10]);
+            int wis = Attrib.GetAbiScore(alleles[5]) + GetScoreMod(allelevalues[10]) + race.Attrib.Wis_mod;
 
             // allele 12
-            int luk = Attrib.GetAbiScore(alleles[6]) + GetScoreMod(allelevalues[11]);
+            int luk = Attrib.GetAbiScore(alleles[6]) + GetScoreMod(allelevalues[11]) + race.Attrib.Luk_mod;
 
             // allele 13
-            int cha = Attrib.GetAbiScore(alleles[7]) + GetScoreMod(allelevalues[12]);
+            int cha = Attrib.GetAbiScore(alleles[7]) + GetScoreMod(allelevalues[12]) + race.Attrib.Cha_mod;
 
             Attrib.SetStats(str,inte,dex,con,wis,luk,cha);
 

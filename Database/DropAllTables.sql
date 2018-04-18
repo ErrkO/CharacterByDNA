@@ -1,0 +1,4 @@
+DROP TABLE Race;
+DROP TABLE HairColor;
+DROP TABLE EyeColor;
+DROP TABLE SkinColor;
