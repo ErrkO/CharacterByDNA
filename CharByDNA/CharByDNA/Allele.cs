@@ -203,6 +203,13 @@ namespace CharByDNA
 
         }
 
+        public int GetAlleleSum()
+        {
+
+            return this.One + this.Two + this.Three + this.Four;
+
+        }
+
         ///<summary>
         /// The getter method for the constant number nucleotides in alleles
         ///</summary>

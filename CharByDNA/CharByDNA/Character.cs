@@ -135,7 +135,7 @@ namespace CharByDNA
             }
 
             // allele 2
-            this.Racee = race.Races[0];
+            this.Racee = GetRace(race.Races,allelevalues[1]);
 
             // allele 3
             if (this.Gender)
@@ -153,36 +153,40 @@ namespace CharByDNA
             }
 
             // allele 4
-            this.HairColor = GetProperty(allelevalues[3], race.HairColors);
+            this.HairColor = GetProperty(allelevalues[3], this.Racee.HairColors);
 
             // allele 5
-            this.EyeColor = GetProperty(allelevalues[4],race.EyeColors);
+            this.EyeColor = GetProperty(allelevalues[4], this.Racee.EyeColors);
 
             // allele 6
-            this.SkinColor = GetProperty(allelevalues[5],race.SkinColors);
+            this.SkinColor = GetProperty(allelevalues[5], this.Racee.SkinColors);
 
             // allele 7
-            int str = Attrib.GetAbiScore(alleles[0]) + GetScoreMod(allelevalues[6]) + race.Attrib.Str_mod;
+            int str = Attrib.GetAbiScore(alleles[0]) + GetScoreMod(allelevalues[6]) + this.Racee.Attrib.Str_mod;
 
             // allele 8
-            int inte = Attrib.GetAbiScore(alleles[1]) + GetScoreMod(allelevalues[7]) + race.Attrib.Int_mod;
+            int inte = Attrib.GetAbiScore(alleles[1]) + GetScoreMod(allelevalues[7]) + this.Racee.Attrib.Int_mod;
 
             // allele 9
-            int dex = Attrib.GetAbiScore(alleles[3]) + GetScoreMod(allelevalues[8]) + race.Attrib.Dex_mod;
+            int dex = Attrib.GetAbiScore(alleles[3]) + GetScoreMod(allelevalues[8]) + this.Racee.Attrib.Dex_mod;
 
             // allele 10
-            int con = Attrib.GetAbiScore(alleles[4]) + GetScoreMod(allelevalues[9]) + race.Attrib.Con_mod;
+            int con = Attrib.GetAbiScore(alleles[4]) + GetScoreMod(allelevalues[9]) + this.Racee.Attrib.Con_mod;
 
             // allele 11
-            int wis = Attrib.GetAbiScore(alleles[5]) + GetScoreMod(allelevalues[10]) + race.Attrib.Wis_mod;
+            int wis = Attrib.GetAbiScore(alleles[5]) + GetScoreMod(allelevalues[10]) + this.Racee.Attrib.Wis_mod;
 
             // allele 12
-            int luk = Attrib.GetAbiScore(alleles[6]) + GetScoreMod(allelevalues[11]) + race.Attrib.Luk_mod;
+            int luk = Attrib.GetAbiScore(alleles[6]) + GetScoreMod(allelevalues[11]) + this.Racee.Attrib.Luk_mod;
 
             // allele 13
-            int cha = Attrib.GetAbiScore(alleles[7]) + GetScoreMod(allelevalues[12]) + race.Attrib.Cha_mod;
+            int cha = Attrib.GetAbiScore(alleles[7]) + GetScoreMod(allelevalues[12]) + this.Racee.Attrib.Cha_mod;
 
             Attrib.SetStats(str,inte,dex,con,wis,luk,cha);
+
+            this.FirstName = charname.GenFname(this.Gender);
+
+            this.LastName = charname.GenLname();
 
         }
 
@@ -193,8 +197,8 @@ namespace CharByDNA
             this.LastName = dad.LastName;
             this.Family.SetDad(dad);
             this.Family.SetMom(mom);
-            dad.Family.AddChildren(this);
-            mom.Family.AddChildren(this);
+            dad.Family.AddChild(this);
+            mom.Family.AddChild(this);
 
         }
 
@@ -206,6 +210,15 @@ namespace CharByDNA
         {
 
 
+
+        }
+
+        public Race GetRace(List<Race> races, int val)
+        {
+
+            int tval = val % 9;
+
+            return races[tval];
 
         }
 

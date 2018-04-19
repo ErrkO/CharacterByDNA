@@ -9,13 +9,13 @@ namespace CharByDNA
     public class FamilyTree
     {
 
+        public const int MAXGENERATIONS = 5;
+
         public Character Dad { get; private set; }
 
         public Character Mom { get; private set; }
 
         public Character Me { get; private set; }
-
-        public List<Character> Siblings { get; private set; }
 
         public List<Character> Children { get; private set; }
 
@@ -39,22 +39,14 @@ namespace CharByDNA
             this.Dad = dad;
             this.Mom = mom;
             this.Me = Me;
-            this.Siblings = new List<Character>();
             this.Children = new List<Character>();
 
         }
 
-        public void AddChildren(Character child)
+        public void AddChild(Character child)
         {
 
             this.Children.Add(child);
-
-        }
-
-        public void AddSiblings(Character sibling)
-        {
-
-            this.Siblings.Add(sibling);
 
         }
 
@@ -72,23 +64,53 @@ namespace CharByDNA
 
         }
 
-        public void FillSiblings()
+        public bool IsParent(Character child, Character parent)
         {
 
-            List<Character> dadkids = this.Dad.Family.Children;
-            List<Character> momkids = this.Mom.Family.Children;
-
-            int dsize = dadkids.Count;
-            int msize = momkids.Count;
-
-            if (dsize == msize)
+            if (child.Family.Dad == parent || child.Family.Mom == parent)
             {
 
-                for ()
+                return true;
 
             }
 
+            return false;
+
         }
+
+        public bool IsSibling(Character a, Character b)
+        {
+
+            if (a.Family.Dad == b.Family.Dad)
+            {
+
+                return true;
+
+            }
+
+            return false;
+
+        }
+
+        /* public bool IsAncestor(Character descen, Character ancest, int generation)
+        {
+
+            if (IsParent(descen,ancest))
+            {
+
+                return true;
+
+            }
+
+            else
+            {
+
+                generation++;
+                ancest = ancest.Family.
+
+            }
+
+        } */
 
     }
 }

@@ -28,10 +28,11 @@ namespace CharByDNA
             Console.WriteLine("1. Generate Character by DNA");
             Console.WriteLine("2. Generate Child from Parent DNA.");
             Console.WriteLine("3. Generate random character from gender.");
-            Console.WriteLine("4. Show all races and mods");
-            Console.WriteLine("5. Generate and Display all Unique Alleles");
-            Console.WriteLine("6. Generate and Display all Unique Sums of Alleles");
-            Console.WriteLine("7. Return to the main menu");
+            Console.WriteLine("4. Generate child from random parents.");
+            Console.WriteLine("5. Show all races and mods");
+            Console.WriteLine("6. Generate and Display all Unique Alleles");
+            Console.WriteLine("7. Generate and Display all Unique Sums of Alleles");
+            Console.WriteLine("8. Return to the main menu");
             Console.Write("Please enter your choice: ");
             choice = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
@@ -81,10 +82,7 @@ namespace CharByDNA
                 Console.WriteLine("\n" + dad.ToString());
                 Console.WriteLine("\n" + mom.ToString());
 
-                List<int> dstrand = dad.Dna.Miosis();
-                List<int> mstrand = mom.Dna.Miosis();
-
-                Character child = new Character(new DNA(dstrand, mstrand), dad);
+                Character child = new Character(dad,mom);
 
                 Console.WriteLine("\n" + child.ToString());
 
@@ -131,6 +129,51 @@ namespace CharByDNA
             else if (choice == 4)
             {
 
+                bool end = false;
+
+                Console.WriteLine("Generating Dad...");
+                Character dad = new Character(true);
+                
+
+                Console.WriteLine("\nGenerating Mom...");
+                Character mom = new Character(false);
+
+                while(!end)
+                {
+
+                    Console.WriteLine("\n" + dad.ToString());
+                    Console.WriteLine("\n" + mom.ToString());
+
+                    Console.WriteLine("\nCreating Child");
+                    Character child = new Character(dad, mom);
+                    Console.WriteLine("\n" + child.ToString());
+
+                    Console.Write("\nend? (y/n): ");
+                    string chc = Console.ReadLine();
+
+                    if (chc.Contains('y') || chc.Contains('Y'))
+                    {
+
+                        end = true;
+
+                    }
+
+                    else
+                    {
+
+                        Console.Clear();
+
+                    }
+
+                }
+
+                CharMenu();
+
+            }
+
+            else if (choice == 5)
+            {
+
                 Console.WriteLine("");
 
                 Race r = new Race();
@@ -147,7 +190,7 @@ namespace CharByDNA
 
             }
 
-            else if (choice == 5)
+            else if (choice == 6)
             {
 
                 Console.WriteLine("\nGenerating...");
@@ -163,7 +206,7 @@ namespace CharByDNA
 
             }
 
-            else if (choice == 6)
+            else if (choice == 7)
             {
 
                 Console.WriteLine("\nGenerating...");
@@ -187,7 +230,7 @@ namespace CharByDNA
 
             }
 
-            else if (choice == 7)
+            else if (choice == 8)
             {
 
                 Console.WriteLine("Exiting....");

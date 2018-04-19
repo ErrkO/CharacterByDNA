@@ -59,6 +59,8 @@ namespace CharByDNA
 
             this.Left = null;
             this.Right = null;
+            this.Alle = new Allele();
+            this.Alleles = new List<Allele>();
 
         }
 
@@ -76,15 +78,15 @@ namespace CharByDNA
 
             this.Alleles.Add(this.Alle.GenerateGenderAllele(gender));
 
-            for (int i = 0; i < NUMALLELES - 1; i++)
-            {
-
-                this.Alleles.Add(this.Alle.GenerateRandomAllele());
-
-            }
-
             for (int i = 0; i < NUMALLELES; i++)
             {
+
+                if (i != 0)
+                {
+                    
+                    this.Alleles.Add(this.Alle.GenerateRandomAllele());
+
+                }
 
                 Allele a = Alleles[i];
                 List<int> codes = a.ToList();
@@ -114,6 +116,7 @@ namespace CharByDNA
             this.Left = new List<int>();
             this.Right = new List<int>();
             this.Alle = new Allele();
+            this.Alleles = new List<Allele>();
 
             List<string> codelist = codeddna.Split(',').ToList();
 
@@ -138,10 +141,28 @@ namespace CharByDNA
         public DNA(List<int> dad, List<int> mom)
         {
 
-            this.Left = dad;
-            this.Right = mom;
+            int allpraise = rngesus.Next(1, 3);
 
-            FixDNA();
+            if (allpraise == 1)
+            {
+
+                this.Left = dad;
+                this.Right = mom;
+
+            }
+
+            else
+            {
+
+                this.Left = mom;
+                this.Right = dad;
+
+            }
+            
+            this.Alle = new Allele();
+            this.Alleles = new List<Allele>();
+
+            FixDNA(allpraise);
 
         }
 
@@ -265,20 +286,32 @@ namespace CharByDNA
         /// This method checks the given DNA object and corrects any errors
         ///</summary>
         ///<param name="dna"> DNA: object that represents the DNA </param>
-        public void FixDNA(DNA dna)
+        public void FixDNA(DNA dna, int c)
         {
 
             for (int i = 0; i < LENGTH; i++)
             {
 
-                if (i >= 4 && i <=7 )
+                if (i >= 4 && i <= 7)
                 {
 
-                    dna.Right[i] = Alle.Nucleo.Opposite(dna.Left[i]);
+                    if (c == 1)
+                    {
+
+                        dna.Left[i] = this.Alle.Nucleo.Opposite(dna.Right[i]);
+
+                    }
+
+                    else
+                    {
+
+                        dna.Right[i] = this.Alle.Nucleo.Opposite(dna.Left[i]);
+
+                    }
 
                 }
 
-                else if (!Alle.Nucleo.CheckPair(dna.Left[i],dna.Right[i]))
+                else if (!this.Alle.Nucleo.CheckPair(dna.Left[i],dna.Right[i]))
                 {
 
                     int choice = rngesus.Next(1,3);
@@ -306,10 +339,10 @@ namespace CharByDNA
         ///<summary>
         /// This method checks the current DNA object and corrects any errors
         ///</summary>
-        public void FixDNA()
+        public void FixDNA(int c)
         {
 
-            FixDNA(this);
+            FixDNA(this,c);
 
         }
 
