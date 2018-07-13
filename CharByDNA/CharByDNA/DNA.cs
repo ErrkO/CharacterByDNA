@@ -298,14 +298,14 @@ namespace CharByDNA
                     if (c == 1)
                     {
 
-                        dna.Left[i] = this.Alle.Nucleo.Opposite(dna.Right[i]);
+                        dna.Right[i] = this.Alle.Nucleo.Opposite(dna.Left[i]);
 
                     }
 
                     else
                     {
 
-                        dna.Right[i] = this.Alle.Nucleo.Opposite(dna.Left[i]);
+                        dna.Left[i] = this.Alle.Nucleo.Opposite(dna.Right[i]);
 
                     }
 

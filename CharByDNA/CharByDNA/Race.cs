@@ -21,7 +21,11 @@ namespace CharByDNA
         ///</sumamry>
         private string rconn = "Races.txt";
 
-        private string sqlrconn = "URI=file:C:\\Users\\erico\\Documents\\Github\\CharacterByDNA\\Database\\Game.db;Version=3";
+        // laptop Conn
+        //private string sqlrconn = "URI=file:C:\\Users\\erico\\Documents\\Github\\CharacterByDNA\\Database\\Game.db;Version=3";
+
+        // Desktop Conn
+        private string sqlrconn = "URI=file:D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\Game.db;Version=3";
 
         private SQLiteConnection sqlConn;
 
