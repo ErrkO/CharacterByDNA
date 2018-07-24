@@ -10,14 +10,14 @@ namespace CharByDNA
     class DNAMath
     {
 
-        public List<Allele> AllAlleles { get; set; }
+        public List<Gene> AllAlleles { get; set; }
 
         public List<int> AllAlleleSums { get; set; }
 
-        public List<Allele> GenerateAllPossibleUniqueAlleles()
+        public List<Gene> GenerateAllPossibleUniqueAlleles()
         {
 
-            List<Allele> alleles = new List<Allele>();
+            List<Gene> alleles = new List<Gene>();
 
             for (int i = 0; i < 4; i++)
             {
@@ -38,7 +38,7 @@ namespace CharByDNA
                             three = ConvertiToCDNA(k);
                             four = ConvertiToCDNA(l);
 
-                            Allele a = new Allele(one,two,three,four);
+                            Gene a = new Gene(one,two,three,four);
 
                             alleles.Add(a);
                             
@@ -54,7 +54,7 @@ namespace CharByDNA
 
         }
 
-        public List<int> GenerateAllPossibleUniqueAlleleSums(List<Allele> alleles)
+        public List<int> GenerateAllPossibleUniqueAlleleSums(List<Gene> alleles)
         {
 
             List<int> allsums = new List<int>();
@@ -64,7 +64,7 @@ namespace CharByDNA
 
                 int sum = 0;
 
-                Allele allele = alleles[i];
+                Gene allele = alleles[i];
 
                 sum += allele.One + allele.Two + allele.Three + allele.Four;
 
@@ -111,14 +111,14 @@ namespace CharByDNA
 
         }
 
-        public string AlleleToString(Allele a)
+        public string AlleleToString(Gene a)
         {
 
             return Convert.ToString(a.One + "" + a.Two + "" + a.Three + "" + a.Four);
 
         }
 
-        public string AlleleListToString(List<Allele> a)
+        public string AlleleListToString(List<Gene> a)
         {
 
             string str = "";

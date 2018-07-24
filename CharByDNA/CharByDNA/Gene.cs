@@ -42,7 +42,7 @@ namespace CharByDNA
     ///<summary>
     /// The class that contains the information for the blocks of nucleotides
     ///</summary>
-    public class Allele
+    public class Gene
     {
 
         ///<summary>
@@ -89,7 +89,7 @@ namespace CharByDNA
         ///<summary>
         /// The default constructor that just instantiates a new object
         ///</summary>
-        public Allele()
+        public Gene()
         {
 
             this.Nucleo = new Nucleotide();
@@ -103,7 +103,7 @@ namespace CharByDNA
         ///<param name="two"> int: value in the second position </param>
         ///<param name="three"> int: value in the third position </param>
         ///<param name="four"> int: value in the fourth position </param>
-        public Allele(int one, int two, int three, int four)
+        public Gene(int one, int two, int three, int four)
         {
 
             this.One = one;
@@ -122,7 +122,7 @@ namespace CharByDNA
         ///<returns>
         /// Returns an allele object
         ///</returns>
-        public Allele GenerateGenderAllele(bool gender)
+        public Gene GenerateGenderGene(bool gender)
         {
 
             int one, two, three, four;
@@ -151,7 +151,7 @@ namespace CharByDNA
                     
                 } while(!correctstring);
 
-                return new Allele(one,two,three,four);
+                return new Gene(one,two,three,four);
 
             }
 
@@ -177,7 +177,7 @@ namespace CharByDNA
                     
                 } while(!correctstring);
 
-                return new Allele(one,two,three,four);
+                return new Gene(one,two,three,four);
 
             }
 
@@ -189,7 +189,7 @@ namespace CharByDNA
         ///<returns>
         /// Returns an allele object
         ///</returns>
-        public Allele GenerateRandomAllele()
+        public Gene GenerateRandomGene()
         {
 
             int one, two, three, four;
@@ -199,7 +199,7 @@ namespace CharByDNA
             three = rngesus.Next(0,4);
             four = rngesus.Next(0,4);
 
-            return new Allele(Nucleo.TranslateComboNum(one),Nucleo.TranslateComboNum(two),Nucleo.TranslateComboNum(three),Nucleo.TranslateComboNum(four));          
+            return new Gene(Nucleo.TranslateComboNum(one),Nucleo.TranslateComboNum(two),Nucleo.TranslateComboNum(three),Nucleo.TranslateComboNum(four));          
 
         }
 
@@ -216,7 +216,7 @@ namespace CharByDNA
         ///<returns>
         /// Returns an integer of the constant NUMINALES
         ///</returns>
-        public int GetNumberOfNucleoInAlleles()
+        public int GetNumberOfNucleoInGenes()
         {
 
             return NUMINALES;

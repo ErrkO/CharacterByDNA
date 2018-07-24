@@ -60,7 +60,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Allele.cs" />
+    <Compile Include="Codon.cs" />
+    <Compile Include="Gene.cs" />
     <Compile Include="Attributes.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="DNA.cs" />

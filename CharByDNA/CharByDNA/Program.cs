@@ -196,7 +196,7 @@ namespace CharByDNA
                 Console.WriteLine("\nGenerating...");
                 DNAMath dnam = new DNAMath();
 
-                List<Allele> ualle = dnam.GenerateAllPossibleUniqueAlleles();
+                List<Gene> ualle = dnam.GenerateAllPossibleUniqueAlleles();
 
                 Console.WriteLine(dnam.AlleleListToString(ualle));
                 Console.WriteLine("\nTotal Alleles: " + ualle.Count);
@@ -212,7 +212,7 @@ namespace CharByDNA
                 Console.WriteLine("\nGenerating...");
                 DNAMath dnam = new DNAMath();
 
-                List<Allele> ualle = dnam.GenerateAllPossibleUniqueAlleles();
+                List<Gene> ualle = dnam.GenerateAllPossibleUniqueAlleles();
 
                 List<int> sums = dnam.GenerateAllPossibleUniqueAlleleSums(ualle);
 

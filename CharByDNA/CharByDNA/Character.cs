@@ -110,7 +110,7 @@ namespace CharByDNA
         {
 
             List<int> allelevalues = dna.GetAllelesvalues();
-            List<Allele> alleles = dna.GetAlleles();
+            List<Gene> alleles = dna.GetAlleles();
 
             this.Family = new FamilyTree(this);
 

@@ -22,12 +22,12 @@ namespace CharByDNA
         public const int LENGTH = 52;
 
         ///<summary>
-        /// This is the number of alleles in DNA
+        /// This is the number of Genes in DNA
         ///</summary>
         ///<value>
         /// 13
         ///</value>
-        public const int NUMALLELES = 13;
+        public const int NUMGENES = 13;
 
         ///<summary>
         /// The random number generator
@@ -47,9 +47,9 @@ namespace CharByDNA
         ///</summary>
         public List<int> Right {get;set;}
 
-        public Allele Alle { get; set; }
+        public Gene Gene { get; set; }
 
-        public List<Allele> Alleles { get; set; }
+        public List<Gene> Genes { get; set; }
 
         ///<summary>
         /// The default constructor. It just sets the strands to null
@@ -59,8 +59,8 @@ namespace CharByDNA
 
             this.Left = null;
             this.Right = null;
-            this.Alle = new Allele();
-            this.Alleles = new List<Allele>();
+            this.Gene = new Gene();
+            this.Genes = new List<Gene>();
 
         }
 
@@ -73,25 +73,25 @@ namespace CharByDNA
 
             this.Left = new List<int>();
             this.Right = new List<int>();
-            this.Alle = new Allele();
-            this.Alleles = new List<Allele>();
+            this.Gene = new Gene();
+            this.Genes = new List<Gene>();
 
-            this.Alleles.Add(this.Alle.GenerateGenderAllele(gender));
+            this.Genes.Add(this.Gene.GenerateGenderGene(gender));
 
-            for (int i = 0; i < NUMALLELES; i++)
+            for (int i = 0; i < NUMGENES; i++)
             {
 
                 if (i != 0)
                 {
                     
-                    this.Alleles.Add(this.Alle.GenerateRandomAllele());
+                    this.Genes.Add(this.Gene.GenerateRandomGene());
 
                 }
 
-                Allele a = Alleles[i];
+                Gene a = Genes[i];
                 List<int> codes = a.ToList();
 
-                for (int j = 0; j < Alle.GetNumberOfNucleoInAlleles(); j++)
+                for (int j = 0; j < Gene.GetNumberOfNucleoInGenes(); j++)
                 {
 
                     Tuple tup = DecodeDNA(codes[j]);
@@ -115,8 +115,8 @@ namespace CharByDNA
 
             this.Left = new List<int>();
             this.Right = new List<int>();
-            this.Alle = new Allele();
-            this.Alleles = new List<Allele>();
+            this.Gene = new Gene();
+            this.Genes = new List<Gene>();
 
             List<string> codelist = codeddna.Split(',').ToList();
 
@@ -159,8 +159,8 @@ namespace CharByDNA
 
             }
             
-            this.Alle = new Allele();
-            this.Alleles = new List<Allele>();
+            this.Gene = new Gene();
+            this.Genes = new List<Gene>();
 
             FixDNA(allpraise);
 
@@ -265,14 +265,14 @@ namespace CharByDNA
                 if (i == LENGTH - 1)
                 {
 
-                    codeddna += Alle.Nucleo.EncodePair(dna.Left[i],dna.Right[i]);
+                    codeddna += Gene.Nucleo.EncodePair(dna.Left[i],dna.Right[i]);
 
                 }
 
                 else
                 {
 
-                    codeddna += Alle.Nucleo.EncodePair(dna.Left[i],dna.Right[i]) + ",";
+                    codeddna += Gene.Nucleo.EncodePair(dna.Left[i],dna.Right[i]) + ",";
 
                 }
 
@@ -298,20 +298,20 @@ namespace CharByDNA
                     if (c == 1)
                     {
 
-                        dna.Right[i] = this.Alle.Nucleo.Opposite(dna.Left[i]);
+                        dna.Right[i] = this.Gene.Nucleo.Opposite(dna.Left[i]);
 
                     }
 
                     else
                     {
 
-                        dna.Left[i] = this.Alle.Nucleo.Opposite(dna.Right[i]);
+                        dna.Left[i] = this.Gene.Nucleo.Opposite(dna.Right[i]);
 
                     }
 
                 }
 
-                else if (!this.Alle.Nucleo.CheckPair(dna.Left[i],dna.Right[i]))
+                else if (!this.Gene.Nucleo.CheckPair(dna.Left[i],dna.Right[i]))
                 {
 
                     int choice = rngesus.Next(1,3);
@@ -319,14 +319,14 @@ namespace CharByDNA
                     if (choice == 1)
                     {
 
-                        dna.Right[i] = Alle.Nucleo.Opposite(dna.Left[i]);
+                        dna.Right[i] = Gene.Nucleo.Opposite(dna.Left[i]);
 
                     }
 
                     else
                     {
 
-                        dna.Left[i] = Alle.Nucleo.Opposite(dna.Right[i]);
+                        dna.Left[i] = Gene.Nucleo.Opposite(dna.Right[i]);
 
                     }
 
@@ -359,7 +359,7 @@ namespace CharByDNA
                 for (int i = 0; i < LENGTH; i++)
                 {
 
-                    this.Left.Add(Alle.Nucleo.Opposite(strand[i]));
+                    this.Left.Add(Gene.Nucleo.Opposite(strand[i]));
 
                 }
 
@@ -371,7 +371,7 @@ namespace CharByDNA
                 for (int i = 0; i < LENGTH; i++)
                 {
 
-                    this.Right.Add(Alle.Nucleo.Opposite(strand[i]));
+                    this.Right.Add(Gene.Nucleo.Opposite(strand[i]));
 
                 }
 
@@ -380,70 +380,70 @@ namespace CharByDNA
         }
 
         ///<summary>
-        /// This method returns all of the allele values. It should have a length of NUMALLELES
+        /// This method returns all of the Gene values. It should have a length of NUMGeneS
         ///</summary>
         ///<example>
         /// 3333 -> 12
         ///</example>
         ///<returns>
-        /// Returns a List containing all of the alleles condensed into a number
+        /// Returns a List containing all of the Genes condensed into a number
         ///</returns>
-        public List<int> GetAllelesvalues()
+        public List<int> GetGenesvalues()
         {
 
-            List<int> allelevalues = new List<int>();
+            List<int> Genevalues = new List<int>();
 
             int sum = 0;
 
-            for (int i = 0; i < NUMALLELES; i++)
+            for (int i = 0; i < NUMGENES; i++)
             {
 
                 sum = 0;
 
-                for (int j = Alle.GetNumberOfNucleoInAlleles() * i; j < Alle.GetNumberOfNucleoInAlleles()  * (i+1); j++)
+                for (int j = Gene.GetNumberOfNucleoInGenes() * i; j < Gene.GetNumberOfNucleoInGenes()  * (i+1); j++)
                 {
 
-                    sum += Alle.Nucleo.EncodePairValue(this.Left[j],this.Right[j]);                    
+                    sum += Gene.Nucleo.EncodePairValue(this.Left[j],this.Right[j]);                    
 
                 }
 
-                allelevalues.Add(sum);
+                Genevalues.Add(sum);
 
             }
 
-            return allelevalues;
+            return Genevalues;
 
         }
 
         ///<summary>
-        /// This method returns a list of all the alleles in the strand of DNA
+        /// This method returns a list of all the Genes in the strand of DNA
         ///</summary>
         ///<returns>
-        /// Returns a list of all the alleles
+        /// Returns a list of all the Genes
         ///</returns>
-        public List<Allele> GetAlleles()
+        public List<Gene> GetGenes()
         {
 
-            List<Allele> alleles = new List<Allele>();
+            List<Gene> Genes = new List<Gene>();
             List<int> ales = new List<int>();
 
-            for (int i = 0; i < NUMALLELES; i++)
+            for (int i = 0; i < NUMGENES; i++)
             {
 
                 ales.Clear();
 
-                for (int j = Alle.GetNumberOfNucleoInAlleles() * i; j < Alle.GetNumberOfNucleoInAlleles() * (i + 1); j++)
+                for (int j = Gene.GetNumberOfNucleoInGenes() * i; j < Gene.GetNumberOfNucleoInGenes() * (i + 1); j++)
                 {
 
-                    ales.Add(Alle.Nucleo.EncodePairValue(this.Left[j],this.Right[j]));
+                    ales.Add(Gene.Nucleo.EncodePairValue(this.Left[j],this.Right[j]));
 
                 }
 
-                alleles.Add(new Allele(ales[0],ales[1],ales[2],ales[3]));
+                Genes.Add(new Gene(ales[0],ales[1],ales[2],ales[3]));
 
             }
 
-            return alleles;
+            return Genes;
 
         }
 
@@ -480,15 +480,15 @@ namespace CharByDNA
         }
 
         ///<summary>
-        /// The getter method for the constant number of alleles
+        /// The getter method for the constant number of Genes
         ///</summary>
         ///<returns>
-        /// Returns an integer of the constant NUMALLELES
+        /// Returns an integer of the constant NUMGeneS
         ///</returns>
-        public int GetNumberOfAlleles()
+        public int GetNumberOfGenes()
         {
 
-            return NUMALLELES;
+            return NUMGENES;
 
         }
 
