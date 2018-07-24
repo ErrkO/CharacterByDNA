@@ -280,7 +280,14 @@ namespace CharByDNA
         public int GetScoreMod(int value)
         {
 
-            if (value % 7 == 3)
+            if (value % 7 == 0)
+            {
+
+                return 3;
+
+            }
+
+            else if (value % 7 == 1)
             {
 
                 return -3;
@@ -290,32 +297,11 @@ namespace CharByDNA
             else if (value % 7 == 2)
             {
 
-                return -2;
-
-            }
-
-            else if (value % 7 == 1)
-            {
-
                 return -1;
 
             }
 
-            else if (value % 7 == 0)
-            {
-
-                return 0;
-
-            }
-
-            else if (value % 7 == 6)
-            {
-
-                return 1;
-
-            }
-
-            else if (value % 7 == 5)
+            else if (value % 7 == 3)
             {
 
                 return 2;
@@ -325,7 +311,21 @@ namespace CharByDNA
             else if (value % 7 == 4)
             {
 
-                return 3;
+                return 0;
+
+            }
+
+            else if (value % 7 == 5)
+            {
+
+                return -2;
+
+            }
+
+            else if (value % 7 == 6)
+            {
+
+                return 1;
 
             }
 
