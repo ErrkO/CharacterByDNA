@@ -210,6 +210,20 @@ namespace CharByDNA
 
         }
 
+        public string GetGeneString()
+        {
+
+            return ((this.One * 100) + (this.Two * 10) + this.Three).ToString();
+
+        }
+
+        public int GetGeneInt()
+        {
+
+            return (this.One * 100) +(this.Two * 10) + this.Three;
+
+        }
+
         ///<summary>
         /// The getter method for the constant number nucleotides in alleles
         ///</summary>

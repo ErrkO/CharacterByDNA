@@ -147,5 +147,14 @@ namespace CharByDNA
 
         }
 
+        public int TranslateCodon(Gene gene)
+        {
+
+            int genenum = gene.GetGeneInt();
+
+            return TranslateCodon(genenum);
+
+        }
+
     }
 }

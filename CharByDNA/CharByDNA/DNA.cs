@@ -17,17 +17,17 @@ namespace CharByDNA
         /// This is the number of nucleotides in a strand of DNA
         ///</summary>
         ///<value>
-        /// 52
+        /// 78
         ///</value>
-        public const int LENGTH = 52;
+        public const int LENGTH = 78;
 
         ///<summary>
         /// This is the number of Genes in DNA
         ///</summary>
         ///<value>
-        /// 13
+        /// 36
         ///</value>
-        public const int NUMGENES = 13;
+        public const int NUMGENES = 26;
 
         /// <summary>
         /// 
@@ -53,8 +53,7 @@ namespace CharByDNA
         public DNA()
         {
 
-            this.Left = null;
-            this.Right = null;
+            this.DNAStrand = "";
             this.Gene = new Gene();
             this.Genes = new List<Gene>();
 
@@ -67,12 +66,25 @@ namespace CharByDNA
         public DNA(bool gender)
         {
 
-            this.Left = new List<int>();
-            this.Right = new List<int>();
+            this.DNAStrand = "";
             this.Gene = new Gene();
             this.Genes = new List<Gene>();
 
             this.Genes.Add(this.Gene.GenerateGenderGene(gender));
+            
+            if (gender)
+            {
+
+                this.Genes.Add(this.Gene.GenerateGenderGene(!gender));
+
+            }
+
+            else
+            {
+
+                this.Genes.Add(this.Gene.GenerateGenderGene(gender));
+
+            }
 
             for (int i = 0; i < NUMGENES; i++)
             {
@@ -84,21 +96,13 @@ namespace CharByDNA
 
                 }
 
-                Gene a = Genes[i];
-                List<int> codes = a.ToList();
-
-                for (int j = 0; j < Gene.GetNumberOfNucleoInGenes(); j++)
-                {
-
-                    Tuple tup = DecodeDNA(codes[j]);
-                    this.Left.Add(tup.left);
-                    this.Right.Add(tup.right);
-
-                }
+                this.DNAStrand += this.Genes[i].GetGeneString();
 
             }
 
         }
+
+        /*
 
         ///<summary>
         /// This constructor builds the dna object by decoding a string and turning it into the strands
@@ -129,36 +133,60 @@ namespace CharByDNA
 
         }
 
+        */
+
+        public DNA(string dnastrand)
+        {
+
+            this.Gene = new Gene();
+            this.Genes = new List<Gene>();
+
+            this.DNAStrand = dnastrand;
+
+            List<char> nucleotides = dnastrand.ToCharArray().ToList<char>();
+
+            for (int i = 0; i < NUMGENES; i++)
+            {
+
+                Gene temp = new Gene(nucleotides[(i * 3) + 0], nucleotides[(i * 3) + 1], nucleotides[(i * 3) + 2]);
+                this.Genes.Add(temp);
+
+            }
+
+        }
+
         ///<summary>
         /// This constructor builds the dna object from the DNA of the dad and mom strands
         ///</summary>
        ///<param name="dad"> List of int: the strand of nucleotides from the father </param>
        ///<param name="mom"> List of int: the strand of nucleotides from the mother </param>
-        public DNA(List<int> dad, List<int> mom)
+        public DNA(List<Gene> dad, List<Gene> mom)
         {
 
-            int allpraise = rngesus.Next(1, 3);
-
-            if (allpraise == 1)
-            {
-
-                this.Left = dad;
-                this.Right = mom;
-
-            }
-
-            else
-            {
-
-                this.Left = mom;
-                this.Right = dad;
-
-            }
-            
-            this.Gene = new Gene();
             this.Genes = new List<Gene>();
 
-            FixDNA(allpraise);
+            for (int i = 0; i < NUMGENES; i++)
+            {
+
+                if (i % 2 == 0)
+                {
+
+                    this.Genes.Add(dad[i]);
+
+                }
+
+                else
+                {
+
+                    this.Genes.Add(mom[i]);
+
+                }
+
+                this.DNAStrand += this.Genes[i].GetGeneString();
+
+            }
+
+            Mutate();
 
         }
 
@@ -168,26 +196,39 @@ namespace CharByDNA
         ///<returns>
         /// Returns a list of integers representing the strand of DNA
         ///</returns>
-        public List<int> Miosis()
+        public List<Gene> Miosis()
         {
 
-            int choice = rngesus.Next(1,3);
+            List<Gene> traitstopass = new List<Gene>();
 
-            if (choice == 1)
+            int choice;
+
+            for (int i = 0; i < NUMGENES/2; i++)
             {
 
-                return this.Left;
+                choice = rngesus.Next(1, 3);
+
+                if (choice == 1)
+                {
+
+                    traitstopass.Add(this.Genes[i * 2]);
+
+                }
+
+                else
+                {
+
+                    traitstopass.Add(this.Genes[(i * 2) + 1]);
+
+                }
 
             }
 
-            else
-            {
-
-                return this.Right;
-
-            }
+            return traitstopass;
 
         }
+
+        // To Change
 
         ///<summary>
         /// This method converts a coded pair into a tuple object
@@ -202,6 +243,8 @@ namespace CharByDNA
             return DecodeDNA(Convert.ToInt32(code));
 
         }
+
+        // To Change
 
         ///
         ///
@@ -242,6 +285,8 @@ namespace CharByDNA
             return tup;
 
         }
+
+        // To Change
 
         ///<summary>
         /// This method turns the DNA object into a coded string
@@ -332,6 +377,28 @@ namespace CharByDNA
 
         }
 
+        private void Mutate()
+        {
+
+            int allpraise = rngesus.Next(1, 10000);
+            int pos = rngesus.Next(0, LENGTH);
+            int newbase = rngesus.Next(1, 4);
+
+            List<char> tempstrand = this.DNAStrand.ToCharArray().ToList<char>();
+
+            if (allpraise == 500)
+            {
+
+                string bse = newbase.ToString();
+
+                tempstrand[pos] = Char.Parse(bse);
+
+                this.DNAStrand = tempstrand.ToString();
+
+            }
+
+        }
+
         ///<summary>
         /// This method checks the current DNA object and corrects any errors
         ///</summary>
@@ -375,6 +442,8 @@ namespace CharByDNA
 
         }
 
+        /*
+
         ///<summary>
         /// This method returns all of the Gene values. It should have a length of NUMGeneS
         ///</summary>
@@ -408,6 +477,24 @@ namespace CharByDNA
             }
 
             return Genevalues;
+
+        }
+
+        */
+
+        public List<int> GetGeneValues()
+        {
+
+            List<int> genevals = new List<int>();
+
+            for (int i = 0; i < NUMGENES; i++)
+            {
+
+                genevals.Add(this.Gene.Cdn.TranslateCodon(this.Genes[i]));
+
+            }
+
+            return genevals;
 
         }
 
