@@ -29,6 +29,11 @@ namespace CharByDNA
         ///</value>
         public const int NUMGENES = 13;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public string DNAStrand;
+
         ///<summary>
         /// The random number generator
         ///</summary>
@@ -37,20 +42,11 @@ namespace CharByDNA
         ///</remarks>
         private Random rngesus = new Random();
 
-        ///<summary>
-        /// The property that contains a list of the left strand nucleotides
-        ///</summary>
-        public List<int> Left {get;set;}
-        
-        ///<summary>
-        /// The property that contains a list of the right strand nucleotides
-        ///</summary>
-        public List<int> Right {get;set;}
-
         public Gene Gene { get; set; }
 
         public List<Gene> Genes { get; set; }
 
+        // To be Changed
         ///<summary>
         /// The default constructor. It just sets the strands to null
         ///</summary>

@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace CharByDNA
 {
-    class Codon
+    public class Codon
     {
+
+        public Codon()
+        {
+
+
+
+        }
 
         public int TranslateCodon(int codon)
         {

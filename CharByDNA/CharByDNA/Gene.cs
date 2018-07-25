@@ -59,7 +59,7 @@ namespace CharByDNA
         ///<value>
         /// 4
         ///</value>
-        public const int NUMINALES = 4;
+        public const int NUMINGENE = 3;
 
         ///<summary>
         /// The property that holds the first value
@@ -77,14 +77,11 @@ namespace CharByDNA
         public int Three { get; set; }
 
         ///<summary>
-        /// The property that holds the fourth value
-        ///</summary>
-        public int Four { get; set; }
-
-        ///<summary>
         /// The property that holds the nucleotide information
         ///</summary>
         public Nucleotide Nucleo { get; set; }
+
+        public Codon Cdn { get; set; }
 
         ///<summary>
         /// The default constructor that just instantiates a new object
@@ -93,6 +90,7 @@ namespace CharByDNA
         {
 
             this.Nucleo = new Nucleotide();
+            this.Cdn = new Codon();
 
         }
 
@@ -103,15 +101,12 @@ namespace CharByDNA
         ///<param name="two"> int: value in the second position </param>
         ///<param name="three"> int: value in the third position </param>
         ///<param name="four"> int: value in the fourth position </param>
-        public Gene(int one, int two, int three, int four)
+        public Gene(int one, int two, int three) : this()
         {
 
             this.One = one;
             this.Two = two;
             this.Three = three;
-            this.Four = four;
-
-            this.Nucleo = new Nucleotide();
 
         }
 
@@ -125,7 +120,7 @@ namespace CharByDNA
         public Gene GenerateGenderGene(bool gender)
         {
 
-            int one, two, three, four;
+            int one, two, three;
             
             bool correctstring = false;
 
@@ -135,23 +130,25 @@ namespace CharByDNA
                 do
                 {
 
-                    one = Nucleo.TranslateComboNum(rngesus.Next(0,2));
-                    two = Nucleo.TranslateComboNum(rngesus.Next(0,2));
-                    three = Nucleo.TranslateComboNum(rngesus.Next(0,3));
-                    four = Nucleo.TranslateComboNum(rngesus.Next(0,4));
+                    one = rngesus.Next(1, 4);
+                    two = rngesus.Next(1, 4);
+                    three = rngesus.Next(1, 4);
 
-                    int sum = one + two + three + four;
+                    int num = (one*100) + (two*10) + three;
 
-                    if (sum < 20)
+                    if (num % 2 == 0)
                     {
 
-                        correctstring = true;
+                        if (num != 111 || num != 444)
+                        {
+
+                            correctstring = true;
+
+                        }
 
                     }
                     
                 } while(!correctstring);
-
-                return new Gene(one,two,three,four);
 
             }
 
@@ -161,25 +158,29 @@ namespace CharByDNA
                 do
                 {
 
-                    one = Nucleo.TranslateComboNum(rngesus.Next(3,4));
-                    two = Nucleo.TranslateComboNum(rngesus.Next(3,4));
-                    three = Nucleo.TranslateComboNum(rngesus.Next(1,4));
-                    four = Nucleo.TranslateComboNum(rngesus.Next(0,4));
+                    one = rngesus.Next(1, 4);
+                    two = rngesus.Next(1, 4);
+                    three = rngesus.Next(1, 4);
 
-                    int sum = one + two + three + four;
+                    int num = (one * 100) + (two * 10) + three;
 
-                    if (sum > 20)
+                    if (num % 2 == 1)
                     {
 
-                        correctstring = true;
+                        if (num != 111 || num != 444)
+                        {
+
+                            correctstring = true;
+
+                        }
 
                     }
-                    
-                } while(!correctstring);
 
-                return new Gene(one,two,three,four);
+                } while (!correctstring);
 
             }
+
+            return new Gene(one, two, three);
 
         }
 
@@ -192,21 +193,20 @@ namespace CharByDNA
         public Gene GenerateRandomGene()
         {
 
-            int one, two, three, four;
+            int one, two, three;
 
             one = rngesus.Next(0,4);
             two = rngesus.Next(0,4);
             three = rngesus.Next(0,4);
-            four = rngesus.Next(0,4);
 
-            return new Gene(Nucleo.TranslateComboNum(one),Nucleo.TranslateComboNum(two),Nucleo.TranslateComboNum(three),Nucleo.TranslateComboNum(four));          
+            return new Gene(Nucleo.TranslateComboNum(one),Nucleo.TranslateComboNum(two),Nucleo.TranslateComboNum(three));          
 
         }
 
-        public int GetAlleleSum()
+        public int GetGeneSum()
         {
 
-            return this.One + this.Two + this.Three + this.Four;
+            return (this.One*100) + (this.Two*10) + this.Three;
 
         }
 
@@ -219,7 +219,7 @@ namespace CharByDNA
         public int GetNumberOfNucleoInGenes()
         {
 
-            return NUMINALES;
+            return NUMINGENE;
 
         }
 
@@ -232,7 +232,7 @@ namespace CharByDNA
         public List<int> ToList()
         {
 
-            return new List<int>() {this.One, this.Two, this.Three, this.Four};
+            return new List<int>() {this.One, this.Two, this.Three};
 
         }
 
