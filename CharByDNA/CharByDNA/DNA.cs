@@ -42,8 +42,14 @@ namespace CharByDNA
         ///</remarks>
         private Random rngesus = new Random();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Gene Gene { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public List<Gene> Genes { get; set; }
 
         // To be Changed
@@ -56,6 +62,13 @@ namespace CharByDNA
             this.DNAStrand = "";
             this.Gene = new Gene();
             this.Genes = new List<Gene>();
+
+            for (int i = 0; i < NUMGENES; i++)
+            {
+
+                this.DNAStrand += this.Gene.GenerateRandomGene().ToString();
+
+            }
 
         }
 
@@ -96,45 +109,16 @@ namespace CharByDNA
 
                 }
 
-                this.DNAStrand += this.Genes[i].GetGeneString();
+                this.DNAStrand += this.Genes[i].ToString();
 
             }
 
         }
 
-        /*
-
-        ///<summary>
-        /// This constructor builds the dna object by decoding a string and turning it into the strands
-        ///</summary>
-        ///<param name="codedna">
-        /// string: represents coded dna
-        ///</param>
-        public DNA(string codeddna)
-        {
-
-            this.Left = new List<int>();
-            this.Right = new List<int>();
-            this.Gene = new Gene();
-            this.Genes = new List<Gene>();
-
-            List<string> codelist = codeddna.Split(',').ToList();
-
-            for (int i = 0; i < LENGTH; i++)
-            {
-
-                Tuple tup = DecodeDNA(codelist[i]);
-
-                this.Left.Add(tup.left);
-
-                this.Right.Add(tup.right);
-
-            }
-
-        }
-
-        */
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dnastrand"></param>
         public DNA(string dnastrand)
         {
 
@@ -158,8 +142,8 @@ namespace CharByDNA
         ///<summary>
         /// This constructor builds the dna object from the DNA of the dad and mom strands
         ///</summary>
-       ///<param name="dad"> List of int: the strand of nucleotides from the father </param>
-       ///<param name="mom"> List of int: the strand of nucleotides from the mother </param>
+        ///<param name="dad"> List of int: the strand of nucleotides from the father </param>
+        ///<param name="mom"> List of int: the strand of nucleotides from the mother </param>
         public DNA(List<Gene> dad, List<Gene> mom)
         {
 
@@ -182,7 +166,7 @@ namespace CharByDNA
 
                 }
 
-                this.DNAStrand += this.Genes[i].GetGeneString();
+                this.DNAStrand += this.Genes[i].ToString();
 
             }
 

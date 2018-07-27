@@ -188,36 +188,43 @@ namespace CharByDNA
         /// The method that generates a random allele
         ///</summary>
         ///<returns>
-        /// Returns an allele object
+        /// Returns an gene object
         ///</returns>
         public Gene GenerateRandomGene()
         {
 
             int one, two, three;
 
-            one = rngesus.Next(0,4);
-            two = rngesus.Next(0,4);
-            three = rngesus.Next(0,4);
+            bool correctstring = false;
 
-            return new Gene(Nucleo.TranslateComboNum(one),Nucleo.TranslateComboNum(two),Nucleo.TranslateComboNum(three));          
+            do
+            {
+
+                one = rngesus.Next(1, 5);
+                two = rngesus.Next(1, 5);
+                three = rngesus.Next(1, 5);
+
+                if ((one != 1 && two != 1 && three != 1) || (one != 4 && two != 4 && three != 4))
+                {
+
+                    correctstring = true;
+
+                }
+
+            } while (!correctstring);
+
+            return new Gene(one,two,three);          
 
         }
 
-        public int GetGeneSum()
-        {
-
-            return (this.One*100) + (this.Two*10) + this.Three;
-
-        }
-
-        public string GetGeneString()
+        public override string ToString()
         {
 
             return ((this.One * 100) + (this.Two * 10) + this.Three).ToString();
 
         }
 
-        public int GetGeneInt()
+        public int ToInt()
         {
 
             return (this.One * 100) +(this.Two * 10) + this.Three;
