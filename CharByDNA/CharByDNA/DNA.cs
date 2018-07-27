@@ -286,97 +286,6 @@ namespace CharByDNA
 
         }
 
-        // To Change
-
-        ///<summary>
-        /// This method turns the DNA object into a coded string
-        ///</summary>
-        ///<param name="dna"> DNA: object that represents the DNA </param>
-        ///<returns>
-        /// Returns a string of the coded DNA
-        ///</returns>
-        public String EncodeDNA(DNA dna)
-        {
-
-            string codeddna = "";
-
-            for (int i = 0; i < LENGTH; i++)
-            {
-
-                if (i == LENGTH - 1)
-                {
-
-                    codeddna += Gene.Nucleo.EncodePair(dna.Left[i],dna.Right[i]);
-
-                }
-
-                else
-                {
-
-                    codeddna += Gene.Nucleo.EncodePair(dna.Left[i],dna.Right[i]) + ",";
-
-                }
-
-            }
-
-            return codeddna;
-
-        }
-
-        ///<summary>
-        /// This method checks the given DNA object and corrects any errors
-        ///</summary>
-        ///<param name="dna"> DNA: object that represents the DNA </param>
-        public void FixDNA(DNA dna, int c)
-        {
-
-            for (int i = 0; i < LENGTH; i++)
-            {
-
-                if (i >= 4 && i <= 7)
-                {
-
-                    if (c == 1)
-                    {
-
-                        dna.Right[i] = this.Gene.Nucleo.Opposite(dna.Left[i]);
-
-                    }
-
-                    else
-                    {
-
-                        dna.Left[i] = this.Gene.Nucleo.Opposite(dna.Right[i]);
-
-                    }
-
-                }
-
-                else if (!this.Gene.Nucleo.CheckPair(dna.Left[i],dna.Right[i]))
-                {
-
-                    int choice = rngesus.Next(1,3);
-
-                    if (choice == 1)
-                    {
-
-                        dna.Right[i] = Gene.Nucleo.Opposite(dna.Left[i]);
-
-                    }
-
-                    else
-                    {
-
-                        dna.Left[i] = Gene.Nucleo.Opposite(dna.Right[i]);
-
-                    }
-
-                }
-
-            }
-
-        }
-
         private void Mutate()
         {
 
@@ -399,89 +308,6 @@ namespace CharByDNA
 
         }
 
-        ///<summary>
-        /// This method checks the current DNA object and corrects any errors
-        ///</summary>
-        public void FixDNA(int c)
-        {
-
-            FixDNA(this,c);
-
-        }
-
-        ///<summary>
-        /// This method takes one strand of DNA and completes the other half
-        ///</summary>
-        ///<param name="strand"> List of int: One side of the DNA values </param>
-        public void CompleteDNA(List<int> strand)
-        {
-
-            if (this.Left == null)
-            {
-
-                for (int i = 0; i < LENGTH; i++)
-                {
-
-                    this.Left.Add(Gene.Nucleo.Opposite(strand[i]));
-
-                }
-
-            }
-
-            else
-            {
-
-                for (int i = 0; i < LENGTH; i++)
-                {
-
-                    this.Right.Add(Gene.Nucleo.Opposite(strand[i]));
-
-                }
-
-            }
-
-        }
-
-        /*
-
-        ///<summary>
-        /// This method returns all of the Gene values. It should have a length of NUMGeneS
-        ///</summary>
-        ///<example>
-        /// 3333 -> 12
-        ///</example>
-        ///<returns>
-        /// Returns a List containing all of the Genes condensed into a number
-        ///</returns>
-        public List<int> GetGenesvalues()
-        {
-
-            List<int> Genevalues = new List<int>();
-
-            int sum = 0;
-
-            for (int i = 0; i < NUMGENES; i++)
-            {
-
-                sum = 0;
-
-                for (int j = Gene.GetNumberOfNucleoInGenes() * i; j < Gene.GetNumberOfNucleoInGenes()  * (i+1); j++)
-                {
-
-                    sum += Gene.Nucleo.EncodePairValue(this.Left[j],this.Right[j]);                    
-
-                }
-
-                Genevalues.Add(sum);
-
-            }
-
-            return Genevalues;
-
-        }
-
-        */
-
         public List<int> GetGeneValues()
         {
 
@@ -499,53 +325,12 @@ namespace CharByDNA
         }
 
         ///<summary>
-        /// This method returns a list of all the Genes in the strand of DNA
-        ///</summary>
-        ///<returns>
-        /// Returns a list of all the Genes
-        ///</returns>
-        public List<Gene> GetGenes()
-        {
-
-            List<Gene> Genes = new List<Gene>();
-            List<int> ales = new List<int>();
-
-            for (int i = 0; i < NUMGENES; i++)
-            {
-
-                ales.Clear();
-
-                for (int j = Gene.GetNumberOfNucleoInGenes() * i; j < Gene.GetNumberOfNucleoInGenes() * (i + 1); j++)
-                {
-
-                    ales.Add(Gene.Nucleo.EncodePairValue(this.Left[j],this.Right[j]));
-
-                }
-
-                Genes.Add(new Gene(ales[0],ales[1],ales[2],ales[3]));
-
-            }
-
-            return Genes;
-
-        }
-
-        ///<summary>
         /// This is the override method to display the DNA object
         ///</summary>
         public override string ToString()
         {
 
-            string dna = "";
-
-            for (int i = 0; i < LENGTH; i++)
-            {
-
-                dna += this.Left[i] + " - " + this.Right[i] + "\n";
-
-            }
-
-            return dna;
+            return this.DNAStrand;
 
         }
 
