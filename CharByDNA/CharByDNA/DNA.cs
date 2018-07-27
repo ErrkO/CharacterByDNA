@@ -66,7 +66,9 @@ namespace CharByDNA
             for (int i = 0; i < NUMGENES; i++)
             {
 
-                this.DNAStrand += this.Gene.GenerateRandomGene().ToString();
+                this.Genes.Add(this.Gene.GenerateRandomGene());
+
+                this.DNAStrand += this.Genes[i].ToString();
 
             }
 

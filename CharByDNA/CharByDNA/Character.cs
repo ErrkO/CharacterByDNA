@@ -109,8 +109,8 @@ namespace CharByDNA
         public Character(DNA dna)
         {
 
-            List<int> allelevalues = dna.GetAllelesvalues();
-            List<Gene> alleles = dna.GetAlleles();
+            List<int> genevals = dna.GetGeneValues();
+            List<Gene> genes = dna.Genes;
 
             this.Family = new FamilyTree(this);
 
@@ -119,8 +119,18 @@ namespace CharByDNA
             race = new Race();
             Attrib = new Attributes();
 
-            // allele 1
-            if (allelevalues[0] > 20)
+            // Gene Pair 1
+            int gone = genevals[0] % 2;
+            int gtwo = genevals[1] % 2;
+
+            if (gone+gtwo == 1)
+            {
+
+                this.Gender = true;
+
+            }
+
+            else if (gone+gtwo == 2)
             {
 
                 this.Gender = false;
@@ -130,57 +140,73 @@ namespace CharByDNA
             else
             {
 
-                this.Gender = true;
+                Console.WriteLine("This is an error");
 
             }
 
-            // allele 2
-            this.Racee = GetRace(race.Races,allelevalues[1]);
+            // Gene Pair 2
+            this.Racee = race.Races[0];
 
-            // allele 3
+            //this.Racee = GetRace(race.Races,allelevalues[1]);
+
+            // Gene Pair 3
             if (this.Gender)
             {
 
-                this.Height = this.Racee.MHeightBase + allelevalues[2];
+                this.Height = this.Racee.MHeightBase + genevals[4] + genevals[5];
 
             }
 
             else
             {
 
-                this.Height = this.Racee.FHeightBase + allelevalues[2];
+                this.Height = this.Racee.FHeightBase + genevals[4] + genevals[5];
 
             }
 
-            // allele 4
-            this.HairColor = GetProperty(allelevalues[3], this.Racee.HairColors);
+            // Gene Pair 4
+            this.HairColor = GetProperty(genevals[6], genevals[7], this.Racee.HairColors);
 
-            // allele 5
-            this.EyeColor = GetProperty(allelevalues[4], this.Racee.EyeColors);
+            // Gene Pair 5
+            this.EyeColor = GetProperty(genevals[8], genevals[9], this.Racee.EyeColors);
 
-            // allele 6
-            this.SkinColor = GetProperty(allelevalues[5], this.Racee.SkinColors);
+            // Gene Pair 6
+            this.SkinColor = GetProperty(genevals[10], genevals[11], this.Racee.SkinColors);
 
-            // allele 7
-            int str = Attrib.GetAbiScore(alleles[0]) + GetScoreMod(allelevalues[6]) + this.Racee.Attrib.Str_mod;
+            // Gene Pair 7
+            int strtemp = (int)Math.Floor((double)(genevals[12] + genevals[13]) / 2);
 
-            // allele 8
-            int inte = Attrib.GetAbiScore(alleles[1]) + GetScoreMod(allelevalues[7]) + this.Racee.Attrib.Int_mod;
+            int str = strtemp + this.Racee.Attrib.Str_mod;
 
-            // allele 9
-            int dex = Attrib.GetAbiScore(alleles[3]) + GetScoreMod(allelevalues[8]) + this.Racee.Attrib.Dex_mod;
+            // Gene Pair 8
+            int inttemp = (int)Math.Floor((double)(genevals[14] + genevals[15]) / 2);
 
-            // allele 10
-            int con = Attrib.GetAbiScore(alleles[4]) + GetScoreMod(allelevalues[9]) + this.Racee.Attrib.Con_mod;
+            int inte = inttemp + this.Racee.Attrib.Int_mod;
 
-            // allele 11
-            int wis = Attrib.GetAbiScore(alleles[5]) + GetScoreMod(allelevalues[10]) + this.Racee.Attrib.Wis_mod;
+            // Gene Pair 9
+            int dextemp = (int)Math.Floor((double)(genevals[16] + genevals[17]) / 2);
 
-            // allele 12
-            int luk = Attrib.GetAbiScore(alleles[6]) + GetScoreMod(allelevalues[11]) + this.Racee.Attrib.Luk_mod;
+            int dex = dextemp + this.Racee.Attrib.Dex_mod;
 
-            // allele 13
-            int cha = Attrib.GetAbiScore(alleles[7]) + GetScoreMod(allelevalues[12]) + this.Racee.Attrib.Cha_mod;
+            // Gene Pair 10
+            int contemp = (int)Math.Floor((double)(genevals[18] + genevals[19]) / 2);
+
+            int con = contemp + this.Racee.Attrib.Con_mod;
+
+            // Gene Pair 11
+            int wistemp = (int)Math.Floor((double)(genevals[20] + genevals[21]) / 2);
+
+            int wis = wistemp + this.Racee.Attrib.Wis_mod;
+
+            // Gene Pair 12
+            int luktemp = (int)Math.Floor((double)(genevals[22] + genevals[23]) / 2);
+
+            int luk = luktemp + this.Racee.Attrib.Luk_mod;
+
+            // Gene Pair 13
+            int chatemp = (int)Math.Floor((double)(genevals[24] + genevals[25]) / 2);
+
+            int cha = chatemp + this.Racee.Attrib.Cha_mod;
 
             Attrib.SetStats(str,inte,dex,con,wis,luk,cha);
 
@@ -209,127 +235,76 @@ namespace CharByDNA
         public Character(bool gender) : this(new DNA(gender))
         {
 
-
-
-        }
-
-        public Race GetRace(List<Race> races, int val)
-        {
-
-            int tval = val % 9;
-
-            return races[tval];
+            this.FirstName = charname.GenFname(this.Gender);
+            this.LastName = charname.GenLname();
 
         }
 
         ///<summary>
         ///
         ///</summary>
-        public string GetProperty(int value, List<string> properties)
+        public string GetProperty(int value, int valuetwo, List<string> properties)
         {
 
-            if (value <= 14)
+            int vused;
+
+            if (value >= valuetwo)
             {
 
-                return properties[0];
+                vused = value;
 
             }
 
-            else if (value <= 17)
+            else
+            {
+
+                vused = valuetwo;
+
+            }
+
+            if (vused >= 1 && vused <= 3)
             {
 
                 return properties[1];
 
             }
 
-            else if (value <= 21)
+            else if (vused >= 4 && vused <= 6)
             {
 
                 return properties[2];
-                
+
             }
 
-            else if (value <= 24)
+            else if (vused >= 5 && vused <= 9)
             {
 
                 return properties[3];
                 
             }
 
-            else if (value <= 27)
+            else if (vused >= 10 && vused <= 12)
             {
 
                 return properties[4];
                 
             }
 
-            else if (value <= 32)
+            else if (vused >= 13 && vused <= 15)
             {
 
                 return properties[5];
                 
             }
 
+            else if (vused == 16)
+            {
+
+                return properties[0];
+                
+            }
+
             return null;
-
-        }
-
-        ///<summary>
-        ///
-        ///</summary>
-        public int GetScoreMod(int value)
-        {
-
-            if (value % 7 == 0)
-            {
-
-                return 3;
-
-            }
-
-            else if (value % 7 == 1)
-            {
-
-                return -3;
-
-            }
-
-            else if (value % 7 == 2)
-            {
-
-                return -1;
-
-            }
-
-            else if (value % 7 == 3)
-            {
-
-                return 2;
-
-            }
-
-            else if (value % 7 == 4)
-            {
-
-                return 0;
-
-            }
-
-            else if (value % 7 == 5)
-            {
-
-                return -2;
-
-            }
-
-            else if (value % 7 == 6)
-            {
-
-                return 1;
-
-            }
-
-            return -100;
 
         }
 
