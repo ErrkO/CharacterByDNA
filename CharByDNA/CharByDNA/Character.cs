@@ -120,8 +120,8 @@ namespace CharByDNA
             Attrib = new Attributes();
 
             // Gene Pair 1
-            int gone = genevals[0] % 2;
-            int gtwo = genevals[1] % 2;
+            int gone = genes[0].ToInt() % 2;
+            int gtwo = genes[1].ToInt() % 2;
 
             if (gone+gtwo == 1)
             {
@@ -248,7 +248,33 @@ namespace CharByDNA
 
             int vused;
 
-            if (value >= valuetwo)
+            if (value == 16 || valuetwo == 16)
+            {
+
+                if (value < valuetwo)
+                {
+
+                    vused = value;
+
+                }
+
+                else if (valuetwo < value)
+                {
+
+                    vused = valuetwo;
+
+                }
+
+                else
+                {
+
+                    vused = 16;
+
+                }
+
+            }
+
+            else if (value >= valuetwo)
             {
 
                 vused = value;

@@ -129,12 +129,14 @@ namespace CharByDNA
 
             this.DNAStrand = dnastrand;
 
-            List<char> nucleotides = dnastrand.ToCharArray().ToList<char>();
-
             for (int i = 0; i < NUMGENES; i++)
             {
 
-                Gene temp = new Gene(nucleotides[(i * 3) + 0], nucleotides[(i * 3) + 1], nucleotides[(i * 3) + 2]);
+                int one = (int)Char.GetNumericValue(dnastrand[(i*3)+0]);
+                int two = (int)Char.GetNumericValue(dnastrand[(i * 3) + 1]);
+                int three = (int)Char.GetNumericValue(dnastrand[(i * 3) + 2]);
+
+                Gene temp = new Gene(one,two,three);
                 this.Genes.Add(temp);
 
             }
@@ -149,26 +151,17 @@ namespace CharByDNA
         public DNA(List<Gene> dad, List<Gene> mom)
         {
 
+            this.Gene = new Gene();
             this.Genes = new List<Gene>();
 
-            for (int i = 0; i < NUMGENES; i++)
+            for (int i = 0; i < NUMGENES/2; i++)
             {
 
-                if (i % 2 == 0)
-                {
+                this.Genes.Add(dad[i]);
 
-                    this.Genes.Add(dad[i]);
+                this.Genes.Add(mom[i]);
 
-                }
-
-                else
-                {
-
-                    this.Genes.Add(mom[i]);
-
-                }
-
-                this.DNAStrand += this.Genes[i].ToString();
+                this.DNAStrand += this.Genes[i].ToString() + this.Genes[i+1].ToString();
 
             }
 

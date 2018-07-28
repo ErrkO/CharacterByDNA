@@ -71,13 +71,13 @@
 
 gender 
     XX(Female) or XY(Male)
-    X = even
-    Y = odd
+    X = odd
+    Y = even
 
 race
 
 height
-    value * 2 + hieght mod
+    gene1 + gene2 + hieght mod
 hair
     Red < Grey < Blonde < Auburn < Brown < Black
     Grey [1-3]

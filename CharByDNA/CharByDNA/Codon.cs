@@ -150,7 +150,7 @@ namespace CharByDNA
         public int TranslateCodon(Gene gene)
         {
 
-            int genenum = gene.GetGeneInt();
+            int genenum = gene.ToInt();
 
             return TranslateCodon(genenum);
 

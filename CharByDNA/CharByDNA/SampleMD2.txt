@@ -1,0 +1,86 @@
+Dad:123312431231244424133334223311432344144233144143232323314134411334412123131232
+Mom:
+
+Dad:
+    Gender: XY
+        Gene1: 123
+        Gene2: 312
+    Race: Human (not Implemented)
+        Gene3: 431
+        Gene4: 231
+    Height: 74"
+        Gene5: 244
+        Gene6: 424
+    Hair: Brown
+        Gene7: 133
+        Gene8: 334
+    Eye: Green
+        Gene9: 223
+        Gene10: 311
+    Skin: White
+        Gene11: 432
+        Gene12: 344
+    str: 13
+        gene 13: 144
+        gene 14: 233
+    int: 14
+        gene 15: 144
+        gene 16: 143
+    agi: 10
+        gene 17: 232
+        gene 18: 323
+    con: 12
+        gene 19: 314
+        gene 20: 134
+    wis: 10
+        gene 21: 411
+        gene 22: 334
+    luk: 10
+        gene 23: 412
+        gene 24: 123
+    cha: 9
+        gene 25: 131
+        gene 26: 232
+
+Mom:
+    Gender: XX
+        Gene1:
+        Gene2:
+    Race: Human
+        Gene3:
+        Gene4:
+    Height: 
+        Gene5:
+        Gene6:
+    Hair:
+        Gene7:
+        Gene8:
+    Eye:
+        Gene9:
+        Gene10:
+    Skin:
+        Gene11:
+        Gene12:
+    str:
+        gene 13:
+        gene 14:
+    int:
+        gene 15:
+        gene 16:
+    agi:
+        gene 17:
+        gene 18:
+    con:
+        gene 19:
+        gene 20:
+    wis:
+        gene 21:
+        gene 22:
+    luk:
+        gene 23:
+        gene 24:
+    cha:
+        gene 25:
+        gene 26:
+
+123312431231244424133334223311432344144233144143232323314134411334412123131232
