@@ -29,10 +29,10 @@ namespace CharByDNA
             Console.WriteLine("2. Generate Child from Parent DNA.");
             Console.WriteLine("3. Generate random character from gender.");
             Console.WriteLine("4. Generate child from random parents.");
-            Console.WriteLine("5. Show all races and mods");
-            Console.WriteLine("6. Generate and Display all Unique Alleles");
-            Console.WriteLine("7. Generate and Display all Unique Sums of Alleles");
-            Console.WriteLine("8. Return to the main menu");
+            Console.WriteLine("5. Generate Random Parents and then Child");
+            Console.WriteLine("6. Show all races and mods");
+            Console.WriteLine("7. Run Life Sim");
+            Console.WriteLine("8. Exit");
             Console.Write("Please enter your choice: ");
             choice = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
@@ -86,7 +86,7 @@ namespace CharByDNA
 
                 Console.WriteLine("\n" + child.ToString());
 
-                //Console.WriteLine(child.Dna.ToString());
+                Console.WriteLine(child.Dna.ToString());
 
                 Console.ReadKey();
 
@@ -131,18 +131,18 @@ namespace CharByDNA
 
                 bool end = false;
 
-                Console.WriteLine("Generating Dad...");
+                //Console.WriteLine("Generating Dad...");
                 Character dad = new Character(true);
                 
 
-                Console.WriteLine("\nGenerating Mom...");
+                //Console.WriteLine("\nGenerating Mom...");
                 Character mom = new Character(false);
 
                 while(!end)
                 {
 
-                    Console.WriteLine("\n" + dad.ToString());
-                    Console.WriteLine("\n" + mom.ToString());
+                    Console.WriteLine("\nDad:\n" + dad.ToString());
+                    Console.WriteLine("\nMom:\n" + mom.ToString());
 
                     Console.WriteLine("\nCreating Child");
                     Character child = new Character(dad, mom);
@@ -174,6 +174,46 @@ namespace CharByDNA
             else if (choice == 5)
             {
 
+                bool end = false;
+
+                while (!end)
+                {
+
+                    Character dad = new Character(true);
+                    Console.WriteLine("\nDad:\n" + dad.ToString());
+                    Character mom = new Character(false);
+                    Console.WriteLine("\nMom:\n" + mom.ToString());
+
+                    Console.WriteLine("\nCreating Child");
+                    Character child = new Character(dad, mom);
+                    Console.WriteLine("\n" + child.ToString());
+
+                    Console.Write("\nend? (y/n): ");
+                    string chc = Console.ReadLine();
+
+                    if (chc.Contains('y') || chc.Contains('Y'))
+                    {
+
+                        end = true;
+
+                    }
+
+                    else
+                    {
+
+                        Console.Clear();
+
+                    }
+
+                }
+
+                CharMenu();
+
+            }
+
+            else if (choice == 6)
+            {
+
                 Console.WriteLine("");
 
                 Race r = new Race();
@@ -190,40 +230,16 @@ namespace CharByDNA
 
             }
 
-            else if (choice == 6)
-            {
-
-                Console.WriteLine("\nGenerating...");
-                DNAMath dnam = new DNAMath();
-
-                List<Allele> ualle = dnam.GenerateAllPossibleUniqueAlleles();
-
-                Console.WriteLine(dnam.AlleleListToString(ualle));
-                Console.WriteLine("\nTotal Alleles: " + ualle.Count);
-
-                Console.ReadKey();
-                CharMenu();
-
-            }
-
             else if (choice == 7)
             {
 
-                Console.WriteLine("\nGenerating...");
-                DNAMath dnam = new DNAMath();
+                Console.Write("Please enter a starting population: ");
+                int startpop = Convert.ToInt32(Console.ReadLine());
 
-                List<Allele> ualle = dnam.GenerateAllPossibleUniqueAlleles();
+                Console.Write("Please enter the max years: ");
+                int maxyears = Convert.ToInt32(Console.ReadLine());
 
-                List<int> sums = dnam.GenerateAllPossibleUniqueAlleleSums(ualle);
-
-                for (int i = 0; i < sums.Count; i++)
-                {
-
-                    Console.WriteLine(sums[i]);
-
-                }
-
-                Console.WriteLine("\nTotal Sums: " + sums.Count);
+                LifeSimulator sim = new LifeSimulator(startpop, maxyears);
 
                 Console.ReadKey();
                 CharMenu();
@@ -234,6 +250,7 @@ namespace CharByDNA
             {
 
                 Console.WriteLine("Exiting....");
+                Console.ReadKey();
 
             }
 

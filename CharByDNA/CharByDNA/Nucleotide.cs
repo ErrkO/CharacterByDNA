@@ -13,7 +13,7 @@ namespace CharByDNA
         /// This method checks to see if the nucleotides are matching pairs
         ///</summary>
         ///<example>
-        /// 1-3 | 3-1 | 2-4 | 4-2 are all matching pairs
+        /// 1-4 | 3-2 | 2-3 | 4-1 are all matching pairs
         ///</example>
         ///<param name="left"> int: The nucleotide from the left strand </param>
         ///<param name="right"> int: The nucleotide from the right strand </param>
@@ -23,28 +23,28 @@ namespace CharByDNA
         public bool CheckPair(int left, int right)
         {
 
-            if (left == 1 && right == 3)
+            if (left == 1 && right == 4)
             {
 
                 return true;
 
             }
 
-            else if (left == 2 &&  right == 4)
+            else if (left == 2 &&  right == 3)
             {
 
                 return true;
 
             }
 
-            else if (left == 3 &&  right == 1)
+            else if (left == 3 &&  right == 2)
             {
 
                 return true;
 
             }
 
-            else if (left == 4 && right == 2)
+            else if (left == 4 && right == 1)
             {
 
                 return true;
@@ -71,27 +71,29 @@ namespace CharByDNA
             if (nucleotide == 1)
             {
 
-                return 3;
+                return 4;
 
             }
 
             else if (nucleotide == 2)
             {
 
-                return 4;
+                return 3;
 
             }
 
             else if (nucleotide == 3)
             {
 
-                return 1;
+                return 2;
 
             }
 
-            return 2;
+            return 1;
 
         }
+
+        // To Change
 
         ///
         ///
@@ -125,6 +127,8 @@ namespace CharByDNA
             return null;
 
         }
+
+        // To Change
 
         ///<summary>
         /// This method turns a nucleotide pair into a coded pair (int)
@@ -161,92 +165,6 @@ namespace CharByDNA
 
             return 0;
 
-
-        }
-
-        ///
-        ///
-        ///
-        public int TranslateNumber(int num)
-        {
-
-            if (num == 0)
-            {
-
-                return 1;
-
-            }
-
-            else if (num == 1)
-            {
-
-                return 2;
-
-            }
-
-            else if (num == 2)
-            {
-
-                return 3;
-
-            }
-
-            else if (num == 3)
-            {
-
-                return 4;
-
-            }
-
-            else
-            {
-
-                return 100;
-
-            }
-
-        }
-
-        ///
-        ///
-        ///
-        public int TranslateComboNum(int num)
-        {
-
-            if (num == 0)
-            {
-
-                return 3;
-
-            }
-
-            else if (num == 1)
-            {
-
-                return 4;
-
-            }
-
-            else if (num == 2)
-            {
-
-                return 6;
-
-            }
-
-            else if (num == 3)
-            {
-
-                return 8;
-
-            }
-
-            else
-            {
-
-                return 100;
-
-            }
 
         }
 

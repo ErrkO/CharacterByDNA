@@ -241,7 +241,7 @@ namespace CharByDNA
         ///<returns>
         /// Returns an integer value that is an ability score
         ///</returns>
-        public int GetAbiScore(Allele allele)
+        public int GetAbiScore(Gene allele)
         {
 
             int minus = allele.One;
