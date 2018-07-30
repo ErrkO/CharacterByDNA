@@ -31,7 +31,8 @@ namespace CharByDNA
             Console.WriteLine("4. Generate child from random parents.");
             Console.WriteLine("5. Generate Random Parents and then Child");
             Console.WriteLine("6. Show all races and mods");
-            Console.WriteLine("7. Exit");
+            Console.WriteLine("7. Run Life Sim");
+            Console.WriteLine("8. Exit");
             Console.Write("Please enter your choice: ");
             choice = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
@@ -230,6 +231,22 @@ namespace CharByDNA
             }
 
             else if (choice == 7)
+            {
+
+                Console.Write("Please enter a starting population: ");
+                int startpop = Convert.ToInt32(Console.ReadLine());
+
+                Console.Write("Please enter the max years: ");
+                int maxyears = Convert.ToInt32(Console.ReadLine());
+
+                LifeSimulator sim = new LifeSimulator(startpop, maxyears);
+
+                Console.ReadKey();
+                CharMenu();
+
+            }
+
+            else if (choice == 8)
             {
 
                 Console.WriteLine("Exiting....");

@@ -17,6 +17,8 @@ namespace CharByDNA
 
         public Character Me { get; private set; }
 
+        public Character Spouse { get; private set; }
+
         public List<Character> Children { get; private set; }
 
         public FamilyTree() : this(null,null,null)
@@ -61,6 +63,27 @@ namespace CharByDNA
         {
 
             this.Mom = mom;
+
+        }
+
+        public void Marriage(Character spouse)
+        {
+
+            if (this.Me.Gender == true)
+            {
+
+                spouse.LastName = this.Me.LastName;
+
+            }
+
+            else
+            {
+
+                this.Me.LastName = spouse.LastName;
+
+            }
+
+            this.Spouse = spouse;
 
         }
 

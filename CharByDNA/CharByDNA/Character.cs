@@ -91,7 +91,16 @@ namespace CharByDNA
         ///</summary>
         public string SkinColor { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public FamilyTree Family { get; private set; }
+
+        public int Age { get; set; }
+
+        public bool Dead { get; set; }
+
+        public int Pregnent { get; set; }
 
         ///<summary>
         ///
@@ -113,6 +122,8 @@ namespace CharByDNA
             List<Gene> genes = dna.Genes;
 
             this.Family = new FamilyTree(this);
+            this.Age = 1;
+            this.Dead = false;
 
             this.Dna = dna;
 
@@ -225,6 +236,8 @@ namespace CharByDNA
             this.Family.SetMom(mom);
             dad.Family.AddChild(this);
             mom.Family.AddChild(this);
+            this.Age = 1;
+            this.Dead = false;
 
         }
 
@@ -237,6 +250,8 @@ namespace CharByDNA
 
             this.FirstName = charname.GenFname(this.Gender);
             this.LastName = charname.GenLname();
+            this.Age = 1;
+            this.Dead = false;
 
         }
 

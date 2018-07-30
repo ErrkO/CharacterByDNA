@@ -66,6 +66,7 @@
     <Compile Include="Character.cs" />
     <Compile Include="DNA.cs" />
     <Compile Include="FamilyTree.cs" />
+    <Compile Include="LifeSimulator.cs" />
     <Compile Include="Name.cs" />
     <Compile Include="Nucleotide.cs" />
     <Compile Include="Program.cs" />
