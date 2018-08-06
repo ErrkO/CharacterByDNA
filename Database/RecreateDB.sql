@@ -64,14 +64,14 @@ INSERT INTO Race VALUES (7,'Teifling',48,50,3,2,3,0,0,0,0,0,1,0);
 INSERT INTO Race VALUES (8,'Halfling',35,36,0,0,0,0,0,0,0,0,0,1);
 INSERT INTO Race VALUES (9,'Dead',0,0,1,1,1,-100,-100,-100,-100,-100,-100,-100);
 
-/* hcID,hcColor1,hcColor2,hcColor3,hcColor4,hcColor5,hcColor6 */
-INSERT INTO HairColor VALUES (0,'Red','Auburn','Brown','Blonde','Black','Grey');
+//* hcID,hcColor1,hcColor2,hcColor3,hcColor4,hcColor5,hcColor6 */
+INSERT INTO HairColor VALUES (0,'Red','Grey','Blonde','Auburn','Brown','Black');
 INSERT INTO HairColor VALUES (1,'Green','Auburn','Brown','Blonde','Black','Grey');
 INSERT INTO HairColor VALUES (2,'None','None','None','None','None','Mone');
 INSERT INTO HairColor VALUES (3,'Green','Blue','Pink','Purple','Black','Brown');
 
 /* ecID,ecColor1,ecColor2,ecColor3,ecColor4,ecColor5,ecColor6 */
-INSERT INTO EyeColor VALUES (0,'Amber','Blue','Brown','Grey','Green','Hazel');
+INSERT INTO EyeColor VALUES (0,'Grey','Amber','Blue','Green','Hazel','Brown');
 INSERT INTO EyeColor VALUES (1,'Red','Blue','Gold','Grey','Green','Hazel');
 INSERT INTO EyeColor VALUES (2,'Red','Black','Gold','White','Silver','None');
 INSERT INTO EyeColor VALUES (3,'None','None','None','None','None','Mone');
