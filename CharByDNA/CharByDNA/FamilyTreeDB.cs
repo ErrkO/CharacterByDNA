@@ -26,26 +26,32 @@ namespace CharByDNA
         public void SetSpouse(int c1id, int c2id)
         {
 
+            this.sqlConn.Open();
+
             string query1 = string.Format("INSERT INTO FamilyTree VALUES ({0},1,{1})",c1id,c2id);
             string query2 = string.Format("INSERT INTO FamilyTree VALUES ({0},1,{1})",c2id,c1id);
 
             SQLiteCommand command1 = new SQLiteCommand(query1, this.sqlConn);
             SQLiteCommand command2 = new SQLiteCommand(query2, this.sqlConn);
-            SQLiteDataReader reader = command1.ExecuteReader();
-            reader = command2.ExecuteReader();
+
+            command1.ExecuteNonQuery();
+            command2.ExecuteNonQuery();
 
         }
 
         public void SetParent(int p1id, int p2id, int cid)
         {
 
+            this.sqlConn.Open();
+
             string query1 = string.Format("INSERT INTO FamilyTree VALUES ({0},2,{1})", p1id, cid);
             string query2 = string.Format("INSERT INTO FamilyTree VALUES ({0},2,{1})", p2id, cid);
 
             SQLiteCommand command1 = new SQLiteCommand(query1, this.sqlConn);
             SQLiteCommand command2 = new SQLiteCommand(query2, this.sqlConn);
-            SQLiteDataReader reader = command1.ExecuteReader();
-            reader = command2.ExecuteReader();
+
+            command1.ExecuteNonQuery();
+            command2.ExecuteNonQuery();
 
         }
 

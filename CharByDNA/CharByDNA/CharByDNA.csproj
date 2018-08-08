@@ -60,6 +60,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Event.cs" />
+    <Compile Include="GTime.cs" />
     <Compile Include="Codon.cs" />
     <Compile Include="FamilyTreeDB.cs" />
     <Compile Include="Gene.cs" />

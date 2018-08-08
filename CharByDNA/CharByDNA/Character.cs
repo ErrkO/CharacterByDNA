@@ -23,6 +23,8 @@ namespace CharByDNA
         ///</summary>
         Race race;
 
+        public int ID { get; private set; }
+
         ///<summary>
         /// The property that holds the first name
         ///</summary>
