@@ -255,6 +255,16 @@ namespace CharByDNA
 
         }
 
+        public Character(string fname, string lname, DNA dna) : this(dna)
+        {
+
+            this.FirstName = fname;
+            this.LastName = lname;
+            this.Age = 1;
+            this.Dead = false;
+
+        }
+
         ///<summary>
         ///
         ///</summary>

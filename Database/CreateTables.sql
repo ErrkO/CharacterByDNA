@@ -1,3 +1,21 @@
+CREATE TABLE Characters(
+    cID int primary key NOT NULL,
+    cFname text not null,
+    cLname text not null,
+    cDNA text not null
+);
+
+CREATE TABLE FamilyTree(
+    PID int not null
+    rtID int not null,
+    RID int not null
+);
+
+CREATE TABLE RelationshipType(
+    rtID int primary key not null,
+    rtType text not null,
+);
+
 CREATE TABLE Race(
     rID int primary key not null,
     rName text not null,

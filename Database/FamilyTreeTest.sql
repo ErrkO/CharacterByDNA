@@ -10,8 +10,8 @@ CREATE TABLE RelationshipType(
 
 CREATE TABLE FamilyTree(
     Person_ID int NOT NULL,
-    Relation_ID int NOT NULL,
-    rt_ID int NOT NULL
+    rt_ID int NOT NULL,
+    Relation_ID int NOT NULL    
 );
 
 INSERT INTO Cactor VALUES (1,'John');
