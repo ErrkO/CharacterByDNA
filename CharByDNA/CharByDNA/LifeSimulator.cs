@@ -10,6 +10,12 @@ namespace CharByDNA
     public class LifeSimulator
     {
 
+        public GTime AGE18 = new GTime(18);
+
+        public GTime AGE5 = new GTime(5);
+
+        public GTime AGE40 = new GTime(40);
+
         ///<summary>
         /// The random number generator
         ///</summary>
@@ -18,9 +24,7 @@ namespace CharByDNA
         ///</remarks>
         private Random rngesus = new Random();
 
-        public int CurrDay { get; set; }
-
-        public int CurrYear { get; set; }
+        public GTime Time { get; set; }
 
         public int TotalCharacters { get; set; }
 
@@ -41,8 +45,7 @@ namespace CharByDNA
             this.Men = new List<Character>();
             this.Women = new List<Character>();
 
-            this.CurrDay = 0;
-            this.CurrYear = 0;
+            Time = new GTime();
 
             for (int i = 0; i < startpop; i++)
             {
@@ -54,84 +57,72 @@ namespace CharByDNA
                 this.Men.Add(male);
                 this.TotalCharacters++;
 
+                CharacterDB tmpmale = new CharacterDB(male,Time);
+
                 this.Women.Add(female);
                 this.TotalCharacters++;
+
+                CharacterDB tmpfmale = new CharacterDB(female, Time);
+
+                Console.WriteLine("{0}: {1} and {2} were created", this.Time.ToString(), male.FirstName, female.FirstName);
 
             }
 
             do
             {
 
+                this.Time = AGE18;
+
                 for (int i = 0; i < this.Men.Count; i++)
                 {
 
-                    if (this.CurrDay == 365)
-                    {
-
-                        this.Men[i].Age += 1;
-
-                    }
-
                     Marriage(this.Men[i]);
 
-                    GetPregnent(this.Men[i]);
-
-                    if (this.CurrYear >= 18)
-                    {
-
-                        Death(this.Men[i], i);
-
-                    }
+                    GetPregnent(this.Time.ToString(), this.Men[i]);
 
                 }
 
                 for (int i = 0; i < this.Women.Count; i++)
                 {
+
+                    if (this.Time.Month == 10)
+                    {
+
+                        if (this.Time.Hour == this.Women[i].DueDate.Hour)
+                        {
+
+                            if (this.Time.Minute == this.Women[i].DueDate.Minute)
+                            {
+
+                                ;
+
+                            }
+
+                        }
+
+                    }
+
+                    if (this.Women[i].DueDate != new GTime(true))
+                    {
+
+                        if (this.Time == this.Women[i].DueDate)
+                        {
+
+                            HaveChild(this.Women[i]);
+
+                            this.Women[i].DueDate = new GTime(true);
+
+                        }
+
+                    }
                     
-                    if (this.Women[i].Pregnent == 1)
-                    {
-
-                        HaveChild(this.Women[i]);
-
-                    }
-
-                    if (this.Women[i].Pregnent > 0)
-                    {
-
-                        this.Women[i].Pregnent--;
-
-                    }
-
-                    if (this.CurrDay == 365)
-                    {
-
-                        this.Women[i].Age += 1;
-
-                    }
-
-                    if (this.CurrYear >= 18)
-                    {
-
-                        Death(this.Women[i], i);
-
-                    }
-
                 }
+
+                this.Time = this.Time++;
 
                 CleanLists();
 
-                if (this.CurrDay == 365)
-                {
-
-                    this.CurrDay = 0;
-
-                    this.CurrYear++;
-
-                }
-
-                this.CurrDay++;
-
-            } while (this.CurrYear != maxyears);
+            } while (this.Time.Year != maxyears);
 
             Console.WriteLine("{0} characters have been created", this.TotalCharacters);
 
@@ -143,7 +134,7 @@ namespace CharByDNA
             for (int i = 0; i < this.Women.Count; i++)
             {
 
-                if (husband.Age > 18 && this.Women[i].Age > 18)
+                if (husband.GetAge(this.Time) >= AGE18 && this.Women[i].GetAge(this.Time) >= AGE18)
                 {
 
                     if (husband.Family.Spouse == null && this.Women[i].Family.Spouse == null)
@@ -152,7 +143,7 @@ namespace CharByDNA
                         husband.Family.Marriage(this.Women[i]);
                         this.Women[i].Family.Marriage(husband);
 
-                        Console.WriteLine("Year {0} Day {1}: {2} and {3} got married!", this.CurrYear + 1, this.CurrDay + 1, husband.FirstName, this.Women[i].FirstName);
+                        Console.WriteLine("{0}: {1} and {2} got married!", this.Time.ToString(), husband.FirstName, this.Women[i].FirstName);
 
                         return;
 
@@ -167,7 +158,7 @@ namespace CharByDNA
         public void Death(Character chara, int pos)
         {
 
-            if (chara.Age <= 5)
+            if (chara.GetAge(this.Time) <= AGE5)
             {
 
                 int death = rngesus.Next(0, 10000);
@@ -175,7 +166,7 @@ namespace CharByDNA
                 if (death <= 10)
                 {
 
-                    Console.WriteLine("Year {0} Day {1}: {2} has Died", this.CurrYear + 1, this.CurrDay + 1, chara.FirstName);
+                    Console.WriteLine("{0}: {1} has Died", this.Time.ToString(), chara.FirstName);
 
                     if (chara.Gender)
                     {
@@ -195,7 +186,7 @@ namespace CharByDNA
 
             }
 
-            else if (chara.Age <= 40)
+            else if (chara.GetAge(this.Time) <= AGE40)
             {
 
                 int death = rngesus.Next(0, 10000);
@@ -203,7 +194,7 @@ namespace CharByDNA
                 if (death <= 1)
                 {
 
-                    Console.WriteLine("Year {0} Day {1}: {2} has Died", this.CurrYear + 1, this.CurrDay + 1, chara.FirstName);
+                    Console.WriteLine("{0}: {1} has Died", this.Time.ToString(), chara.FirstName);
 
                     if (chara.Gender)
                     {
@@ -223,7 +214,7 @@ namespace CharByDNA
 
             }
 
-            else if (chara.Age > 40 )
+            else if (chara.GetAge(this.Time) > AGE40 )
             {
 
                 int death = rngesus.Next(0, 10000);
@@ -231,7 +222,7 @@ namespace CharByDNA
                 if (death <= 50)
                 {
 
-                    Console.WriteLine("Year {0} Day {1}: {2} has Died", this.CurrYear + 1, this.CurrDay + 1, chara.FirstName);
+                    Console.WriteLine("{0}: {1} has Died", this.Time.ToString(), chara.FirstName);
 
                     if (chara.Gender)
                     {
@@ -253,36 +244,28 @@ namespace CharByDNA
 
         }
 
-        public void GetPregnent(Character husband)
+        public void GetPregnent(string timecode, Character husband)
         {
 
-            for (int i = 0; i < this.Women.Count; i++)
+            if (husband.Family.Spouse != null)
             {
 
-                if (husband.Age > 18 && this.Women[i].Age > 18)
+                if (husband.Family.Spouse.DueDate != new GTime(true))
                 {
 
-                    if (husband.Family.Spouse == this.Women[i])
-                    {
-
-                        if (this.Women[i].Pregnent > 0)
-                        {
-
-                            return;
-
-                        }
-
-                        this.Women[i].Pregnent = rngesus.Next(270, 281);
-
-                        Console.WriteLine("Year {0} Day {1}: {2} and {3} are pregnant",this.CurrYear + 1, this.CurrDay + 1, husband.FirstName, this.Women[i].FirstName);
-
-                        return;
-
-                    }
+                    return;
 
                 }
 
-            }
+                string duecode = GTime.AddDays(timecode, rngesus.Next(270, 281));
+
+                husband.Family.Spouse.DueDate = new GTime(duecode);
+
+                Console.WriteLine("{0}: {1} and {2} are pregnant, due date is {3}", this.Time.ToString(), husband.FirstName, husband.Family.Spouse.FirstName, husband.Family.Spouse.DueDate.ToString());
+
+                return;
+
+            } 
 
         }
 
@@ -293,7 +276,10 @@ namespace CharByDNA
 
             chld = new Character(mom.Family.Spouse, mom);
 
-            Console.WriteLine("Year {0} Day {1}: {2} and {3} have had a child named {4}", this.CurrYear + 1, this.CurrDay + 1, mom.Family.Spouse.FirstName, mom.FirstName, chld.FirstName);
+            CharacterDB tmpchild = new CharacterDB(chld, this.Time);
+            //tmpchild.SaveCharacter(tmpchild);
+
+            Console.WriteLine("{0}: {1} and {2} have had a child named {3}", this.Time.ToString(), mom.Family.Spouse.FirstName, mom.FirstName, chld.FirstName);
 
             if (chld.Gender)
             {

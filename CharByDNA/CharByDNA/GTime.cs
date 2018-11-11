@@ -10,6 +10,8 @@ namespace CharByDNA
     public class GTime
     {
 
+        public char[] seperators = { '-', ' ', ':' };
+
         public int Year { get; private set; }
 
         public int Month { get; private set; }
@@ -19,6 +21,22 @@ namespace CharByDNA
         public int Hour { get; private set; }
 
         public int Minute { get; private set; }
+
+        public GTime(bool isnegative)
+        {
+
+            if (isnegative)
+            {
+
+                this.Year = -1;
+                this.Month = -1;
+                this.Day = -1;
+                this.Hour = -1;
+                this.Minute = -1;
+
+            }
+
+        }
 
         public GTime(int year, int month, int day, int hour, int minute)
         {
@@ -69,7 +87,7 @@ namespace CharByDNA
         public GTime(string timestring)
         {
 
-            char[] seperators = {'-',' ',':'};
+            //char[] seperators = {'-',' ',':'};
 
             List<string> splits = timestring.Split(seperators).ToList<string>();
 
@@ -126,7 +144,6 @@ namespace CharByDNA
 
         }
 
-        /*
         public static GTime operator -(GTime gt1, GTime gt2)
         {
 
@@ -138,8 +155,328 @@ namespace CharByDNA
             newtime.Hour = gt1.Hour - gt2.Hour;
             newtime.Minute = gt1.Minute - gt2.Minute;
 
+            return newtime;
+
         }
-        */
+
+        public static bool operator >(GTime gt1, GTime gt2)
+        {
+
+            if (gt1.Year > gt2.Year)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Month > gt2.Month)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Day > gt2.Day)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Hour > gt2.Hour)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Day > gt2.Day)
+            {
+
+                return true;
+
+            }
+
+            return false;
+
+        }
+
+        public static bool operator <(GTime gt1, GTime gt2)
+        {
+
+            if (gt1.Year < gt2.Year)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Month < gt2.Month)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Day < gt2.Day)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Hour < gt2.Hour)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Day < gt2.Day)
+            {
+
+                return true;
+
+            }
+
+            return false;
+
+        }
+
+        public static bool operator >=(GTime gt1, GTime gt2)
+        {
+
+            if (gt1.Year >= gt2.Year)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Month >= gt2.Month)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Day >= gt2.Day)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Hour >= gt2.Hour)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Day >= gt2.Day)
+            {
+
+                return true;
+
+            }
+
+            return false;
+
+        }
+
+        public static bool operator <=(GTime gt1, GTime gt2)
+        {
+
+            if (gt1.Year <= gt2.Year)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Month <= gt2.Month)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Day <= gt2.Day)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Hour <= gt2.Hour)
+            {
+
+                return true;
+
+            }
+
+            else if (gt1.Day <= gt2.Day)
+            {
+
+                return true;
+
+            }
+
+            return false;
+
+        }
+
+        public static bool operator ==(GTime gt1, GTime gt2)
+        {
+
+            if (gt1.Year == gt2.Year && gt1.Month == gt2.Month && gt1.Day == gt2.Day && gt1.Hour == gt2.Hour && gt1.Minute == gt2.Minute)
+            {
+
+                return true;
+
+            }
+
+            return false;
+
+        }
+
+        public static bool operator !=(GTime gt1, GTime gt2)
+        {
+
+            if (gt1.Year == gt2.Year && gt1.Month == gt2.Month && gt1.Day == gt2.Day && gt1.Hour == gt2.Hour && gt1.Minute == gt2.Minute)
+            {
+
+                return false;
+
+            }
+
+            return true;
+
+        }
+
+        public static bool CheckForValidDate(GTime time)
+        {
+
+            if (time.Minute > 59 || time.Minute < 0)
+            {
+
+                return false;
+
+            }
+
+            if (time.Hour > 23 || time.Hour < 0)
+            {
+
+                return false;
+
+            }
+
+            if (time.Day > 30 || time.Day < 0)
+            {
+
+                return false;
+
+            }
+
+            if (time.Month > 12 || time.Month < 0)
+            {
+
+                return false;
+
+            }
+
+            return true;
+
+        }
+
+        public GTime AddDays(GTime time, int days)
+        {
+
+            GTime newtime = time;
+
+            newtime.Day += days;
+
+            while (!CheckForValidDate(newtime))
+            {
+
+                if (Day >= 30)
+                {
+
+                    newtime.Month += 1;
+
+                    newtime.Day -= 30;
+
+                }
+
+                if (Month >= 12)
+                {
+
+                    newtime.Year += 1;
+
+                    newtime.Month -= 12;
+
+                }
+
+            }
+
+            return newtime;
+
+        }
+
+        public static string AddDays(string timecode, int days)
+        {
+
+            //List<string> splits = timecode.Split(seperators).ToList<string>();
+
+            GTime newtime = new GTime(timecode);
+
+            //int newdays = Convert.ToInt32(splits[2]);
+
+            newtime.Day += days;
+
+            while (!CheckForValidDate(newtime))
+            {
+
+                if (newtime.Day >= 30)
+                {
+
+                    newtime.Month += 1;
+
+                    newtime.Day -= 30;
+
+                }
+
+                if (newtime.Month >= 12)
+                {
+
+                    newtime.Year += 1;
+
+                    newtime.Month -= 12;
+
+                }
+
+            }
+
+            return newtime.ToString();
+
+        }
+
+        public GTime FutureDateDays(int days)
+        {
+
+            GTime newtime = this;
+
+            for (int i = 0; i < days*1440; i++)
+            {
+
+                newtime = newtime++;
+
+            }
+
+            return newtime;
+
+        }
 
         public override string ToString()
         {

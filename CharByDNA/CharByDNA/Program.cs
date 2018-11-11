@@ -13,6 +13,8 @@ namespace CharByDNA
         static void Main(string[] args)
         {
 
+            Database db = new Database();
+
             CharMenu();
 
         }
@@ -22,7 +24,7 @@ namespace CharByDNA
 
             int choice;
 
-            Console.Clear();
+            //Console.Clear();
             Console.WriteLine("Welcome to the character builder");
             Console.WriteLine("");
             Console.WriteLine("1. Generate Character by DNA");
@@ -32,7 +34,8 @@ namespace CharByDNA
             Console.WriteLine("5. Generate Random Parents and then Child");
             Console.WriteLine("6. Show all races and mods");
             Console.WriteLine("7. Run Life Sim");
-            Console.WriteLine("8. Exit");
+            Console.WriteLine("8. Create CSV files");
+            Console.WriteLine("9. Exit");
             Console.Write("Please enter your choice: ");
             choice = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
@@ -247,6 +250,15 @@ namespace CharByDNA
             }
 
             else if (choice == 8)
+            {
+
+                Names nm = new Names();
+                nm.NumberedFile();
+                CharMenu();
+
+            }
+
+            else if (choice == 9)
             {
 
                 Console.WriteLine("Exiting....");

@@ -51,7 +51,12 @@ namespace CharByDNA
         public void SaveEvent()
         {
 
+            this.sqlConn.Open();
 
+            string query = string.Format("INSERT INTO EventLog VALUES ({0},{1})", this.Time,this.EventText);
+
+            SQLiteCommand command = new SQLiteCommand(query, sqlConn);
+            command.ExecuteNonQuery();
 
         }
 

@@ -21,6 +21,10 @@ namespace CharByDNA
 
         public GTime BirthTime { get; private set; }
 
+        public GTime DueDate { get; set; }
+
+        public bool Dead { get; set; }
+
         // Desktop Conn
         private string sqlcconn = "URI=file:D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\Game.db;Version=3";
 
@@ -42,6 +46,8 @@ namespace CharByDNA
             this.Lname = character.LastName;
             this.Dna = character.Dna;
             this.BirthTime = time;
+            this.DueDate = character.DueDate;
+            this.Dead = character.Dead;
 
         }
 
@@ -50,7 +56,8 @@ namespace CharByDNA
 
             this.sqlConn.Open();
 
-            string query = string.Format("INSERT INTO Characters VALUES ({0},{1},{2},{3},{4})",character.CID,character.Fname,character.Lname,character.Dna.ToString(),character.BirthTime.ToString());
+            string query = string.Format("INSERT INTO Characters VALUES ({0},{1},{2},{3},{4},{5},{6})",character.CID,character.Fname,character.Lname,character.Dna.ToString(),
+                character.BirthTime.ToString(),character.DueDate.ToString(),character.Dead);
 
             SQLiteCommand command = new SQLiteCommand(query, sqlConn);
             command.ExecuteNonQuery();

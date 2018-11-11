@@ -107,6 +107,59 @@ namespace CharByDNA
 
         }
 
+        public void NumberedFile()
+        {
+
+            int i = 1;
+
+            using (StreamWriter writetext = new StreamWriter("D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\CharByDNA\\CharByDNA\\FFnames.csv", true))
+            {
+
+                foreach(string name in this.Ffnames)
+                {
+
+                    string newtext = string.Format("({0},\"{1}\"),",i, name);
+                    writetext.WriteLine(newtext);
+                    i++;
+
+                }
+
+            }
+
+            i = 1;
+
+            using (StreamWriter writetext = new StreamWriter("D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\CharByDNA\\CharByDNA\\MFnames.csv", true))
+            {
+
+                foreach (string name in this.Mfnames)
+                {
+
+                    string newtext = string.Format("({0},\"{1}\"),", i, name);
+                    writetext.WriteLine(newtext);
+                    i++;
+
+                }
+
+            }
+
+            i = 1;
+
+            using (StreamWriter writetext = new StreamWriter("D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\CharByDNA\\CharByDNA\\LNames.csv", true))
+            {
+
+                foreach (string name in this.Lnames)
+                {
+
+                    string newtext = string.Format("({0},\"{1}\"),", i, name);
+                    writetext.WriteLine(newtext);
+                    i++;
+
+                }
+
+            }
+
+        }
+
     }
 
 }
