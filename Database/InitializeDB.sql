@@ -1,14 +1,3 @@
-/* Remove all tables from the database */
-DROP TABLE Race;
-DROP TABLE HairColor;
-DROP TABLE EyeColor;
-DROP TABLE SkinColor;
-DROP TABLE CharacterDB;
-DROP TABLE EventLog;
-DROP TABLE FNames;
-DROP TABLE MNames;
-DROP TABLE LNames;
-
 /* Create tables and relationships */
 CREATE TABLE Race(
     rID int primary key not null,
