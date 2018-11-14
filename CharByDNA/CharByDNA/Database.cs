@@ -22,6 +22,8 @@ namespace CharByDNA
 
         private string RecreateDbsql = "D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\RecreateDB.sql";
 
+        private string InitDbsql = "D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\InitializeDB.sql";
+
         // Desktop Conn
         private string sqlconn = "URI=file:D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\Game.db;Version=3";
 
@@ -69,6 +71,8 @@ namespace CharByDNA
                     this.SQLCONN = new SQLiteConnection(UncompleteConn + filename + ";" + version);
 
                     this.DbName = filename;
+
+                    InitDB();
 
                 }
 
@@ -136,6 +140,19 @@ namespace CharByDNA
             }
 
             return true;
+
+        }
+
+        private void InitDB()
+        {
+
+            this.SQLCONN.Open();
+
+            string script = File.ReadAllText(InitDbsql);
+
+            SQLiteCommand cmd = new SQLiteCommand(script, this.SQLCONN);
+
+            cmd.ExecuteNonQuery();
 
         }
 
