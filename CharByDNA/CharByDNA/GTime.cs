@@ -51,37 +51,22 @@ namespace CharByDNA
 
         public GTime(int year, int month, int day, int hour) : this(year,month,day,hour,00)
         {
-
-            
-
         }
 
         public GTime(int year, int month, int day) : this(year,month,day,00,00)
         {
-
-
-
         }
 
         public GTime(int year, int month) : this(year, month, 01, 00, 00)
         {
-
-
-
         }
 
         public GTime(int year) : this(year, 01, 01, 00, 00)
         {
-
-
-
         }
 
         public GTime() : this(0001, 01, 01, 00, 00)
         {
-
-
-
         }
 
         public GTime(string timestring)
@@ -96,6 +81,28 @@ namespace CharByDNA
             this.Day = Convert.ToInt32(splits[2]);
             this.Hour = Convert.ToInt32(splits[3]);
             this.Minute = Convert.ToInt32(splits[4]);
+
+        }
+
+        public GTime(double timecode)
+        {
+
+            double tcodemonth = (timecode % 10000);
+            double tcodeday = (timecode % 100);
+            double tcodehour = (timecode % 1);
+            double tcodemin = (timecode % .01);
+
+            double tyear = (timecode - tcodemonth) / 10000;
+            double tmonth = (tcodemonth - tcodeday) / 100;
+            double tday = (tcodeday - tcodehour);
+            double thour = (tcodehour - tcodemin) * 100;
+            double tmin = tcodemin * 10000;
+
+            this.Year = Convert.ToInt32(tyear);
+            this.Month = Convert.ToInt32(tmonth);
+            this.Day = Convert.ToInt32(tday);
+            this.Hour = Convert.ToInt32(thour);
+            this.Minute = Convert.ToInt32(tmin);
 
         }
 
@@ -482,6 +489,19 @@ namespace CharByDNA
         {
 
             return string.Format("{0:d4}-{1:d2}-{2:d2} {3:d2}:{4:d2}",this.Year,this.Month,this.Day,this.Hour,this.Minute);
+
+        }
+
+        public double ToDouble()
+        {
+
+            double tyear = this.Year * 10000;
+            double tmonth = this.Month * 100;
+            double tday = this.Day * 1;
+            double thour = this.Hour * .01;
+            double tmin = this.Minute * .0001;
+
+            return tyear + tmonth + tday + thour + tmin;
 
         }
 

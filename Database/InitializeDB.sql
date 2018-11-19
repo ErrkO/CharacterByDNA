@@ -51,8 +51,9 @@ CREATE TABLE CharacterDB(
     Fname text not null,
     Lname text not null,
     Dna text not null,
-    BirthTime text not null,
-    DueDate text,
+    Gender bool not null,
+    BirthTime real not null,
+    DueDate real,
     Dead bool not null
 );
 

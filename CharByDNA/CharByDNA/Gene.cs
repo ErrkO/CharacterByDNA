@@ -231,6 +231,13 @@ namespace CharByDNA
 
         }
 
+        public int ToValue()
+        {
+
+            return Cdn.TranslateCodon(this);
+
+        }
+
         ///<summary>
         /// The getter method for the constant number nucleotides in alleles
         ///</summary>

@@ -169,6 +169,55 @@ namespace CharByDNA
 
         }
 
+        private List<CharacterDB> CQuery(string query)
+        {
+
+            List<CharacterDB> characters = new List<CharacterDB>();
+
+            this.SQLCONN.Open();
+
+            SQLiteCommand command = new SQLiteCommand(query, this.SQLCONN);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+
+                int cid = reader.GetInt32(0);
+                string fname = reader.GetString(1);
+                string lname = reader.GetString(2);
+                string dna = reader.GetString(3);
+                bool gender = reader.GetBoolean(4);
+                double btime = reader.GetDouble(5);
+                double dtime = reader.GetDouble(6);
+                bool dead = reader.GetBoolean(7);
+
+                characters.Add(new CharacterDB(cid, fname, lname, dna, gender, btime, dtime, dead));
+
+            }
+
+            this.SQLCONN.Close();
+
+            return characters;
+
+        }
+
+        public List<CharacterDB> FillListWithViableCharacters(GTime time)
+        {
+
+            string bquery = "SELECT * FROM CharacterDB WHERE Dead = false";
+
+            string query = string.Format(bquery + " AND DueDate = {0}",time.ToDouble());
+            string query2 = string.Format(bquery + " AND BirthTime + 180000 >= {0} AND Gender = true",time.ToDouble());
+
+            List<CharacterDB> chars = new List<CharacterDB>();
+
+            chars = CQuery(query);
+            chars.AddRange(CQuery(query2));
+
+            return chars;
+
+        }
+
     }
 
 }

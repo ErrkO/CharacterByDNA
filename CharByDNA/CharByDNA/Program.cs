@@ -15,11 +15,11 @@ namespace CharByDNA
 
             Database db = new Database();
 
-            CharMenu();
+            CharMenu(db);
 
         }
 
-        public static void CharMenu()
+        public static void CharMenu(Database db)
         {
 
             int choice;
@@ -34,8 +34,9 @@ namespace CharByDNA
             Console.WriteLine("5. Generate Random Parents and then Child");
             Console.WriteLine("6. Show all races and mods");
             Console.WriteLine("7. Run Life Sim");
-            Console.WriteLine("8. Create CSV files");
-            Console.WriteLine("9. Exit");
+            Console.WriteLine("8. Fill DB with Characters");
+            Console.WriteLine("9. Create CSV files");
+            Console.WriteLine("10. Exit");
             Console.Write("Please enter your choice: ");
             choice = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
@@ -59,7 +60,7 @@ namespace CharByDNA
 
                 Console.ReadKey();
 
-                CharMenu();
+                CharMenu(db);
 
 
             }
@@ -93,7 +94,7 @@ namespace CharByDNA
 
                 Console.ReadKey();
 
-                CharMenu();
+                CharMenu(db);
 
             }
 
@@ -125,7 +126,7 @@ namespace CharByDNA
                 Console.WriteLine("\n" + a.ToString());
 
                 Console.ReadKey();
-                CharMenu();
+                CharMenu(db);
 
             }
 
@@ -170,7 +171,7 @@ namespace CharByDNA
 
                 }
 
-                CharMenu();
+                CharMenu(db);
 
             }
 
@@ -210,7 +211,7 @@ namespace CharByDNA
 
                 }
 
-                CharMenu();
+                CharMenu(db);
 
             }
 
@@ -229,7 +230,7 @@ namespace CharByDNA
                 }
 
                 Console.ReadKey();
-                CharMenu();
+                CharMenu(db);
 
             }
 
@@ -245,7 +246,30 @@ namespace CharByDNA
                 LifeSimulator sim = new LifeSimulator(startpop, maxyears);
 
                 Console.ReadKey();
-                CharMenu();
+                CharMenu(db);
+
+            }
+
+            else if (choice == 8)
+            {
+
+                Console.Write("Enter the number of characters to genereate: ");
+                int numchars = Convert.ToInt32(Console.ReadLine());
+
+                List<CharacterDB> chars = new List<CharacterDB>();
+
+                GTime time = new GTime();
+
+                for (int i = 0; i < numchars; i++)
+                {
+
+                    CharacterDB chara = new CharacterDB(new DNA(),time,i);
+
+                    chars.Add(chara);
+
+                }
+
+                CharacterDB.SaveListOfCharacters(chars, db.SQLCONN);
 
             }
 
@@ -254,7 +278,7 @@ namespace CharByDNA
 
                 Names nm = new Names();
                 nm.NumberedFile();
-                CharMenu();
+                CharMenu(db);
 
             }
 
@@ -272,7 +296,7 @@ namespace CharByDNA
                 Console.WriteLine("Please enter a valid choice");
                 Console.ReadKey();
 
-                CharMenu();
+                CharMenu(db);
 
             }
 
