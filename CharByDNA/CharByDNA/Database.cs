@@ -154,6 +154,8 @@ namespace CharByDNA
 
             cmd.ExecuteNonQuery();
 
+            this.SQLCONN.Close();
+
         }
 
         private void ReInitDB()
@@ -166,6 +168,8 @@ namespace CharByDNA
             SQLiteCommand cmd = new SQLiteCommand(script,this.SQLCONN);
 
             cmd.ExecuteNonQuery();
+
+            this.SQLCONN.Close();
 
         }
 
@@ -191,7 +195,7 @@ namespace CharByDNA
                 double dtime = reader.GetDouble(6);
                 bool dead = reader.GetBoolean(7);
 
-                characters.Add(new CharacterDB(cid, fname, lname, dna, gender, btime, dtime, dead));
+                characters.Add(new CharacterDB(this,cid, fname, lname, dna, gender, btime, dtime, dead));
 
             }
 
@@ -215,6 +219,26 @@ namespace CharByDNA
             chars.AddRange(CQuery(query2));
 
             return chars;
+
+        }
+
+        public void SaveListOfCharacters(List<CharacterDB> chars)
+        {
+
+            this.SQLCONN.Open();
+
+            foreach (CharacterDB c in chars)
+            {
+
+                string query = string.Format("INSERT INTO CharacterDB VALUES ({0},\'{1}\',\'{2}\',\'{3}\',{4},{5},{6},{7})", c.CID, c.Fname, c.Lname, c.Dna.ToString(),
+                    Convert.ToInt32(c.Gender), c.BirthTime.ToDouble(), c.DueDate.ToDouble(), Convert.ToInt32(c.Dead));
+
+                SQLiteCommand command = new SQLiteCommand(query, this.SQLCONN);
+                command.ExecuteNonQuery();
+
+            }
+
+            this.SQLCONN.Close();
 
         }
 

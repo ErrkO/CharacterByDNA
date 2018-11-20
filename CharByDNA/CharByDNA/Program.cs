@@ -263,13 +263,15 @@ namespace CharByDNA
                 for (int i = 0; i < numchars; i++)
                 {
 
-                    CharacterDB chara = new CharacterDB(new DNA(),time,i);
+                    CharacterDB chara = new CharacterDB(db,new DNA(),time,i);
 
                     chars.Add(chara);
 
                 }
 
-                CharacterDB.SaveListOfCharacters(chars, db.SQLCONN);
+                db.SaveListOfCharacters(chars);
+
+                CharMenu(db);
 
             }
 

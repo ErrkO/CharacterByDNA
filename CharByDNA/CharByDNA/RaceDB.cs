@@ -12,9 +12,11 @@ namespace CharByDNA
     {
 
         // Desktop Conn
-        private string sqlrconn = "URI=file:D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\Game.db;Version=3";
+        //private string sqlrconn = "URI=file:D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\Game.db;Version=3";
 
         private SQLiteConnection SqlConn;
+
+        private Database DB { get; set; }
 
         public int RID { get; set; }
 
@@ -53,14 +55,15 @@ namespace CharByDNA
 
         public List<string> SkinColors { get; set; }
 
-        public RaceDB()
+        public RaceDB(Database db)
         {
 
-            this.SqlConn = new SQLiteConnection(sqlrconn);
+            this.DB = db;
+            this.SqlConn = db.SQLCONN;
 
         }
 
-        public RaceDB(int id, string name, int mhieght, int fhieght, int hcid, int ecid, int scid, int str, int inte, int dex, int con, int wis, int luk, int cha) : this()
+        public RaceDB(Database db, int id, string name, int mhieght, int fhieght, int hcid, int ecid, int scid, int str, int inte, int dex, int con, int wis, int luk, int cha) : this(db)
         {
 
             this.RID = id;
@@ -80,7 +83,7 @@ namespace CharByDNA
 
         }
 
-        public RaceDB(int rid) : this()
+        public RaceDB(Database db, int rid) : this(db)
         {
 
             RaceDB tempRace = GetRaceByID(rid);
@@ -130,7 +133,7 @@ namespace CharByDNA
                 int l = reader.GetInt32(12);
                 int ch = reader.GetInt32(13);
 
-                races.Add(new RaceDB(rid,name,mh,fh,hc,ec,sc,s,i,d,c,w,l,ch));
+                races.Add(new RaceDB(this.DB,rid,name,mh,fh,hc,ec,sc,s,i,d,c,w,l,ch));
 
             }
 

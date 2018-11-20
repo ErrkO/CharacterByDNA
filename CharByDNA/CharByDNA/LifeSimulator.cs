@@ -22,7 +22,7 @@ namespace CharByDNA
         ///<remarks>
         /// All Praise RNGESUS!!!
         ///</remarks>
-        private Random rngesus = new Random();
+        private Random rngesus = new Random(Guid.NewGuid().GetHashCode());
 
         public GTime Time { get; set; }
 

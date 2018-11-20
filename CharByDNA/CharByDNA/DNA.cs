@@ -40,7 +40,7 @@ namespace CharByDNA
         ///<remarks>
         /// All Praise RNGESUS!!!
         ///</remarks>
-        private Random rngesus = new Random();
+        private Random rngesus = new Random(Guid.NewGuid().GetHashCode());
 
         /// <summary>
         /// 
@@ -63,7 +63,32 @@ namespace CharByDNA
             this.Gene = new Gene();
             this.Genes = new List<Gene>();
 
-            for (int i = 0; i < NUMGENES; i++)
+            int gender = rngesus.Next(0, 2);
+
+            if (gender == 0)
+            {
+
+                this.Genes.Add(this.Gene.GenerateGenderGene(Convert.ToBoolean(gender)));
+                this.Genes.Add(this.Gene.GenerateGenderGene(Convert.ToBoolean(gender)));
+
+            }
+
+            else if (gender == 1)
+            {
+
+                this.Genes.Add(this.Gene.GenerateGenderGene(Convert.ToBoolean(gender)));
+                this.Genes.Add(this.Gene.GenerateGenderGene(Convert.ToBoolean(0)));
+
+            }
+
+            else
+            {
+
+                Console.WriteLine("The Dna Constructor is bugged");
+
+            }
+
+            for (int i = 0; i < NUMGENES-2; i++)
             {
 
                 this.Genes.Add(this.Gene.GenerateRandomGene());
@@ -85,21 +110,32 @@ namespace CharByDNA
             this.Gene = new Gene();
             this.Genes = new List<Gene>();
 
-            this.Genes.Add(this.Gene.GenerateGenderGene(gender));
+            //this.Genes.Add(this.Gene.GenerateGenderGene(gender));
+
+            Gene gone, gtwo;
+
+            do
+            {
+
+                if (gender)
+                {
+
+                    gone = this.Gene.GenerateGenderGene(gender);
+                    gtwo = this.Gene.GenerateGenderGene(!gender);
+
+                }
+
+                else
+                {
+
+                    gone = this.Gene.GenerateGenderGene(gender);
+                    gtwo = this.Gene.GenerateGenderGene(gender);
+
+                }
+
+            } while ((gone.ToInt() % 2) + (gtwo.ToInt() % 2) != 2);
             
-            if (gender)
-            {
-
-                this.Genes.Add(this.Gene.GenerateGenderGene(!gender));
-
-            }
-
-            else
-            {
-
-                this.Genes.Add(this.Gene.GenerateGenderGene(gender));
-
-            }
+            
 
             for (int i = 0; i < NUMGENES; i++)
             {
@@ -165,7 +201,7 @@ namespace CharByDNA
 
             }
 
-            Mutate();
+            //Mutate();
 
         }
 

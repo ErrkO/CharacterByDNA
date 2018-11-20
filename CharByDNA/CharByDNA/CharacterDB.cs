@@ -9,12 +9,11 @@ namespace CharByDNA
 {
 
     class CharacterDB
-    {
+    { 
 
-        ///<summary>
-        /// The Names class object
-        ///</summary>
-        Names charname = new Names();
+        public Database DB { get; set; }
+
+        private NameDB NDB { get; set; }
 
         public int CID { get; private set; }
 
@@ -266,17 +265,18 @@ namespace CharByDNA
 
         private SQLiteConnection sqlConn;
 
-        public CharacterDB()
+        public CharacterDB(Database db)
         {
 
-            this.sqlConn = new SQLiteConnection(sqlcconn);
+            this.DB = db;
+            this.sqlConn = db.SQLCONN;
+            this.NDB = new NameDB(db);
 
         }
 
-        public CharacterDB(int id, string fname, string lname, string dna, bool gender, double btime, double dtime, bool dead)
+        public CharacterDB(Database db, int id, string fname, string lname, string dna, bool gender, double btime, double dtime, bool dead) : this(db)
         {
-
-            this.sqlConn = new SQLiteConnection(sqlcconn);
+            
             this.CID = id;
             this.Fname = fname;
             this.Lname = lname;
@@ -285,7 +285,7 @@ namespace CharByDNA
             this.BirthTime = new GTime(btime);
             this.DueDate = new GTime(dtime);
             this.Dead = dead;
-            this.Racee = new RaceDB(1);
+            this.Racee = new RaceDB(db,1);
 
         }
 
@@ -303,7 +303,7 @@ namespace CharByDNA
 
         }
 
-        public CharacterDB(DNA dna, GTime time, int id)
+        public CharacterDB(Database db, DNA dna, GTime time, int id) : this(db)
         {
 
             List<Gene> genes = dna.Genes;
@@ -324,7 +324,7 @@ namespace CharByDNA
 
             }
 
-            else if (gone + gtwo == 2)
+            else if (gone + gtwo == 0)
             {
 
                 this.Gender = false;
@@ -334,20 +334,20 @@ namespace CharByDNA
             else
             {
 
-                Console.WriteLine("This is an error");
+                Console.WriteLine("{0} has two y chromosomes",id);
 
             }
 
-            this.Fname = charname.GenFname(this.Gender);
+            this.Fname = NDB.GenFname(this.Gender);
 
-            this.Lname = charname.GenLname();
+            this.Lname = NDB.GenLname();
 
         }
 
-        public CharacterDB(CharacterDB dad, CharacterDB mom, GTime time, int id) : this(new DNA(dad.Dna.Miosis(), mom.Dna.Miosis()),time, id)
+        public CharacterDB(Database db, CharacterDB dad, CharacterDB mom, GTime time, int id) : this(db, new DNA(dad.Dna.Miosis(), mom.Dna.Miosis()),time, id)
         {
 
-            this.Fname = charname.GenFname(this.Gender);
+            this.Fname = NDB.GenFname(this.Gender);
             this.Lname = dad.Lname;
 
         }
@@ -378,10 +378,10 @@ namespace CharByDNA
 
         }
 
-        public static void SaveListOfCharacters(List<CharacterDB> chars,SQLiteConnection sqlConn)
+        public void SaveListOfCharacters(List<CharacterDB> chars)
         {
 
-            sqlConn.Open();
+            this.sqlConn.Open();
 
             foreach (CharacterDB c in chars)
             {
@@ -420,7 +420,7 @@ namespace CharByDNA
                 double dtime = reader.GetDouble(6);
                 bool dead = reader.GetBoolean(7);
 
-                characters.Add(new CharacterDB(cid, fname, lname, dna, gender, btime, dtime, dead));
+                characters.Add(new CharacterDB(this.DB, cid, fname, lname, dna, gender, btime, dtime, dead));
 
             }
 

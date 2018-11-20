@@ -72,6 +72,7 @@
     <Compile Include="FamilyTree.cs" />
     <Compile Include="LifeSimulator.cs" />
     <Compile Include="Name.cs" />
+    <Compile Include="NameDB.cs" />
     <Compile Include="Nucleotide.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

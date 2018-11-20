@@ -51,7 +51,7 @@ namespace CharByDNA
         ///<remarks>
         /// All Praise RNGESUS!!!
         ///</remarks>
-        private Random rngesus = new Random();
+        private Random rngesus = new Random(Guid.NewGuid().GetHashCode());
         
         ///<summary>
         /// This is the number of nucleotides in an allele
@@ -136,7 +136,7 @@ namespace CharByDNA
 
                     int num = (one*100) + (two*10) + three;
 
-                    if (num % 2 == 0)
+                    if (num % 2 == 1)
                     {
 
                         if (num != 111 || num != 444)
@@ -164,7 +164,7 @@ namespace CharByDNA
 
                     int num = (one * 100) + (two * 10) + three;
 
-                    if (num % 2 == 1)
+                    if (num % 2 == 0)
                     {
 
                         if (num != 111 || num != 444)
