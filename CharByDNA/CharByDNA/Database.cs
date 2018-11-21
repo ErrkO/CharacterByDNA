@@ -190,12 +190,12 @@ namespace CharByDNA
                 string fname = reader.GetString(1);
                 string lname = reader.GetString(2);
                 string dna = reader.GetString(3);
-                bool gender = reader.GetBoolean(4);
+                int gender = reader.GetInt32(4);
                 double btime = reader.GetDouble(5);
                 double dtime = reader.GetDouble(6);
-                bool dead = reader.GetBoolean(7);
+                int dead = reader.GetInt32(7);
 
-                characters.Add(new CharacterDB(this,cid, fname, lname, dna, gender, btime, dtime, dead));
+                characters.Add(new CharacterDB(this, cid, fname, lname, dna, Convert.ToBoolean(gender), btime, dtime, Convert.ToBoolean(dead)));
 
             }
 
@@ -205,13 +205,53 @@ namespace CharByDNA
 
         }
 
+        private void CNonQuery(string nonquery)
+        {
+
+            bool conopen = false;
+
+            if (this.SQLCONN != null && this.SQLCONN.State == System.Data.ConnectionState.Open)
+            {
+
+                conopen = true;
+
+            }
+
+            else
+            {
+
+                this.SQLCONN.Open();
+
+            }
+
+            SQLiteCommand command = new SQLiteCommand(nonquery, this.SQLCONN);
+            command.ExecuteNonQuery();
+
+            if (!conopen)
+            {
+
+                this.SQLCONN.Close();
+
+            }
+
+        }
+
+        public List<CharacterDB> GetAllCharacters()
+        {
+
+            string query = "SELECT * FROM CharacterDb";
+
+            return CQuery(query);
+
+        }
+
         public List<CharacterDB> FillListWithViableCharacters(GTime time)
         {
 
-            string bquery = "SELECT * FROM CharacterDB WHERE Dead = false";
+            string bquery = "SELECT * FROM CharacterDB WHERE Dead = 0";
 
             string query = string.Format(bquery + " AND DueDate = {0}",time.ToDouble());
-            string query2 = string.Format(bquery + " AND BirthTime + 180000 >= {0} AND Gender = true",time.ToDouble());
+            string query2 = string.Format(bquery + " AND BirthTime + 180000 >= {0}",time.ToDouble());
 
             List<CharacterDB> chars = new List<CharacterDB>();
 
@@ -239,6 +279,63 @@ namespace CharByDNA
             }
 
             this.SQLCONN.Close();
+
+        }
+
+        public void SaveCharacter(CharacterDB character)
+        {
+
+            string nonquery = string.Format("INSERT INTO Characters VALUES ({0},\'{1}\',\'{2}\',\'{3}\',{4},{5},{6},{7})", character.CID, character.Fname, character.Lname, character.Dna.ToString(),
+                Convert.ToInt32(character.Gender), character.BirthTime.ToDouble(), character.DueDate.ToDouble(), Convert.ToInt32(character.Dead));
+
+            CNonQuery(nonquery);
+
+        }
+
+        private bool InDB(int id)
+        {
+
+            string query = string.Format("SELECT * FROM CharacterDB WHERE CID = {0}", id);
+
+            List<CharacterDB> chars = CQuery(query);
+
+            if (chars.Count > 0)
+            {
+
+                return true;
+
+            }
+
+            return false;
+
+        }
+
+        public void UpdateDB(List<CharacterDB> chars)
+        {
+
+            string query;
+
+            foreach (CharacterDB c in chars)
+            {
+
+                if (InDB(c.CID))
+                {
+
+                    query = string.Format("UPDATE CharacterDB SET Lname = \'{0}\', DueDate = {1}, Dead = {2} WHERE CID = {3}",c.Lname,c.DueDate.ToDouble(),
+                        Convert.ToInt32(c.Dead),c.CID);
+
+                    CQuery(query);
+
+                }
+
+                else
+                {
+
+                    SaveCharacter(c);
+
+                }
+
+            }
 
         }
 

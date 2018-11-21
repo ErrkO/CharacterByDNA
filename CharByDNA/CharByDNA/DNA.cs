@@ -71,6 +71,8 @@ namespace CharByDNA
                 this.Genes.Add(this.Gene.GenerateGenderGene(Convert.ToBoolean(gender)));
                 this.Genes.Add(this.Gene.GenerateGenderGene(Convert.ToBoolean(gender)));
 
+                this.DNAStrand += this.Genes[0].ToString() + this.Genes[1].ToString();
+
             }
 
             else if (gender == 1)
@@ -78,6 +80,8 @@ namespace CharByDNA
 
                 this.Genes.Add(this.Gene.GenerateGenderGene(Convert.ToBoolean(gender)));
                 this.Genes.Add(this.Gene.GenerateGenderGene(Convert.ToBoolean(0)));
+
+                this.DNAStrand += this.Genes[0].ToString() + this.Genes[1].ToString();
 
             }
 

@@ -35,8 +35,9 @@ namespace CharByDNA
             Console.WriteLine("6. Show all races and mods");
             Console.WriteLine("7. Run Life Sim");
             Console.WriteLine("8. Fill DB with Characters");
-            Console.WriteLine("9. Create CSV files");
-            Console.WriteLine("10. Exit");
+            Console.WriteLine("9. Test EmptyDB");
+            Console.WriteLine("10. Create CSV files");
+            Console.WriteLine("11. Exit");
             Console.Write("Please enter your choice: ");
             choice = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
@@ -243,7 +244,7 @@ namespace CharByDNA
                 Console.Write("Please enter the max years: ");
                 int maxyears = Convert.ToInt32(Console.ReadLine());
 
-                LifeSimulator sim = new LifeSimulator(startpop, maxyears);
+                LifeSimulator sim = new LifeSimulator(db,startpop, maxyears);
 
                 Console.ReadKey();
                 CharMenu(db);
@@ -275,7 +276,20 @@ namespace CharByDNA
 
             }
 
-            else if (choice == 8)
+            else if(choice == 9)
+            {
+
+                List<CharacterDB> chars = new List<CharacterDB>();
+
+                chars.AddRange(db.GetAllCharacters());
+
+                Console.WriteLine(chars);
+
+                Console.ReadKey();
+
+            }
+
+            else if (choice == 10)
             {
 
                 Names nm = new Names();
@@ -284,7 +298,7 @@ namespace CharByDNA
 
             }
 
-            else if (choice == 9)
+            else if (choice == 11)
             {
 
                 Console.WriteLine("Exiting....");

@@ -8,118 +8,131 @@ using System.Threading.Tasks;
 namespace CharByDNA
 {
 
+    struct FTree
+    {
+
+        public int Person { get; set; }
+
+        public int Relationship { get; set; }
+
+        public int Relation { get; set; }
+
+        public FTree(int p, int r, int rid)
+        {
+
+            this.Person = p;
+            this.Relationship = r;
+            this.Relation = rid;
+
+        }
+
+    }
+
     class FamilyTreeDB
     {
 
-        // Desktop Conn
-        private string sqlftconn = "URI=file:D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\Game.db;Version=3";
+        private SQLiteConnection SqlConn { get; set; }
+        
+        private Database DB { get; set; }
 
-        private SQLiteConnection sqlConn;
-
-        public FamilyTreeDB()
+        public FamilyTreeDB(Database db)
         {
 
-            this.sqlConn = new SQLiteConnection(sqlftconn);
+            this.DB = db;
+            this.SqlConn = db.SQLCONN;
 
         }
 
-        public void SetSpouse(int c1id, int c2id)
+        private List<FTree> Query(string query)
         {
 
-            this.sqlConn.Open();
+            List<FTree> relations = new List<FTree>();
 
-            string query1 = string.Format("INSERT INTO FamilyTree VALUES ({0},1,{1})",c1id,c2id);
-            string query2 = string.Format("INSERT INTO FamilyTree VALUES ({0},1,{1})",c2id,c1id);
+            this.SqlConn.Open();
 
-            SQLiteCommand command1 = new SQLiteCommand(query1, this.sqlConn);
-            SQLiteCommand command2 = new SQLiteCommand(query2, this.sqlConn);
-
-            command1.ExecuteNonQuery();
-            command2.ExecuteNonQuery();
-
-        }
-
-        public void SetParent(int p1id, int p2id, int cid)
-        {
-
-            this.sqlConn.Open();
-
-            string query1 = string.Format("INSERT INTO FamilyTree VALUES ({0},2,{1})", p1id, cid);
-            string query2 = string.Format("INSERT INTO FamilyTree VALUES ({0},2,{1})", p2id, cid);
-
-            SQLiteCommand command1 = new SQLiteCommand(query1, this.sqlConn);
-            SQLiteCommand command2 = new SQLiteCommand(query2, this.sqlConn);
-
-            command1.ExecuteNonQuery();
-            command2.ExecuteNonQuery();
-
-        }
-
-        public List<int> GetChildren(int id)
-        {
-
-            List<int> ids = new List<int>();
-
-            string query = string.Format("SELECT * FROM FamilyTree WHERE PID = {0} AND rtID = 2",id);
-
-            SQLiteCommand command = new SQLiteCommand(query, this.sqlConn);
+            SQLiteCommand command = new SQLiteCommand(query, this.SqlConn);
             SQLiteDataReader reader = command.ExecuteReader();
 
-            while(reader.Read())
+            while (reader.Read())
             {
 
-                ids.Add(reader.GetInt32(2));
+                int person = reader.GetInt32(0);
+                int rtype = reader.GetInt32(1);
+                int relation = reader.GetInt32(2);
+
+                relations.Add(new FTree(person, rtype, relation));
 
             }
 
-            return ids;
+            this.SqlConn.Close();
+
+            return relations;
 
         }
 
-        public List<int> GetAllChildren(int id)
+        private void NonQuery(string nonquery)
         {
 
-            List<int> ids = new List<int>();
-            List<int> tempids = GetChildren(id);
+            this.SqlConn.Open();
 
-            ids.AddRange(tempids);
+            SQLiteCommand command = new SQLiteCommand(nonquery, this.SqlConn);
+            command.ExecuteNonQuery();
 
-            while (tempids != null)
+            this.SqlConn.Close();
+
+        }
+
+        public List<FTree> GetAllRelationsToID(int id)
+        {
+
+            string query = string.Format("SELECT * FROM FamilyTree WHERE Person_ID = {0}",id);
+            return Query(query);
+
+        }
+
+        public bool HasSpouse(CharacterDB character)
+        {
+
+            string query = string.Format("SELECT * FROM FamilyTree WHERE Person_ID = {0} AND Rt_ID = 1",character.CID);
+
+            List<FTree> tree = Query(query);
+
+            if (tree.Count >= 1)
             {
 
-                List<int> grandchilds = new List<int>();
-
-                for (int i = 0; i < tempids.Count; i++)
-                {
-
-                    if (GetChildren(i) != null)
-                    {
-
-                        grandchilds.AddRange(GetChildren(i));
-
-                    }
-
-                }
-
-                if (grandchilds == null)
-                {
-
-                    tempids = null;
-
-                }
-
-                else
-                {
-
-                    tempids = grandchilds;
-
-                }
-
-                ids.AddRange(tempids);
+                return true;
 
             }
 
-            return ids;
+            return false;
+
+        }
+
+        public void SetChild(CharacterDB parent, CharacterDB child)
+        {
+            
+            string nonquery = string.Format("INSERT INTO FamilyTree VALUES ({0},3,{1})",parent.CID,child.CID);
+            NonQuery(nonquery);
+
+        }
+
+        public void SetSpouses(CharacterDB s1, CharacterDB s2)
+        {
+
+            string nonquery1 = string.Format("INSERT INTO FamilyTree VALUES ({0},1,{1})",s1.CID,s2.CID);
+            string nonquery2 = string.Format("INSERT INTO FamilyTree VALUES ({0},1,{1})", s2.CID, s1.CID);
+
+            NonQuery(nonquery1);
+            NonQuery(nonquery2);
+
+        }
+
+        public int GetSpouse(CharacterDB character)
+        {
+
+            string query = string.Format("SELECT * FROM FamilyTree WHERE Person_ID = {0} AND Rt_ID = 1",character.CID);
+
+            return Query(query)[0].Relation;
 
         }
 

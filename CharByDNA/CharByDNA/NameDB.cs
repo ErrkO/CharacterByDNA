@@ -14,7 +14,7 @@ namespace CharByDNA
         Random rngesus = new Random(Guid.NewGuid().GetHashCode());
 
         // Desktop Conn
-        private string sqlrconn = "URI=file:D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\Game.db;Version=3";
+        //private string sqlrconn = "URI=file:D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\Game.db;Version=3";
 
         private SQLiteConnection SqlConn;
 
@@ -28,7 +28,7 @@ namespace CharByDNA
         private List<string> Query(string query)
         {
 
-            this.SqlConn = new SQLiteConnection(sqlrconn);
+            //this.SqlConn = new SQLiteConnection(this.);
 
             List<string> names = new List<string>();
 

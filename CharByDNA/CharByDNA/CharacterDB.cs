@@ -19,7 +19,7 @@ namespace CharByDNA
 
         public string Fname { get; private set; }
 
-        public string Lname { get; private set; }
+        public string Lname { get; set; }
 
         public DNA Dna { get; private set; }
 
@@ -261,7 +261,7 @@ namespace CharByDNA
         }
 
         // Desktop Conn
-        private string sqlcconn = "URI=file:D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\Game.db;Version=3";
+        //private string sqlcconn = "URI=file:D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\Game.db;Version=3";
 
         private SQLiteConnection sqlConn;
 
@@ -289,7 +289,23 @@ namespace CharByDNA
 
         }
 
-        public CharacterDB(Character character, GTime time)
+        public CharacterDB(Database db, int id) : this(db)
+        {
+
+            CharacterDB c = GetCharacterFromID(id);
+            this.CID = c.CID;
+            this.Fname = c.Fname;
+            this.Lname = c.Lname;
+            this.Dna = c.Dna;
+            this.Gender = c.Gender;
+            this.BirthTime = c.BirthTime;
+            this.DueDate = c.DueDate;
+            this.Dead = c.Dead;
+            this.Racee = new RaceDB(db, 1);
+
+        }
+
+        /*public CharacterDB(Character character, GTime time)
         {
 
             this.sqlConn = new SQLiteConnection(sqlcconn);
@@ -301,7 +317,7 @@ namespace CharByDNA
             this.DueDate = character.DueDate;
             this.Dead = character.Dead;
 
-        }
+        } */
 
         public CharacterDB(Database db, DNA dna, GTime time, int id) : this(db)
         {
@@ -355,46 +371,32 @@ namespace CharByDNA
         public void SaveCharacter()
         {
 
-            this.sqlConn.Open();
-
-            string query = string.Format("INSERT INTO Characters VALUES ({0},{1},{2},{3},{4},{5},{6},{7})", this.CID, this.Fname, this.Lname, this.Dna.ToString(),
+            string nonquery = string.Format("INSERT INTO Characters VALUES ({0},{1},{2},{3},{4},{5},{6},{7})", this.CID, this.Fname, this.Lname, this.Dna.ToString(),
                 this.Gender, this.BirthTime.ToDouble(), this.DueDate.ToDouble(), this.Dead);
 
-            SQLiteCommand command = new SQLiteCommand(query, sqlConn);
-            command.ExecuteNonQuery();
+            NonQuery(nonquery);
 
         }
 
         public void SaveCharacter(CharacterDB character)
         {
 
-            this.sqlConn.Open();
+            string nonquery = string.Format("INSERT INTO Characters VALUES ({0},{1},{2},{3},{4},{5},{6},{7})",character.CID,character.Fname,character.Lname,character.Dna.ToString(),
+                Convert.ToInt32(character.Gender), character.BirthTime.ToDouble(),character.DueDate.ToDouble(),Convert.ToInt32(character.Dead));
 
-            string query = string.Format("INSERT INTO Characters VALUES ({0},{1},{2},{3},{4},{5},{6},{7})",character.CID,character.Fname,character.Lname,character.Dna.ToString(),
-                character.Gender, character.BirthTime.ToDouble(),character.DueDate.ToDouble(),character.Dead);
-
-            SQLiteCommand command = new SQLiteCommand(query, sqlConn);
-            command.ExecuteNonQuery();
+            NonQuery(nonquery);
 
         }
 
         public void SaveListOfCharacters(List<CharacterDB> chars)
         {
 
-            this.sqlConn.Open();
-
             foreach (CharacterDB c in chars)
             {
 
-                string query = string.Format("INSERT INTO Characters VALUES ({0},{1},{2},{3},{4},{5},{6},{7})", c.CID, c.Fname, c.Lname, c.Dna.ToString(),
-                    c.Gender, c.BirthTime.ToDouble(), c.DueDate.ToDouble(), c.Dead);
-
-                SQLiteCommand command = new SQLiteCommand(query, sqlConn);
-                command.ExecuteNonQuery();
+                SaveCharacter(c);
 
             }
-
-            sqlConn.Close();
 
         }
 
@@ -403,7 +405,21 @@ namespace CharByDNA
 
             List<CharacterDB> characters = new List<CharacterDB>();
 
-            this.sqlConn.Open();
+            bool conopen = false;
+
+            if (this.sqlConn != null && this.sqlConn.State == System.Data.ConnectionState.Open)
+            {
+
+                conopen = true;
+
+            }
+
+            else
+            {
+
+                this.sqlConn.Open();
+
+            }
 
             SQLiteCommand command = new SQLiteCommand(query, sqlConn);
             SQLiteDataReader reader = command.ExecuteReader();
@@ -415,18 +431,54 @@ namespace CharByDNA
                 string fname = reader.GetString(1);
                 string lname = reader.GetString(2);
                 string dna = reader.GetString(3);
-                bool gender = reader.GetBoolean(4);
+                int gender = reader.GetInt32(4);
                 double btime = reader.GetDouble(5);
                 double dtime = reader.GetDouble(6);
-                bool dead = reader.GetBoolean(7);
+                int dead = reader.GetInt32(7);
 
-                characters.Add(new CharacterDB(this.DB, cid, fname, lname, dna, gender, btime, dtime, dead));
+                characters.Add(new CharacterDB(this.DB, cid, fname, lname, dna, Convert.ToBoolean(gender), btime, dtime, Convert.ToBoolean(dead)));
 
             }
 
-            sqlConn.Close();
+            if (!conopen)
+            {
+
+                this.sqlConn.Close();
+
+            }
 
             return characters;
+
+        }
+
+        private void NonQuery(string nonquery)
+        {
+
+            bool conopen = false;
+
+            if (this.sqlConn != null && this.sqlConn.State == System.Data.ConnectionState.Open)
+            {
+
+                conopen = true;
+
+            }
+
+            else
+            {
+
+                this.sqlConn.Open();
+
+            }
+
+            SQLiteCommand command = new SQLiteCommand(nonquery, this.sqlConn);
+            command.ExecuteNonQuery();
+
+            if (!conopen)
+            {
+
+                this.sqlConn.Close();
+
+            }
 
         }
 
@@ -466,6 +518,15 @@ namespace CharByDNA
             string query = string.Format("SELECT * FROM CharacterDB WHERE Gender = {0} AND Dead = false",gender);
 
             return Query(query);
+
+        }
+
+        private CharacterDB GetCharacterFromID(int id)
+        {
+
+            string query = string.Format("SELECT * FROM CharacterDB WHERE CID = {0}",id);
+
+            return Query(query)[0];
 
         }
 
@@ -571,6 +632,39 @@ namespace CharByDNA
             int temp2 = Convert.ToInt32(Math.Floor(temp));
 
             return temp2 - 5;
+
+        }
+
+        public bool IsPregnent()
+        {
+
+            return IsPregnent(this);
+
+        }
+
+        public bool IsPregnent(CharacterDB character)
+        {
+
+            if (character.Gender)
+            {
+
+                return false;
+
+            }
+
+            else
+            {
+
+                if (character.DueDate.ToDouble() > 0)
+                {
+
+                    return true;
+
+                }
+
+            }
+
+            return false;
 
         }
 

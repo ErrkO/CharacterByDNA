@@ -108,9 +108,23 @@ namespace CharByDNA
         private List<RaceDB> Query(string query)
         {
 
-            List<RaceDB> races = new List<RaceDB>();
+            bool conopen = false;
 
-            this.SqlConn.Open();
+            if (this.SqlConn != null && this.SqlConn.State == System.Data.ConnectionState.Open)
+            {
+
+                conopen = true;
+
+            }
+
+            else
+            {
+
+                this.SqlConn.Open();
+
+            }
+
+            List<RaceDB> races = new List<RaceDB>();
 
             SQLiteCommand command = new SQLiteCommand(query, this.SqlConn);
             SQLiteDataReader reader = command.ExecuteReader();
@@ -137,7 +151,12 @@ namespace CharByDNA
 
             }
 
-            this.SqlConn.Close();
+            if (!conopen)
+            {
+
+                this.SqlConn.Close();
+
+            }
 
             return races;
 
@@ -173,7 +192,21 @@ namespace CharByDNA
 
             List<string> property = new List<string>();
 
-            this.SqlConn.Open();
+            bool conopen = false;
+
+            if (this.SqlConn != null && this.SqlConn.State == System.Data.ConnectionState.Open)
+            {
+
+                conopen = true;
+
+            }
+
+            else
+            {
+
+                this.SqlConn.Open();
+
+            }
 
             string id = "";
 
@@ -215,7 +248,12 @@ namespace CharByDNA
 
             }
 
-            this.SqlConn.Close();
+            if (!conopen)
+            {
+
+                this.SqlConn.Close();
+
+            }
 
             return property;
 
