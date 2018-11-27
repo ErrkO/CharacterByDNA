@@ -29,6 +29,8 @@ namespace CharByDNA
 
         public GTime DueDate { get; set; }
 
+        public bool IsSingle { get; set; }
+
         public bool Dead { get; set; }
 
         public RaceDB Racee { get; set; }
@@ -274,7 +276,7 @@ namespace CharByDNA
 
         }
 
-        public CharacterDB(Database db, int id, string fname, string lname, string dna, bool gender, double btime, double dtime, bool dead) : this(db)
+        public CharacterDB(Database db, int id, string fname, string lname, string dna, bool gender, double btime, double dtime, bool isingle, bool dead) : this(db)
         {
             
             this.CID = id;
@@ -284,6 +286,7 @@ namespace CharByDNA
             this.Gender = gender;
             this.BirthTime = new GTime(btime);
             this.DueDate = new GTime(dtime);
+            this.IsSingle = isingle;
             this.Dead = dead;
             this.Racee = new RaceDB(db,1);
 
@@ -327,6 +330,7 @@ namespace CharByDNA
             this.BirthTime = time;
             this.Dead = false;
             this.DueDate = new GTime(true);
+            this.IsSingle = true;
             this.Dna = dna;
 
             // Gene Pair 1
@@ -434,9 +438,10 @@ namespace CharByDNA
                 int gender = reader.GetInt32(4);
                 double btime = reader.GetDouble(5);
                 double dtime = reader.GetDouble(6);
-                int dead = reader.GetInt32(7);
+                int issingle = reader.GetInt32(7);
+                int dead = reader.GetInt32(8);
 
-                characters.Add(new CharacterDB(this.DB, cid, fname, lname, dna, Convert.ToBoolean(gender), btime, dtime, Convert.ToBoolean(dead)));
+                characters.Add(new CharacterDB(this.DB, cid, fname, lname, dna, Convert.ToBoolean(gender), btime, dtime, Convert.ToBoolean(issingle), Convert.ToBoolean(dead)));
 
             }
 
@@ -665,6 +670,29 @@ namespace CharByDNA
             }
 
             return false;
+
+        }
+
+        public override string ToString()
+        {
+
+            string gender;
+
+            if (this.Gender)
+            {
+
+                gender = "Male";
+
+            }
+
+            else
+            {
+
+                gender = "Female";
+
+            }
+
+            return string.Format("{0}, {1} {2}",gender,this.Fname,this.Lname);
 
         }
 

@@ -67,6 +67,7 @@ CREATE TABLE CharacterDB(
     Gender bool not null,
     BirthTime real not null,
     DueDate real,
+    IsSingle bool not null,
     Dead bool not null
 );
 

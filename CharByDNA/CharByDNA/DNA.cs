@@ -118,38 +118,31 @@ namespace CharByDNA
 
             Gene gone, gtwo;
 
-            do
+            if (gender)
             {
 
-                if (gender)
-                {
+                gone = this.Gene.GenerateGenderGene(gender);
+                gtwo = this.Gene.GenerateGenderGene(!gender);
 
-                    gone = this.Gene.GenerateGenderGene(gender);
-                    gtwo = this.Gene.GenerateGenderGene(!gender);
+            }
 
-                }
-
-                else
-                {
-
-                    gone = this.Gene.GenerateGenderGene(gender);
-                    gtwo = this.Gene.GenerateGenderGene(gender);
-
-                }
-
-            } while ((gone.ToInt() % 2) + (gtwo.ToInt() % 2) != 2);
-            
-            
-
-            for (int i = 0; i < NUMGENES; i++)
+            else
             {
 
-                if (i != 0)
-                {
-                    
-                    this.Genes.Add(this.Gene.GenerateRandomGene());
+                gone = this.Gene.GenerateGenderGene(gender);
+                gtwo = this.Gene.GenerateGenderGene(gender);
 
-                }
+            }
+
+            this.Genes.Add(gone);
+            this.Genes.Add(gtwo);
+
+            this.DNAStrand += gone.ToString() + gtwo.ToString();
+
+            for (int i = 2; i < NUMGENES; i++)
+            {
+
+                this.Genes.Add(this.Gene.GenerateRandomGene());
 
                 this.DNAStrand += this.Genes[i].ToString();
 

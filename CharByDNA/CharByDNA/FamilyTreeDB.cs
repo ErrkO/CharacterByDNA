@@ -93,7 +93,14 @@ namespace CharByDNA
         public bool HasSpouse(CharacterDB character)
         {
 
-            string query = string.Format("SELECT * FROM FamilyTree WHERE Person_ID = {0} AND Rt_ID = 1",character.CID);
+            return HasSpouse(character.CID);
+
+        }
+
+        public bool HasSpouse(int id)
+        {
+
+            string query = string.Format("SELECT * FROM FamilyTree WHERE Person_ID = {0} AND Rt_ID = 1", id);
 
             List<FTree> tree = Query(query);
 
@@ -133,6 +140,27 @@ namespace CharByDNA
             string query = string.Format("SELECT * FROM FamilyTree WHERE Person_ID = {0} AND Rt_ID = 1",character.CID);
 
             return Query(query)[0].Relation;
+
+        }
+
+        public List<int> GetListOfSingleCharacters(int size)
+        {
+
+            List<int> chars = new List<int>();
+
+            for (int i = 0; i < size; i++)
+            {
+
+                if (!HasSpouse(i))
+                {
+
+                    chars.Add(i);
+
+                }
+
+            }
+
+            return chars;
 
         }
 

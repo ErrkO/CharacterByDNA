@@ -31,11 +31,14 @@ namespace CharByDNA
 
         public string DbName { get; set; }
 
+        private FamilyTreeDB FamTree { get; set; }
+
         public Database()
         {
 
             this.SQLCONN = new SQLiteConnection(sqlconn);
             this.DbName = "Game.db";
+            this.FamTree = new FamilyTreeDB(this);
 
             ReInitDB();
 
@@ -102,6 +105,31 @@ namespace CharByDNA
                 this.DbName = filename;
 
             }
+
+        }
+
+        public int NumOfCharacters()
+        {
+
+            List<int> id = new List<int>();
+
+            string query = "SELECT Count(*) FROM CharacterDB";
+
+            this.SQLCONN.Open();
+
+            SQLiteCommand command = new SQLiteCommand(query, this.SQLCONN);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+
+                id.Add(reader.GetInt32(0));
+
+            }
+
+            this.SQLCONN.Close();
+
+            return id[0];
 
         }
 
@@ -193,15 +221,58 @@ namespace CharByDNA
                 int gender = reader.GetInt32(4);
                 double btime = reader.GetDouble(5);
                 double dtime = reader.GetDouble(6);
-                int dead = reader.GetInt32(7);
+                int issingle = reader.GetInt32(7);
+                int dead = reader.GetInt32(8);
 
-                characters.Add(new CharacterDB(this, cid, fname, lname, dna, Convert.ToBoolean(gender), btime, dtime, Convert.ToBoolean(dead)));
+                characters.Add(new CharacterDB(this, cid, fname, lname, dna, Convert.ToBoolean(gender), btime, dtime, Convert.ToBoolean(issingle), Convert.ToBoolean(dead)));
 
             }
 
             this.SQLCONN.Close();
 
             return characters;
+
+        }
+
+        public int CountQuery(string query)
+        {
+
+            bool conopen = false;
+
+            int numdead = 0;
+
+            if (this.SQLCONN != null && this.SQLCONN.State == System.Data.ConnectionState.Open)
+            {
+
+                conopen = true;
+
+            }
+
+            else
+            {
+
+                this.SQLCONN.Open();
+
+            }
+
+            SQLiteCommand command = new SQLiteCommand(query, this.SQLCONN);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+
+                numdead = reader.GetInt32(0);
+
+            }
+
+            if (!conopen)
+            {
+
+                this.SQLCONN.Close();
+
+            }
+
+            return numdead;
 
         }
 
@@ -248,15 +319,17 @@ namespace CharByDNA
         public List<CharacterDB> FillListWithViableCharacters(GTime time)
         {
 
-            string bquery = "SELECT * FROM CharacterDB WHERE Dead = 0";
+            List<int> ids = this.FamTree.GetListOfSingleCharacters(NumOfCharacters());
 
-            string query = string.Format(bquery + " AND DueDate = {0}",time.ToDouble());
-            string query2 = string.Format(bquery + " AND BirthTime + 180000 >= {0}",time.ToDouble());
+            string query = string.Format("SELECT * FROM CharacterDb WHERE Dead = 0 AND ({0} - BirthTime) / 10000 >= 18 AND (",time.ToDouble());
+
+            query += "IsSingle = 1 OR ";
+
+            query += string.Format("DueDate = {0} OR (DueDate < 0 AND Gender = 0))",time.ToDouble());
 
             List<CharacterDB> chars = new List<CharacterDB>();
 
             chars = CQuery(query);
-            chars.AddRange(CQuery(query2));
 
             return chars;
 
@@ -270,11 +343,7 @@ namespace CharByDNA
             foreach (CharacterDB c in chars)
             {
 
-                string query = string.Format("INSERT INTO CharacterDB VALUES ({0},\'{1}\',\'{2}\',\'{3}\',{4},{5},{6},{7})", c.CID, c.Fname, c.Lname, c.Dna.ToString(),
-                    Convert.ToInt32(c.Gender), c.BirthTime.ToDouble(), c.DueDate.ToDouble(), Convert.ToInt32(c.Dead));
-
-                SQLiteCommand command = new SQLiteCommand(query, this.SQLCONN);
-                command.ExecuteNonQuery();
+                SaveCharacter(c);
 
             }
 
@@ -285,8 +354,8 @@ namespace CharByDNA
         public void SaveCharacter(CharacterDB character)
         {
 
-            string nonquery = string.Format("INSERT INTO Characters VALUES ({0},\'{1}\',\'{2}\',\'{3}\',{4},{5},{6},{7})", character.CID, character.Fname, character.Lname, character.Dna.ToString(),
-                Convert.ToInt32(character.Gender), character.BirthTime.ToDouble(), character.DueDate.ToDouble(), Convert.ToInt32(character.Dead));
+            string nonquery = string.Format("INSERT INTO CharacterDB VALUES ({0},\'{1}\',\'{2}\',\'{3}\',{4},{5},{6},{7},{8})", character.CID, character.Fname, character.Lname, character.Dna.ToString(),
+                Convert.ToInt32(character.Gender), character.BirthTime.ToDouble(), character.DueDate.ToDouble(), Convert.ToInt32(character.IsSingle), Convert.ToInt32(character.Dead));
 
             CNonQuery(nonquery);
 
@@ -310,30 +379,37 @@ namespace CharByDNA
 
         }
 
-        public void UpdateDB(List<CharacterDB> chars)
+        public void UpdateDBCharacter(CharacterDB chara)
         {
 
             string query;
 
+            if (InDB(chara.CID))
+            {
+
+                query = string.Format("UPDATE CharacterDB SET Lname = \'{0}\', DueDate = {1}, IsSingle = {2}, Dead = {3} WHERE CID = {4}", chara.Lname, chara.DueDate.ToDouble(),
+                        Convert.ToInt32(chara.IsSingle), Convert.ToInt32(chara.Dead), chara.CID);
+
+                CNonQuery(query);
+
+            }
+
+            else
+            {
+
+                SaveCharacter(chara);
+
+            }
+
+        }
+
+        public void UpdateDB(List<CharacterDB> chars)
+        {
+
             foreach (CharacterDB c in chars)
             {
 
-                if (InDB(c.CID))
-                {
-
-                    query = string.Format("UPDATE CharacterDB SET Lname = \'{0}\', DueDate = {1}, Dead = {2} WHERE CID = {3}",c.Lname,c.DueDate.ToDouble(),
-                        Convert.ToInt32(c.Dead),c.CID);
-
-                    CQuery(query);
-
-                }
-
-                else
-                {
-
-                    SaveCharacter(c);
-
-                }
+                UpdateDBCharacter(c);
 
             }
 

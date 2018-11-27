@@ -65,7 +65,7 @@ namespace CharByDNA
         {
         }
 
-        public GTime() : this(0001, 01, 01, 00, 00)
+        public GTime() : this(0000, 01, 01, 00, 00)
         {
         }
 
@@ -359,6 +359,33 @@ namespace CharByDNA
             }
 
             return true;
+
+        }
+
+        public static GTime IncrementByDays(GTime time)
+        {
+
+            time.Day++;
+
+            if (time.Day > 30)
+            {
+
+                time.Day = 1;
+
+                time.Month++;
+
+            }
+
+            if (time.Month > 12)
+            {
+
+                time.Month = 1;
+
+                time.Year++;
+
+            }
+
+            return time;
 
         }
 
