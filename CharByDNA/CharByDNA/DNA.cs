@@ -240,64 +240,6 @@ namespace CharByDNA
 
         }
 
-        // To Change
-
-        ///<summary>
-        /// This method converts a coded pair into a tuple object
-        ///</summary>
-        ///<param name="code"> string: Encoded version of the DNA  </param>
-        ///<returns>
-        /// Returns a tuple object that contains the numerical pairs
-        ///</returns>
-        private Tuple DecodeDNA(string code)
-        {
-
-            return DecodeDNA(Convert.ToInt32(code));
-
-        }
-
-        // To Change
-
-        ///
-        ///
-        ///
-        private Tuple DecodeDNA(int code)
-        {
-
-            Tuple tup = new Tuple(0,0);
-
-            if (code == 3)
-            {
-
-                tup = new Tuple(3,1);
-
-            }
-
-            else if (code == 4)
-            {
-
-                tup = new Tuple(1,3);
-
-            }
-
-            else if (code == 6)
-            {
-
-                tup = new Tuple(2,4);
-                
-            }
-
-            else if (code == 8)
-            {
-
-                tup = new Tuple(4,2);
-                
-            }
-
-            return tup;
-
-        }
-
         private void Mutate()
         {
 

@@ -90,7 +90,7 @@ namespace CharByDNA
 
         }
 
-        public bool HasSpouse(CharacterDB character)
+        public bool HasSpouse(Character character)
         {
 
             return HasSpouse(character.CID);
@@ -115,7 +115,7 @@ namespace CharByDNA
 
         }
 
-        public void SetChild(CharacterDB parent, CharacterDB child)
+        public void SetChild(Character parent, Character child)
         {
             
             string nonquery = string.Format("INSERT INTO FamilyTree VALUES ({0},3,{1})",parent.CID,child.CID);
@@ -123,7 +123,7 @@ namespace CharByDNA
 
         }
 
-        public void SetSpouses(CharacterDB s1, CharacterDB s2)
+        public void SetSpouses(Character s1, Character s2)
         {
 
             string nonquery1 = string.Format("INSERT INTO FamilyTree VALUES ({0},1,{1})",s1.CID,s2.CID);
@@ -134,7 +134,7 @@ namespace CharByDNA
 
         }
 
-        public int GetSpouse(CharacterDB character)
+        public int GetSpouse(Character character)
         {
 
             string query = string.Format("SELECT * FROM FamilyTree WHERE Person_ID = {0} AND Rt_ID = 1",character.CID);

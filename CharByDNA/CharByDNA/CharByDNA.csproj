@@ -60,25 +60,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharacterDB.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="GTime.cs" />
     <Compile Include="Codon.cs" />
     <Compile Include="FamilyTreeDB.cs" />
     <Compile Include="Gene.cs" />
-    <Compile Include="Attributes.cs" />
-    <Compile Include="Character.cs" />
     <Compile Include="DNA.cs" />
-    <Compile Include="FamilyTree.cs" />
     <Compile Include="LifeSimulator.cs" />
-    <Compile Include="Name.cs" />
     <Compile Include="NameDB.cs" />
     <Compile Include="Nucleotide.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Character.cs" />
     <Compile Include="Race.cs" />
-    <Compile Include="CharacterDB.cs" />
-    <Compile Include="RaceDB.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

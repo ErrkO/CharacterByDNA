@@ -472,7 +472,7 @@ namespace CharByDNA
             while (!CheckForValidDate(newtime))
             {
 
-                if (newtime.Day >= 30)
+                if (newtime.Day > 30)
                 {
 
                     newtime.Month += 1;
@@ -481,7 +481,7 @@ namespace CharByDNA
 
                 }
 
-                if (newtime.Month >= 12)
+                if (newtime.Month > 12)
                 {
 
                     newtime.Year += 1;

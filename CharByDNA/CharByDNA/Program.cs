@@ -24,6 +24,8 @@ namespace CharByDNA
 
             int choice;
 
+            CharacterDB cdb = new CharacterDB(db);
+
             //Console.Clear();
             Console.WriteLine("Welcome to the character builder");
             Console.WriteLine("");
@@ -55,7 +57,7 @@ namespace CharByDNA
 
                 DNA dna = new DNA(cdna);
 
-                Character chara = new Character(dna);
+                Character chara = new Character(db,dna,new GTime(),0);
 
                 Console.WriteLine(chara.ToString());
 
@@ -81,13 +83,13 @@ namespace CharByDNA
                 Console.Write("Enter Mom DNA: ");
                 string cmdna = Console.ReadLine();
 
-                Character dad = new Character(new DNA(cddna));
-                Character mom = new Character(new DNA(cmdna));
+                Character dad = new Character(db,new DNA(cddna),new GTime(),0);
+                Character mom = new Character(db,new DNA(cmdna),new GTime(),1);
 
                 Console.WriteLine("\n" + dad.ToString());
                 Console.WriteLine("\n" + mom.ToString());
 
-                Character child = new Character(dad,mom);
+                Character child = new Character(db,dad,mom,new GTime(),2);
 
                 Console.WriteLine("\n" + child.ToString());
 
@@ -122,7 +124,7 @@ namespace CharByDNA
 
                 }
 
-                Character a = new Character(gender);
+                Character a = new Character(db,new DNA(gender),new GTime(),0);
 
                 Console.WriteLine("\n" + a.ToString());
 
@@ -136,12 +138,15 @@ namespace CharByDNA
 
                 bool end = false;
 
+                int numchars = 0;
+
                 //Console.WriteLine("Generating Dad...");
-                Character dad = new Character(true);
-                
+                Character dad = new Character(db,new DNA(true),new GTime(),numchars);
+                numchars++;
 
                 //Console.WriteLine("\nGenerating Mom...");
-                Character mom = new Character(false);
+                Character mom = new Character(db,new DNA(false),new GTime(),numchars);
+                numchars++;
 
                 while(!end)
                 {
@@ -150,7 +155,8 @@ namespace CharByDNA
                     Console.WriteLine("\nMom:\n" + mom.ToString());
 
                     Console.WriteLine("\nCreating Child");
-                    Character child = new Character(dad, mom);
+                    Character child = new Character(db,new DNA(dad.Dna.Miosis(), mom.Dna.Miosis()),new GTime(), numchars);
+                    numchars++;
                     Console.WriteLine("\n" + child.ToString());
 
                     Console.Write("\nend? (y/n): ");
@@ -180,17 +186,21 @@ namespace CharByDNA
             {
 
                 bool end = false;
+                int numchars = 0;
 
                 while (!end)
                 {
 
-                    Character dad = new Character(true);
+                    Character dad = new Character(db,new DNA(true), new GTime(),numchars);
+                    numchars++;
                     Console.WriteLine("\nDad:\n" + dad.ToString());
-                    Character mom = new Character(false);
+                    Character mom = new Character(db,new DNA(false),new GTime(),numchars);
+                    numchars++;
                     Console.WriteLine("\nMom:\n" + mom.ToString());
 
                     Console.WriteLine("\nCreating Child");
-                    Character child = new Character(dad, mom);
+                    Character child = new Character(db,new DNA(dad.Dna.Miosis(), mom.Dna.Miosis()),new GTime(),numchars);
+                    numchars++;
                     Console.WriteLine("\n" + child.ToString());
 
                     Console.Write("\nend? (y/n): ");
@@ -221,9 +231,11 @@ namespace CharByDNA
 
                 Console.WriteLine("");
 
-                Race r = new Race();
+                Race r = new Race(db);
 
-                foreach (Race ra in r.Races)
+                List<Race> races = r.GetAllRaces();
+
+                foreach (Race ra in races)
                 {
 
                     Console.WriteLine(ra.ToString());
@@ -257,20 +269,20 @@ namespace CharByDNA
                 Console.Write("Enter the number of characters to genereate: ");
                 int numchars = Convert.ToInt32(Console.ReadLine());
 
-                List<CharacterDB> chars = new List<CharacterDB>();
+                List<Character> chars = new List<Character>();
 
                 GTime time = new GTime();
 
                 for (int i = 0; i < numchars; i++)
                 {
 
-                    CharacterDB chara = new CharacterDB(db,new DNA(),time,i);
+                    Character chara = new Character(db,new DNA(),time,i);
 
                     chars.Add(chara);
 
                 }
 
-                db.SaveListOfCharacters(chars);
+                cdb.SaveListOfCharacters(chars);
 
                 CharMenu(db);
 
@@ -279,9 +291,9 @@ namespace CharByDNA
             else if(choice == 9)
             {
 
-                List<CharacterDB> chars = new List<CharacterDB>();
+                List<Character> chars = new List<Character>();
 
-                chars.AddRange(db.GetAllCharacters());
+                chars.AddRange(cdb.GetAllCharacters());
 
                 Console.WriteLine(chars);
 
@@ -292,8 +304,8 @@ namespace CharByDNA
             else if (choice == 10)
             {
 
-                Names nm = new Names();
-                nm.NumberedFile();
+                NameDB nm = new NameDB(db);
+                //nm.NumberedFile();
                 CharMenu(db);
 
             }

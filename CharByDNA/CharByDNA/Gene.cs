@@ -8,38 +8,6 @@ namespace CharByDNA
 {
 
     ///<summary>
-    /// Struct that holds a pair of nucleotides
-    ///</summary>
-    public struct Tuple
-    {
-        
-        ///<summary>
-        /// the left nucleotide
-        ///</summary>
-        public int left;
-        
-        ///<summary>
-        /// the right nucleotide
-        ///</summary>
-        public int right;
-
-        ///<summary>
-        /// the struct constructor
-        ///</summary>
-        ///<value>
-        /// Accepts an integer for the left and right strands
-        ///</value>
-        public Tuple(int one, int two)
-        {
-
-            this.left = one;
-            this.right = two;
-
-        }
-
-    }
-
-    ///<summary>
     /// The class that contains the information for the blocks of nucleotides
     ///</summary>
     public class Gene

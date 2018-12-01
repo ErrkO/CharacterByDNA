@@ -1,33 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
-using System.Data.SQLite;
 
 namespace CharByDNA
 {
 
-    ///<summary>
-    /// The Race class contains all the information for the different races
-    ///</summary>
-    public class Race
+    class Race
     {
 
-        ///<summary>
-        /// Contains the filename for the race information
-        ///</sumamry>
-        private string rconn = "Races.txt";
-
-        // laptop Conn
-        //private string sqlrconn = "URI=file:C:\\Users\\erico\\Documents\\Github\\CharacterByDNA\\Database\\Game.db;Version=3";
-
         // Desktop Conn
-        private string sqlrconn = "URI=file:D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\Game.db;Version=3";
+        //private string sqlrconn = "URI=file:D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\Game.db;Version=3";
 
-        private SQLiteConnection sqlConn;
+        private SQLiteConnection SqlConn;
+
+        private Database DB { get; set; }
+
+        public int RID { get; set; }
 
         ///<summary>
         /// The property that contains the name of the race
@@ -44,144 +35,155 @@ namespace CharByDNA
         ///</summary>
         public int FHeightBase { get; set; }
 
-        public Attributes Attrib { get; set; }
+        public int Strength { get; set; }
 
-        ///<summary>
-        /// The property that contains the list of all races
-        ///</summary>
-        public List<Race> Races { get; set; }
+        public int Intelligence { get; set; }
+
+        public int Dexterity { get; set; }
+
+        public int Constitution { get; set; }
+
+        public int Wisdom { get; set; }
+
+        public int Luck { get; set; }
+
+        public int Charisma { get; set; }
 
         public List<string> HairColors { get; set; }
 
-
         public List<string> EyeColors { get; set; }
-
 
         public List<string> SkinColors { get; set; }
 
-        ///<summary>
-        /// The default constructor for the race class. It creates a list of all the races and stores that information
-        ///</summary>
-        public Race()
+        public Race(Database db)
         {
 
-            this.sqlConn = new SQLiteConnection(sqlrconn);
-            
-            this.Races = GetRacesByDB();
+            this.DB = db;
+            this.SqlConn = db.SQLCONN;
 
         }
 
-        ///<summary>
-        /// The Constructor that takes the different parameters and creates a race object
-        ///</summary>
-        ///<param name="name"> string: the race name </param>
-        ///<param name="mh"> int: the male base height </param>
-        ///<param name="fh"> int: the female base height </param>
-        ///<param name="s"> int: strength modifier </param>
-        ///<param name="i"> int: intelligence modifier </param>
-        ///<param name="d"> int: dexterity modifier </param>
-        ///<param name="c"> int: constitution modifier </param>
-        ///<param name="w"> int: wisdom modifier </param>
-        ///<param name="l"> int: luck modifier </param>
-        ///<param name="ch"> int: charisma modifier </param>
-        ///<remarks>
-        /// This method should only be used by the class to fill the list of races
-        ///</remarks>
-        private Race(string name,int mh, int fh, int hc, int ec, int sc, int s, int i, int d, int c, int w, int l, int ch)
+        public Race(Database db, int id, string name, int mhieght, int fhieght, int hcid, int ecid, int scid, int str, int inte, int dex, int con, int wis, int luk, int cha) : this(db)
         {
 
-            this.Attrib = new Attributes();
-            this.sqlConn = new SQLiteConnection(sqlrconn);
-
+            this.RID = id;
             this.Racename = name;
-            this.MHeightBase = mh;
-            this.FHeightBase = fh;
-            this.Attrib.SetMods(s,i,d,c,w,l,ch);
-            this.HairColors = GetProperties("HairColor",hc);
-            this.EyeColors = GetProperties("EyeColor",ec);
-            this.SkinColors = GetProperties("SkinColor",sc);
+            this.MHeightBase = mhieght;
+            this.FHeightBase = fhieght;
+            this.Strength = str;
+            this.Intelligence = inte;
+            this.Dexterity = dex;
+            this.Constitution = con;
+            this.Wisdom = wis;
+            this.Luck = luk;
+            this.Charisma = cha;
+            this.HairColors = GetProperties("HairColor", hcid);
+            this.EyeColors = GetProperties("EyeColor", ecid);
+            this.SkinColors = GetProperties("SkinColor", scid);
 
         }
 
-        ///<summary>
-        /// This method reads in the filename and creates a list of all the race information
-        ///</summary>
-        ///<returns>
-        /// returns a list containing all of the races
-        ///</returns>
-        private List<Race> GetRaces()
+        public Race(Database db, int rid) : this(db)
         {
 
-            List<Race> races = new List<Race>();
+            Race tempRace = GetRaceByID(rid);
 
-            string line = "";
+            this.RID = tempRace.RID;
+            this.Racename = tempRace.Racename;
+            this.MHeightBase = tempRace.MHeightBase;
+            this.FHeightBase = tempRace.FHeightBase;
+            this.Strength = tempRace.Strength;
+            this.Intelligence = tempRace.Intelligence;
+            this.Dexterity = tempRace.Dexterity;
+            this.Constitution = tempRace.Constitution;
+            this.Wisdom = tempRace.Wisdom;
+            this.Luck = tempRace.Luck;
+            this.Charisma = tempRace.Charisma;
+            this.HairColors = tempRace.HairColors;
+            this.EyeColors = tempRace.EyeColors;
+            this.SkinColors = tempRace.SkinColors;
 
-            StreamReader file = new StreamReader(rconn);
+        }
 
-            while ((line = file.ReadLine()) != null)
+        private List<Race> Query(string query)
+        {
+
+            bool conopen = false;
+
+            if (this.SqlConn != null && this.SqlConn.State == System.Data.ConnectionState.Open)
             {
 
-                string name;
-                int mh, fh, s, i, d, w, c, l, ch;
-                string[] parts = line.Split(',');
-                name = parts[0];
-                mh = Convert.ToInt32(parts[1]);
-                fh = Convert.ToInt32(parts[2]);
-                s = Convert.ToInt32(parts[3]);
-                i = Convert.ToInt32(parts[4]);
-                d = Convert.ToInt32(parts[5]);
-                c = Convert.ToInt32(parts[6]);
-                w = Convert.ToInt32(parts[7]);
-                l = Convert.ToInt32(parts[8]);
-                ch = Convert.ToInt32(parts[9]);
-
-                races.Add(new Race(name, mh, fh, 0, 0, 0,s, i, d, c, w, l, ch));
+                conopen = true;
 
             }
 
-            return races;
+            else
+            {
 
-        }
+                this.SqlConn.Open();
 
-        private List<Race> GetRacesByDB()
-        {
+            }
 
             List<Race> races = new List<Race>();
 
-            this.sqlConn.Open();
-            string query = "SELECT * FROM Race";
-
-            SQLiteCommand command = new SQLiteCommand(query,sqlConn);
+            SQLiteCommand command = new SQLiteCommand(query, this.SqlConn);
             SQLiteDataReader reader = command.ExecuteReader();
 
-            while(reader.Read())
+            while (reader.Read())
             {
-                
-                string name;
-                int id, mh, fh, s, i, d, w, c, l, ch, hc, ec, sc;
 
-                id = reader.GetInt32(0);
-                name = reader.GetString(1);
-                mh = reader.GetInt32(2);
-                fh = reader.GetInt32(3);
-                hc = reader.GetInt32(4);
-                ec = reader.GetInt32(5);
-                sc = reader.GetInt32(6);
-                s = reader.GetInt32(7);
-                i = reader.GetInt32(8);
-                d = reader.GetInt32(9);
-                c = reader.GetInt32(10);
-                w = reader.GetInt32(11);
-                l = reader.GetInt32(12);
-                ch = reader.GetInt32(13);
+                int rid = reader.GetInt32(0);
+                string name = reader.GetString(1);
+                int mh = reader.GetInt32(2);
+                int fh = reader.GetInt32(3);
+                int hc = reader.GetInt32(4);
+                int ec = reader.GetInt32(5);
+                int sc = reader.GetInt32(6);
+                int s = reader.GetInt32(7);
+                int i = reader.GetInt32(8);
+                int d = reader.GetInt32(9);
+                int c = reader.GetInt32(10);
+                int w = reader.GetInt32(11);
+                int l = reader.GetInt32(12);
+                int ch = reader.GetInt32(13);
 
-                races.Add(new Race(name, mh, fh, hc, ec, sc, s, i, d, c, w, l, ch));
+                races.Add(new Race(this.DB,rid,name,mh,fh,hc,ec,sc,s,i,d,c,w,l,ch));
 
             }
 
-            sqlConn.Close();
+            if (!conopen)
+            {
+
+                this.SqlConn.Close();
+
+            }
 
             return races;
+
+        }
+
+        public Race GetRaceByID(int id)
+        {
+
+            if (id < 1 || id > 9)
+            {
+
+                id = 9;
+
+            }
+
+            string query = string.Format("SELECT * FROM Race WHERE rID = {0}",id);
+
+            return Query(query)[0];
+
+        }
+
+        public List<Race> GetAllRaces()
+        {
+
+            string query = "SELECT * FROM Race";
+
+            return Query(query);
 
         }
 
@@ -190,7 +192,21 @@ namespace CharByDNA
 
             List<string> property = new List<string>();
 
-            this.sqlConn.Open();
+            bool conopen = false;
+
+            if (this.SqlConn != null && this.SqlConn.State == System.Data.ConnectionState.Open)
+            {
+
+                conopen = true;
+
+            }
+
+            else
+            {
+
+                this.SqlConn.Open();
+
+            }
 
             string id = "";
 
@@ -217,12 +233,12 @@ namespace CharByDNA
 
             string query = "SELECT * FROM " + propname + " WHERE " + id + " = " + ID;
 
-            SQLiteCommand command = new SQLiteCommand(query,sqlConn);
+            SQLiteCommand command = new SQLiteCommand(query, this.SqlConn);
             SQLiteDataReader reader = command.ExecuteReader();
 
-            while(reader.Read())
+            while (reader.Read())
             {
-                
+
                 property.Add(reader.GetString(1));
                 property.Add(reader.GetString(2));
                 property.Add(reader.GetString(3));
@@ -232,7 +248,12 @@ namespace CharByDNA
 
             }
 
-            sqlConn.Close();
+            if (!conopen)
+            {
+
+                this.SqlConn.Close();
+
+            }
 
             return property;
 
@@ -241,14 +262,14 @@ namespace CharByDNA
         ///<summary>
         /// The Overridden ToString method to display a specific race
         ///</summary>
-        public override string ToString()
+        /*public override string ToString()
         {
 
-            string str = string.Format("{0} Male Base Height: {1} Female Base Height: {2} str: {3} int: {4} agi: {5} con: {6} wis: {7} luk: {8} cha: {9}",this.Racename,this.MHeightBase,this.FHeightBase,this.Attrib.Str_mod,this.Attrib.Int_mod,this.Attrib.Dex_mod,this.Attrib.Con_mod,this.Attrib.Wis_mod,this.Attrib.Luk_mod,this.Attrib.Cha_mod );
+            string str = string.Format("{0} Male Base Height: {1} Female Base Height: {2} str: {3} int: {4} agi: {5} con: {6} wis: {7} luk: {8} cha: {9}", this.Racename, this.MHeightBase, this.FHeightBase, this.Attrib.Str_mod, this.Attrib.Int_mod, this.Attrib.Dex_mod, this.Attrib.Con_mod, this.Attrib.Wis_mod, this.Attrib.Luk_mod, this.Attrib.Cha_mod);
 
             return str;
 
-        }
+        }*/
 
     }
 

@@ -30,17 +30,7 @@ namespace CharByDNA
 
         public int TotalCharacters { get; set; }
 
-        public int AliveCharacters
-        {
-
-            get
-            {
-
-                return this.DB.CountQuery("SELECT * FROM CharacterDB WHERE Dead = 0");
-
-            }
-
-        }
+        //public int AliveCharacters { get; set; }
 
         public List<Character> Men { get; set; }
 
@@ -48,12 +38,12 @@ namespace CharByDNA
 
         private FamilyTreeDB FamTree { get; set; }
 
-        private Database DB { get; set; }
+        private CharacterDB CDB { get; set; }
 
         public LifeSimulator(Database db)
         {
 
-            this.DB = db;
+            this.CDB = new CharacterDB(db);
             this.FamTree = new FamilyTreeDB(db);
 
         }
@@ -63,7 +53,7 @@ namespace CharByDNA
 
             this.Time = new GTime();
 
-            List<CharacterDB> characters = new List<CharacterDB>();
+            List<Character> characters = new List<Character>();
 
             for (int i = 0; i < startpop; i++)
             {
@@ -71,7 +61,7 @@ namespace CharByDNA
                 if (i % 2 == 0)
                 {
 
-                    CharacterDB chara = new CharacterDB(db, new DNA(false), Time, TotalCharacters);
+                    Character chara = new Character(db, new DNA(false), Time, TotalCharacters);
                     TotalCharacters++;
                     characters.Add(chara);
                     Console.WriteLine("{0}: {1},{2} was created.", this.Time.ToString(), chara.Fname,chara.Gender);
@@ -81,7 +71,7 @@ namespace CharByDNA
                 else
                 {
 
-                    CharacterDB chara = new CharacterDB(db, new DNA(true), Time, TotalCharacters);
+                    Character chara = new Character(db, new DNA(true), Time, TotalCharacters);
                     TotalCharacters++;
                     characters.Add(chara);
                     Console.WriteLine("{0}: {1},{2} was created.", this.Time.ToString(), chara.Fname,chara.Gender);
@@ -90,7 +80,7 @@ namespace CharByDNA
 
             }
 
-            this.DB.SaveListOfCharacters(characters);
+            this.CDB.SaveListOfCharacters(characters);
 
             characters.Clear();
 
@@ -114,7 +104,7 @@ namespace CharByDNA
 
                 }
 
-                characters.AddRange(this.DB.FillListWithViableCharacters(this.Time));
+                characters.AddRange(this.CDB.FillListWithViableCharacters(this.Time));
 
                 if (!OnlyOneGenderAndSingle(characters))
                 {
@@ -127,7 +117,7 @@ namespace CharByDNA
 
                 }
 
-                Death();
+                //Death();
 
                 this.Time = GTime.IncrementByDays(this.Time);
 
@@ -135,7 +125,7 @@ namespace CharByDNA
 
                 //CleanLists();
 
-                this.DB.UpdateDB(characters);
+                this.CDB.SaveListOfCharacters(characters);
 
                 characters.Clear();
 
@@ -145,7 +135,7 @@ namespace CharByDNA
 
         }
 
-        public void Marriage(List<CharacterDB> chars)
+        public void Marriage(List<Character> chars)
         {
 
             if (ContainsMenAndWomen(chars))
@@ -217,10 +207,10 @@ namespace CharByDNA
 
         }
 
-        public void Death()
+        /*public void Death()
         {
 
-            int maxcharsdie = Convert.ToInt32(Math.Floor(this.AliveCharacters * MAXDEATHPERC));
+            int maxcharsdie = Convert.ToInt32(Math.Floor(this.CDB.GetNumberOfAliveCharacters() * MAXDEATHPERC));
 
             int numtodie = rngesus.Next(0, maxcharsdie);
 
@@ -241,14 +231,14 @@ namespace CharByDNA
                 if (rngesus.Next(1,100) == unlucky)
                 {
 
-                    CharacterDB chara = new CharacterDB(this.DB, i);
+                    Character chara = new Character(this.CDB, i);
 
                     if (!chara.Dead)
                     {
 
                         Console.WriteLine("{0}: {1} has died", this.Time.ToString(), chara.Fname);
                         chara.Dead = true;
-                        this.DB.UpdateDBCharacter(chara);
+                        this.CDB.SaveCharacter(chara);
 
                     }
 
@@ -256,98 +246,9 @@ namespace CharByDNA
 
             }
 
-        }
+        } */
 
-        public void Death(Character chara, int pos)
-        {
-
-            if (chara.GetAge(this.Time) <= AGE5)
-            {
-
-                int death = rngesus.Next(0, 10000);
-
-                if (death <= 10)
-                {
-
-                    Console.WriteLine("{0}: {1} has Died", this.Time.ToString(), chara.FirstName);
-
-                    if (chara.Gender)
-                    {
-
-                        this.Men[pos].Dead = true;
-
-                    }
-
-                    else
-                    {
-
-                        this.Women[pos].Dead = true;
-
-                    }
-
-                }
-
-            }
-
-            else if (chara.GetAge(this.Time) <= AGE40)
-            {
-
-                int death = rngesus.Next(0, 10000);
-
-                if (death <= 1)
-                {
-
-                    Console.WriteLine("{0}: {1} has Died", this.Time.ToString(), chara.FirstName);
-
-                    if (chara.Gender)
-                    {
-
-                        this.Men[pos].Dead = true;
-
-                    }
-
-                    else
-                    {
-
-                        this.Women[pos].Dead = true;
-
-                    }
-
-                }
-
-            }
-
-            else if (chara.GetAge(this.Time) > AGE40 )
-            {
-
-                int death = rngesus.Next(0, 10000);
-
-                if (death <= 50)
-                {
-
-                    Console.WriteLine("{0}: {1} has Died", this.Time.ToString(), chara.FirstName);
-
-                    if (chara.Gender)
-                    {
-
-                        this.Men[pos].Dead = true;
-
-                    }
-
-                    else
-                    {
-
-                        this.Women[pos].Dead = true;
-
-                    }
-
-                }
-
-            }
-
-        }
-
-        public void GetPregnant(string timecode, List<CharacterDB> chars)
+        public void GetPregnant(string timecode, List<Character> chars)
         {
 
             if (ContainsWomen(chars))
@@ -362,7 +263,7 @@ namespace CharByDNA
                         if (this.FamTree.HasSpouse(chars[i]))
                         {
 
-                            CharacterDB spouse = new CharacterDB(this.DB, this.FamTree.GetSpouse(chars[i]));
+                            Character spouse = this.CDB.GetCharacter(this.FamTree.GetSpouse(chars[i]));
 
                             if (!spouse.Dead)
                             {
@@ -385,7 +286,7 @@ namespace CharByDNA
 
         }
 
-        public void HaveChild(List<CharacterDB> chars)
+        public void HaveChild(List<Character> chars)
         {
 
             if (ContainsWomen(chars))
@@ -400,9 +301,9 @@ namespace CharByDNA
                         if (chars[i].DueDate.Year == this.Time.Year && chars[i].DueDate.Month == this.Time.Month && chars[i].DueDate.Day == this.Time.Day)
                         {
 
-                            CharacterDB spouse = new CharacterDB(this.DB, this.FamTree.GetSpouse(chars[i]));
+                            Character spouse = this.CDB.GetCharacter(this.FamTree.GetSpouse(chars[i]));
 
-                            CharacterDB child = new CharacterDB(this.DB, spouse, chars[i], this.Time, this.TotalCharacters);
+                            Character child = new Character(this.CDB, spouse, chars[i], this.Time, this.TotalCharacters);
 
                             Console.WriteLine("{0}: {1} and {2} have had a child, {3}",this.Time,spouse.Fname,chars[i].Fname,child.Fname);
 
@@ -425,93 +326,7 @@ namespace CharByDNA
 
         }
 
-        public void HaveChild(Character mom)
-        {
-
-            Character chld;
-
-            chld = new Character(mom.Family.Spouse, mom);
-
-            //CharacterDB tmpchild = new CharacterDB(chld, this.Time);
-            //tmpchild.SaveCharacter(tmpchild);
-
-            Console.WriteLine("{0}: {1} and {2} have had a child named {3}", this.Time.ToString(), mom.Family.Spouse.FirstName, mom.FirstName, chld.FirstName);
-
-            if (chld.Gender)
-            {
-
-                Men.Add(chld);
-
-            }
-
-            else
-            {
-
-                Women.Add(chld);
-
-            }
-
-            this.TotalCharacters++;
-
-            return;
-
-        }
-
-        public void CleanLists()
-        {
-
-            int msize = this.Men.Count;
-            int wsize = this.Women.Count;
-
-            int iter = 0;
-
-            while (iter < msize)
-            {
-
-                if (this.Men[iter].Dead)
-                {
-
-                    this.Men.RemoveAt(iter);
-
-                    msize--;
-
-                }
-
-                else
-                {
-
-                    iter++;
-
-                }
-
-            }
-
-            iter = 0;
-
-            while (iter < wsize)
-            {
-
-                if (this.Women[iter].Dead)
-                {
-
-                    this.Women.RemoveAt(iter);
-
-                    wsize--;
-
-                }
-
-                else
-                {
-
-                    iter++;
-
-                }
-
-            }
-
-        }
-
-        public bool ContainsMen(List<CharacterDB> chars)
+        public bool ContainsMen(List<Character> chars)
         {
 
             for (int i = 0; i < chars.Count; i++)
@@ -530,7 +345,7 @@ namespace CharByDNA
 
         }
 
-        public bool ContainsWomen(List<CharacterDB> chars)
+        public bool ContainsWomen(List<Character> chars)
         {
 
             for (int i = 0; i < chars.Count; i++)
@@ -549,7 +364,7 @@ namespace CharByDNA
 
         }
 
-        public bool ContainsMenAndWomen(List<CharacterDB> chars)
+        public bool ContainsMenAndWomen(List<Character> chars)
         {
 
             if (ContainsMen(chars) && ContainsWomen(chars))
@@ -563,12 +378,10 @@ namespace CharByDNA
 
         }
 
-        public bool AllDead(List<CharacterDB> chars)
+        public bool AllDead(List<Character> chars)
         {
 
-            string query = "SELECT Count(*) FROM CharacterDB WHERE Dead = 1";
-
-            int numdead = this.DB.CountQuery(query);
+            int numdead = this.CDB.GetNumberOfDeadCharacters();
 
             if (numdead == this.TotalCharacters)
             {
@@ -581,7 +394,7 @@ namespace CharByDNA
 
         }
 
-        public bool OnlyOneGenderAndSingle(List<CharacterDB> chars)
+        public bool OnlyOneGenderAndSingle(List<Character> chars)
         {
 
             if (chars.Count == 0)
@@ -619,19 +432,11 @@ namespace CharByDNA
         public void ShowStats()
         {
 
-            string bquery = "SELECT Count(*) FROM CharacterDb";
+            int aliveC = this.CDB.GetNumberOfAliveCharacters();
 
-            string aquery = bquery + " WHERE Dead = 0";
+            int singleC = this.CDB.GetNumberOfSingleCharacters();
 
-            int aliveC = this.DB.CountQuery(aquery);
-
-            string squery = aquery + " AND IsSingle = 1";
-
-            int singleC = this.DB.CountQuery(squery);
-
-            string dquery = bquery + " WHERE Dead = 1";
-
-            int deadC = this.DB.CountQuery(dquery);
+            int deadC = this.CDB.GetNumberOfDeadCharacters();
 
             Console.WriteLine();
             Console.WriteLine("|---------------------------|");

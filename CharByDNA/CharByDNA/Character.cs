@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,144 +8,304 @@ using System.Threading.Tasks;
 namespace CharByDNA
 {
 
-    ///<summary>
-    /// The class that contains the information for a character
-    ///</summary>
-    public class Character
+    class Character
     {
-        
-        ///<summary>
-        /// The Names class object
-        ///</summary>
-        Names charname = new Names();
-        
-        ///<summary>
-        /// The Race class object
-        ///</summary>
-        Race race;
 
-        public int ID { get; private set; }
+        private NameDB NDB { get; set; }
 
-        ///<summary>
-        /// The property that holds the first name
-        ///</summary>
-        public string FirstName { get; set; }
+        public int CID { get; private set; }
 
-        ///<summary>
-        /// The property that holds the last name
-        ///</summary>
-        public string LastName { get; set; }
-        
-        ///<summary>
-        /// The property that holds the Race class object
-        ///</summary>
-        public Race Racee { get; set; }
+        public string Fname { get; private set; }
 
-        ///<summary>
-        /// The property that holds the gender value
-        ///</summary>
-        ///<example>
-        /// True = male
-        ///</example>
+        public string Lname { get; set; }
+
+        public DNA Dna { get; private set; }
+
         public bool Gender { get; set; }
 
-        ///<summary>
-        /// The property that holds the Attributes object
-        ///</summary>
-        public Attributes Attrib { get; set; }
-
-        ///<summary>
-        /// The property that holds the base attack value
-        ///</summary>
-        public int Baseattk { get; set; }
-
-        ///<summary>
-        /// The property that holds the health point total of the character
-        ///</summary>
-        public int Hptotal { get; private set; }
-
-        ///<summary>
-        /// The Property that holds the current amount of health points
-        ///</summary>
-        public int HpCurrent { get; set; }
-
-        ///<summary>
-        /// The property that holds the DNA class object
-        ///</summary>
-        public DNA Dna { get; set; }
-
-        ///<summary>
-        /// 
-        ///</summary>
-        public int Height { get; set; }
-
-        ///<summary>
-        ///
-        ///</summary>
-        public string HairColor { get; set; }
-
-        ///<summary>
-        ///
-        ///</summary>
-        public string EyeColor { get; set; }
-
-        ///<summary>
-        ///
-        ///</summary>
-        public string SkinColor { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public FamilyTree Family { get; private set; }
-
-        public GTime BirthTime { get; set; }
-
-        public bool Dead { get; set; }
+        public GTime BirthTime { get; private set; }
 
         public GTime DueDate { get; set; }
 
-        ///<summary>
-        ///
-        ///</summary>
-        public Character()
-        {
+        public bool IsSingle { get; set; }
 
-            ;
+        public bool Dead { get; set; }
+
+        public Race Racee { get; set; }
+
+        public int Strength
+        {
+            get
+            {
+
+                return (int)Math.Floor((double)(this.Dna.Genes[12].ToValue() + this.Dna.Genes[13].ToValue()) / 2);
+
+            }
 
         }
 
-        ///<summary>
-        ///
-        ///</summary>
-        public Character(DNA dna)
+        public int StrMod
         {
 
-            List<int> genevals = dna.GetGeneValues();
-            List<Gene> genes = dna.Genes;
+            get
+            {
 
-            this.Family = new FamilyTree(this);
-            this.BirthTime = new GTime();
+                return GetMod(this.Strength);
+
+            }
+
+        }
+        
+        public int Intelligence
+        {
+
+            get
+            {
+
+                return (int)Math.Floor((double)(this.Dna.Genes[14].ToValue() + this.Dna.Genes[15].ToValue()) / 2);
+
+            }
+
+        }
+
+        public int IntMod
+        {
+
+            get
+            {
+
+                return GetMod(this.Intelligence);
+
+            }
+
+        }
+
+        public int Dexterity
+        {
+
+            get
+            {
+
+                return (int)Math.Floor((double)(this.Dna.Genes[16].ToValue() + this.Dna.Genes[17].ToValue()) / 2);
+
+            }
+
+        }
+
+        public int DexMod
+        {
+
+            get
+            {
+
+                return GetMod(this.Dexterity);
+
+            }
+
+        }
+
+        public int Constitution
+        {
+
+            get
+            {
+
+                return (int)Math.Floor((double)(this.Dna.Genes[18].ToValue() + this.Dna.Genes[19].ToValue()) / 2);
+
+            }
+
+        }
+
+        public int ConMod
+        {
+
+            get
+            {
+
+                return GetMod(this.Constitution);
+
+            }
+
+        }
+
+        public int Wisdom
+        {
+
+            get
+            {
+
+                return (int)Math.Floor((double)(this.Dna.Genes[20].ToValue() + this.Dna.Genes[21].ToValue()) / 2);
+
+            }
+
+        }
+
+        public int WisMod
+        {
+
+            get
+            {
+
+                return GetMod(this.Wisdom);
+
+            }
+
+        }
+
+        public int Luck
+        {
+
+            get
+            {
+
+                return (int)Math.Floor((double)(this.Dna.Genes[22].ToValue() + this.Dna.Genes[23].ToValue()) / 2);
+
+            }
+
+        }
+
+        public int LukMod
+        {
+
+            get
+            {
+
+                return GetMod(this.Luck);
+
+            }
+
+        }
+
+        public int Charisma
+        {
+
+            get
+            {
+
+                return (int)Math.Floor((double)(this.Dna.Genes[24].ToValue() + this.Dna.Genes[25].ToValue()) / 2);
+
+            }
+
+        }
+
+        public int ChaMod
+        {
+
+            get
+            {
+
+                return GetMod(this.Charisma);
+
+            }
+
+        }
+
+        public int Height
+        {
+
+            get
+            {
+
+                if (this.Gender)
+                {
+
+                    return this.Racee.MHeightBase + this.Dna.Genes[4].ToValue() + this.Dna.Genes[5].ToValue();
+
+                }
+
+                else
+                {
+
+                    return this.Racee.FHeightBase + this.Dna.Genes[4].ToValue() + this.Dna.Genes[5].ToValue();
+
+                }
+
+            }
+
+        }
+
+        public string HairColor
+        {
+
+            get
+            {
+
+                return GetProperty(this.Dna.Genes[6].ToValue(), this.Dna.Genes[7].ToValue(), this.Racee.HairColors);
+
+            }
+
+        }
+
+        public string EyeColor
+        {
+
+            get
+            {
+
+                return GetProperty(this.Dna.Genes[8].ToValue(), this.Dna.Genes[9].ToValue(), this.Racee.EyeColors);
+
+            }
+
+        }
+
+        public string SkinColor
+        {
+
+            get
+            {
+
+                return GetProperty(this.Dna.Genes[10].ToValue(), this.Dna.Genes[11].ToValue(), this.Racee.SkinColors);
+
+            }
+
+        }
+
+        public Character(Database db)
+        {
+
+            this.NDB = new NameDB(db);
+
+        }
+
+        public Character(Database db, int id, string fname, string lname, string dna, bool gender, double btime, double dtime, bool isingle, bool dead) : this(db)
+        {
+            
+            this.CID = id;
+            this.Fname = fname;
+            this.Lname = lname;
+            this.Dna = new DNA(dna);
+            this.Gender = gender;
+            this.BirthTime = new GTime(btime);
+            this.DueDate = new GTime(dtime);
+            this.IsSingle = isingle;
+            this.Dead = dead;
+            this.Racee = new Race(db,1);
+
+        }
+
+        public Character(Database db, DNA dna, GTime time, int id) : this(db)
+        {
+
+            List<Gene> genes = dna.Genes;
+            this.CID = id;
+            this.BirthTime = time;
             this.Dead = false;
             this.DueDate = new GTime(true);
-
+            this.IsSingle = true;
             this.Dna = dna;
-
-            race = new Race();
-            Attrib = new Attributes();
 
             // Gene Pair 1
             int gone = genes[0].ToInt() % 2;
             int gtwo = genes[1].ToInt() % 2;
 
-            if (gone+gtwo == 1)
+            if (gone + gtwo == 1)
             {
 
                 this.Gender = true;
 
             }
 
-            else if (gone+gtwo == 2)
+            else if (gone + gtwo == 0)
             {
 
                 this.Gender = false;
@@ -154,120 +315,21 @@ namespace CharByDNA
             else
             {
 
-                Console.WriteLine("This is an error");
+                Console.WriteLine("{0} has two y chromosomes",id);
 
             }
 
-            // Gene Pair 2
-            this.Racee = race.Races[0];
+            this.Fname = NDB.GenFname(this.Gender);
 
-            //this.Racee = GetRace(race.Races,allelevalues[1]);
-
-            // Gene Pair 3
-            if (this.Gender)
-            {
-
-                this.Height = this.Racee.MHeightBase + genevals[4] + genevals[5];
-
-            }
-
-            else
-            {
-
-                this.Height = this.Racee.FHeightBase + genevals[4] + genevals[5];
-
-            }
-
-            // Gene Pair 4
-            this.HairColor = GetProperty(genevals[6], genevals[7], this.Racee.HairColors);
-
-            // Gene Pair 5
-            this.EyeColor = GetProperty(genevals[8], genevals[9], this.Racee.EyeColors);
-
-            // Gene Pair 6
-            this.SkinColor = GetProperty(genevals[10], genevals[11], this.Racee.SkinColors);
-
-            // Gene Pair 7
-            int strtemp = (int)Math.Floor((double)(genevals[12] + genevals[13]) / 2);
-
-            int str = strtemp + this.Racee.Attrib.Str_mod;
-
-            // Gene Pair 8
-            int inttemp = (int)Math.Floor((double)(genevals[14] + genevals[15]) / 2);
-
-            int inte = inttemp + this.Racee.Attrib.Int_mod;
-
-            // Gene Pair 9
-            int dextemp = (int)Math.Floor((double)(genevals[16] + genevals[17]) / 2);
-
-            int dex = dextemp + this.Racee.Attrib.Dex_mod;
-
-            // Gene Pair 10
-            int contemp = (int)Math.Floor((double)(genevals[18] + genevals[19]) / 2);
-
-            int con = contemp + this.Racee.Attrib.Con_mod;
-
-            // Gene Pair 11
-            int wistemp = (int)Math.Floor((double)(genevals[20] + genevals[21]) / 2);
-
-            int wis = wistemp + this.Racee.Attrib.Wis_mod;
-
-            // Gene Pair 12
-            int luktemp = (int)Math.Floor((double)(genevals[22] + genevals[23]) / 2);
-
-            int luk = luktemp + this.Racee.Attrib.Luk_mod;
-
-            // Gene Pair 13
-            int chatemp = (int)Math.Floor((double)(genevals[24] + genevals[25]) / 2);
-
-            int cha = chatemp + this.Racee.Attrib.Cha_mod;
-
-            Attrib.SetStats(str,inte,dex,con,wis,luk,cha);
-
-            this.FirstName = charname.GenFname(this.Gender);
-
-            this.LastName = charname.GenLname();
+            this.Lname = NDB.GenLname();
 
         }
 
-        public Character(Character dad, Character mom) : this(new DNA(dad.Dna.Miosis(),mom.Dna.Miosis()))
+        public Character(Database db, Character dad, Character mom, GTime time, int id) : this(db, new DNA(dad.Dna.Miosis(), mom.Dna.Miosis()),time, id)
         {
 
-            this.FirstName = charname.GenFname(this.Gender);
-            this.LastName = dad.LastName;
-            this.Family.SetDad(dad);
-            this.Family.SetMom(mom);
-            dad.Family.AddChild(this);
-            mom.Family.AddChild(this);
-            this.BirthTime = new GTime();
-            this.Dead = false;
-            this.DueDate = new GTime(true);
-
-        }
-
-        ///<summary>
-        /// This constructor generates a new Character based on the given gender
-        ///</summary>
-        ///<param name="gender"> bool: True is male </param>
-        public Character(bool gender) : this(new DNA(gender))
-        {
-
-            this.FirstName = charname.GenFname(this.Gender);
-            this.LastName = charname.GenLname();
-            this.BirthTime = new GTime();
-            this.Dead = false;
-            this.DueDate = new GTime(true);
-
-        }
-
-        public Character(string fname, string lname, DNA dna) : this(dna)
-        {
-
-            this.FirstName = fname;
-            this.LastName = lname;
-            this.BirthTime = new GTime();
-            this.Dead = false;
-            this.DueDate = new GTime(true);
+            this.Fname = NDB.GenFname(this.Gender);
+            this.Lname = dad.Lname;
 
         }
 
@@ -337,84 +399,98 @@ namespace CharByDNA
             {
 
                 return properties[3];
-                
+
             }
 
             else if (vused >= 10 && vused <= 12)
             {
 
                 return properties[4];
-                
+
             }
 
             else if (vused >= 13 && vused <= 15)
             {
 
                 return properties[5];
-                
+
             }
 
             else if (vused == 16)
             {
 
                 return properties[0];
-                
+
             }
 
             return null;
 
         }
 
-        public GTime GetAge(GTime currtime)
+        public int GetMod(int score)
         {
 
-            return currtime - this.BirthTime;
+            double temp = (score / 2);
+
+            int temp2 = Convert.ToInt32(Math.Floor(temp));
+
+            return temp2 - 5;
 
         }
 
-        ///<summary>
-        ///
-        ///</summary>
-        public string HeightToString()
+        public bool IsPregnent()
         {
 
-            int ft; 
-            int inch;
-
-            ft = Convert.ToInt32(Math.Floor(Convert.ToDouble(this.Height/12)));
-
-            inch = this.Height % 12;
-
-            string str = string.Format("{0}\' {1}\"",ft,inch);
-
-            return str;
+            return IsPregnent(this);
 
         }
 
-        ///<summary>
-        ///
-        ///</summary>
-        public override string ToString()
+        public bool IsPregnent(Character character)
         {
 
-            string gen = "";
-
-            if (this.Gender)
+            if (character.Gender)
             {
 
-                gen = "male";
+                return false;
 
             }
 
             else
             {
 
-                gen = "female";
+                if (character.DueDate.ToDouble() > 0)
+                {
+
+                    return true;
+
+                }
 
             }
 
-            string ret = string.Format("{0} {1} is a {2} of the {3} race with a height of {4}, {5} hair, {6} eyes, {7} skin color,str: {8}, int: {9}, agi: {10}, con: {11}, wis: {12}, luk: {13}, cha: {14}", this.FirstName, this.LastName, gen, this.Racee.Racename, HeightToString(), this.HairColor, this.EyeColor, this.SkinColor, this.Attrib.Str, this.Attrib.Int, this.Attrib.Dex, this.Attrib.Con, this.Attrib.Wis, this.Attrib.Luk, this.Attrib.Cha);
-            return ret;
+            return false;
+
+        }
+
+        public override string ToString()
+        {
+
+            string gender;
+
+            if (this.Gender)
+            {
+
+                gender = "Male";
+
+            }
+
+            else
+            {
+
+                gender = "Female";
+
+            }
+
+            return string.Format("{0}, {1} {2}",gender,this.Fname,this.Lname);
 
         }
 
