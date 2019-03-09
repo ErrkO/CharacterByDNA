@@ -10,7 +10,7 @@ namespace CharByDNA
     ///<summary>
     /// The class that contains the information for the blocks of nucleotides
     ///</summary>
-    public static class Gene
+    public static class GeneStatic
     {
         
         ///<summary>
@@ -157,16 +157,25 @@ namespace CharByDNA
 
         }
 
-        ///<summary>
-        /// This method returns the allele in the form of a list
-        ///</summary>
-        ///<returns>
-        /// Returns a list of the alleles in their positions
-        ///</returns>
-        public static List<int> ToList(string gene)
+        public static List<string> ToList(string Dna)
         {
 
-            return new List<int>() {gene[0], gene[1], gene[2]};
+            List<string> Genes = new List<string>();
+            string tempgene;
+
+            for (int i = 0; i < Dna.Length/3; i++)
+            {
+
+                tempgene = "";
+                tempgene += Dna[(i*3)+0];
+                tempgene += Dna[(i*3)+1];
+                tempgene += Dna[(i*3)+2];
+
+                Genes.Add(tempgene); 
+
+            }
+
+            return Genes;
 
         }
 

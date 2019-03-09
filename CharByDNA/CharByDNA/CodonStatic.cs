@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CharByDNA
 {
-    public static class Codon
+    public static class CodonStatic
     {
 
         public static int TranslateCodon(int codon)
@@ -137,6 +137,19 @@ namespace CharByDNA
                 return -1;
 
             }
+
+        }
+
+        ///<summary>
+        /// This method returns the allele in the form of a list
+        ///</summary>
+        ///<returns>
+        /// Returns a list of the alleles in their positions
+        ///</returns>
+        public static List<int> ToList(string gene)
+        {
+
+            return new List<int>() {gene[0], gene[1], gene[2]};
 
         }
 
