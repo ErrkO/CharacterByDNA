@@ -8,10 +8,40 @@ using System.Threading.Tasks;
 namespace CharByDNA
 {
 
-    class Character
+    public struct CharTemp
     {
 
-        private NameDB NDB { get; set; }
+        public int CID { get; set; }
+
+        public string Dna { get; set; }
+
+        public bool Gender { get; set; }
+
+        public double BirthTime { get; set; }
+
+        public double DueDate { get; set; }
+
+        public int SpouseID { get; set; }
+
+        public bool Dead { get; set; }
+
+        public CharTemp(int cid, string dna, bool gender, double birth, double due, int sid, bool dead)
+        {
+
+            this.CID = cid;
+            this.Dna = dna;
+            this.Gender = gender;
+            this.BirthTime = birth;
+            this.DueDate = due;
+            this.SpouseID = sid;
+            this.Dead = dead;
+
+        }
+
+    }
+
+    class Character
+    {
 
         public int CID { get; private set; }
 
@@ -24,12 +54,12 @@ namespace CharByDNA
         public bool Gender { get; set; }
 
         //public GTime BirthTime { get; private set; }
-        public string BirthTime { get; private set; }
+        public double BirthTime { get; private set; }
 
         //public GTime DueDate { get; set; }
-        public string DueDate { get; set; }
+        public double DueDate { get; set; }
 
-        public bool IsSingle { get; set; }
+        public int SpouseID { get; set; }
 
         public bool Dead { get; set; }
 
@@ -266,7 +296,7 @@ namespace CharByDNA
         /// Used to set a new Character
         ///</summary>
         public Character(int id, string fname, string lname, string dna, bool gender, double btime, double dtime,
-            bool isingle, bool dead)
+            int sid, bool dead)
         {
             
             this.CID = id;
@@ -276,7 +306,7 @@ namespace CharByDNA
             this.Gender = gender;
             this.BirthTime = btime;
             this.DueDate = dtime;
-            this.IsSingle = isingle;
+            this.SpouseID = sid;
             this.Dead = dead;
             this.Racee = new Race(db,1);
 
@@ -285,15 +315,15 @@ namespace CharByDNA
         ///<summary>
         /// Used to build a new Character
         ///</summary>
-        public Character(string dna, string time, int id, NameDB NDB)
+        public Character(string dna, double time, int id, NameDB NDB)
         {
 
             List<string> genes = DNAStatic.ToList(dna);
             this.CID = id;
             this.BirthTime = time;
             this.Dead = false;
-            this.DueDate = time;
-            this.IsSingle = true;
+            this.DueDate = 0;
+            this.SpouseID = true;
             this.Dna = dna;
 
             // Gene Pair 1
@@ -327,7 +357,7 @@ namespace CharByDNA
 
         }
 
-        public Character(Character dad, Character mom, string time, int id, NameDB NDB) : this(DNAStatic.CreateChildsDNA(dad,mom),time, id,NDB)
+        public Character(Character dad, Character mom, double time, int id, NameDB NDB) : this(DNAStatic.CreateChildsDNA(dad,mom),time, id,NDB)
         {
 
             this.Fname = NDB.GenFname(this.Gender);
