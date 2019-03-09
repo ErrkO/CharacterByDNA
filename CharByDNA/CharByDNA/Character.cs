@@ -19,13 +19,15 @@ namespace CharByDNA
 
         public string Lname { get; set; }
 
-        public DNA Dna { get; private set; }
+        public string Dna { get; private set; }
 
         public bool Gender { get; set; }
 
-        public GTime BirthTime { get; private set; }
+        //public GTime BirthTime { get; private set; }
+        public string BirthTime { get; private set; }
 
-        public GTime DueDate { get; set; }
+        //public GTime DueDate { get; set; }
+        public string DueDate { get; set; }
 
         public bool IsSingle { get; set; }
 
@@ -38,7 +40,7 @@ namespace CharByDNA
             get
             {
 
-                return (int)Math.Floor((double)(this.Dna.Genes[12].ToValue() + this.Dna.Genes[13].ToValue()) / 2);
+                return (int)Math.Floor((double)(GeneStatic.ToValue(this.Dna,12) + GeneStatic.ToValue(this.Dna,13)) / 2);
 
             }
 
@@ -62,7 +64,7 @@ namespace CharByDNA
             get
             {
 
-                return (int)Math.Floor((double)(this.Dna.Genes[14].ToValue() + this.Dna.Genes[15].ToValue()) / 2);
+                return (int)Math.Floor((double)(GeneStatic.ToValue(this.Dna,14) + GeneStatic.ToValue(this.Dna,15)) / 2);
 
             }
 
@@ -86,7 +88,7 @@ namespace CharByDNA
             get
             {
 
-                return (int)Math.Floor((double)(this.Dna.Genes[16].ToValue() + this.Dna.Genes[17].ToValue()) / 2);
+                return (int)Math.Floor((double)(GeneStatic.ToValue(this.Dna,16) + GeneStatic.ToValue(this.Dna,17)) / 2);
 
             }
 
@@ -110,7 +112,7 @@ namespace CharByDNA
             get
             {
 
-                return (int)Math.Floor((double)(this.Dna.Genes[18].ToValue() + this.Dna.Genes[19].ToValue()) / 2);
+                return (int)Math.Floor((double)(GeneStatic.ToValue(this.Dna,18) + GeneStatic.ToValue(this.Dna,19)) / 2);
 
             }
 
@@ -134,7 +136,7 @@ namespace CharByDNA
             get
             {
 
-                return (int)Math.Floor((double)(this.Dna.Genes[20].ToValue() + this.Dna.Genes[21].ToValue()) / 2);
+                return (int)Math.Floor((double)(GeneStatic.ToValue(this.Dna,20) + GeneStatic.ToValue(this.Dna,21)) / 2);
 
             }
 
@@ -158,7 +160,7 @@ namespace CharByDNA
             get
             {
 
-                return (int)Math.Floor((double)(this.Dna.Genes[22].ToValue() + this.Dna.Genes[23].ToValue()) / 2);
+                return (int)Math.Floor((double)(GeneStatic.ToValue(this.Dna,22) + GeneStatic.ToValue(this.Dna,23)) / 2);
 
             }
 
@@ -182,7 +184,7 @@ namespace CharByDNA
             get
             {
 
-                return (int)Math.Floor((double)(this.Dna.Genes[24].ToValue() + this.Dna.Genes[25].ToValue()) / 2);
+                return (int)Math.Floor((double)(GeneStatic.ToValue(this.Dna,24) + GeneStatic.ToValue(this.Dna,25)) / 2);
 
             }
 
@@ -209,14 +211,14 @@ namespace CharByDNA
                 if (this.Gender)
                 {
 
-                    return this.Racee.MHeightBase + this.Dna.Genes[4].ToValue() + this.Dna.Genes[5].ToValue();
+                    return this.Racee.MHeightBase + GeneStatic.ToValue(this.Dna,4) + GeneStatic.ToValue(this.Dna,5);
 
                 }
 
                 else
                 {
 
-                    return this.Racee.FHeightBase + this.Dna.Genes[4].ToValue() + this.Dna.Genes[5].ToValue();
+                    return this.Racee.FHeightBase + GeneStatic.ToValue(this.Dna,4) + GeneStatic.ToValue(this.Dna,5);
 
                 }
 
@@ -230,7 +232,7 @@ namespace CharByDNA
             get
             {
 
-                return GetProperty(this.Dna.Genes[6].ToValue(), this.Dna.Genes[7].ToValue(), this.Racee.HairColors);
+                return GetProperty(GeneStatic.ToValue(this.Dna,6), GeneStatic.ToValue(this.Dna,7), this.Racee.HairColors);
 
             }
 
@@ -242,7 +244,7 @@ namespace CharByDNA
             get
             {
 
-                return GetProperty(this.Dna.Genes[8].ToValue(), this.Dna.Genes[9].ToValue(), this.Racee.EyeColors);
+                return GetProperty(GeneStatic.ToValue(this.Dna,8), GeneStatic.ToValue(this.Dna,9), this.Racee.EyeColors);
 
             }
 
@@ -254,43 +256,43 @@ namespace CharByDNA
             get
             {
 
-                return GetProperty(this.Dna.Genes[10].ToValue(), this.Dna.Genes[11].ToValue(), this.Racee.SkinColors);
+                return GetProperty(GeneStatic.ToValue(this.Dna,10), GeneStatic.ToValue(this.Dna,11), this.Racee.SkinColors);
 
             }
 
         }
 
-        public Character(Database db)
-        {
-
-            this.NDB = new NameDB(db);
-
-        }
-
-        public Character(Database db, int id, string fname, string lname, string dna, bool gender, double btime, double dtime, bool isingle, bool dead) : this(db)
+        ///<summary>
+        /// Used to set a new Character
+        ///</summary>
+        public Character(int id, string fname, string lname, string dna, bool gender, double btime, double dtime,
+            bool isingle, bool dead)
         {
             
             this.CID = id;
             this.Fname = fname;
             this.Lname = lname;
-            this.Dna = new DNA(dna);
+            this.Dna = dna;
             this.Gender = gender;
-            this.BirthTime = new GTime(btime);
-            this.DueDate = new GTime(dtime);
+            this.BirthTime = btime;
+            this.DueDate = dtime;
             this.IsSingle = isingle;
             this.Dead = dead;
             this.Racee = new Race(db,1);
 
         }
 
-        public Character(Database db, DNA dna, GTime time, int id) : this(db)
+        ///<summary>
+        /// Used to build a new Character
+        ///</summary>
+        public Character(string dna, string time, int id, NameDB NDB)
         {
 
-            List<Gene> genes = dna.Genes;
+            List<string> genes = DNAStatic.ToList(dna);
             this.CID = id;
             this.BirthTime = time;
             this.Dead = false;
-            this.DueDate = new GTime(true);
+            this.DueDate = time;
             this.IsSingle = true;
             this.Dna = dna;
 
@@ -325,7 +327,7 @@ namespace CharByDNA
 
         }
 
-        public Character(Database db, Character dad, Character mom, GTime time, int id) : this(db, new DNA(dad.Dna.Miosis(), mom.Dna.Miosis()),time, id)
+        public Character(Character dad, Character mom, string time, int id, NameDB NDB) : this(DNAStatic.CreateChildsDNA(dad,mom),time, id,NDB)
         {
 
             this.Fname = NDB.GenFname(this.Gender);
@@ -458,7 +460,7 @@ namespace CharByDNA
             else
             {
 
-                if (character.DueDate.ToDouble() > 0)
+                if (Convert.ToDouble(character.DueDate) > 0)
                 {
 
                     return true;

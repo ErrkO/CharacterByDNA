@@ -175,6 +175,13 @@ namespace CharByDNA
 
         }
 
+        public static List<string> ToList(string dna)
+        {
+
+            return GeneStatic.ToList(dna);
+
+        }
+
     }
 
 }
