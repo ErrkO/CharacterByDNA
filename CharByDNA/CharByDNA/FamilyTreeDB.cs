@@ -143,6 +143,15 @@ namespace CharByDNA
 
         }
 
+        public int GetSpouse(int id)
+        {
+
+            string query = string.Format("SELECT * FROM FamilyTree WHERE Person_ID = {0} AND Rt_ID = 1",id);
+
+            return Query(query)[0].Relation;
+
+        }
+
         public List<int> GetParents(int id)
         {
 

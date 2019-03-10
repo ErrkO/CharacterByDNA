@@ -38,6 +38,19 @@ namespace CharByDNA
 
         }
 
+        public CharTemp(Character character)
+        {
+
+            this.CID = character.cid;
+            this.Dna = character.dna;
+            this.Gender = character.gender;
+            this.BirthTime = character.birth;
+            this.DueDate = character.due;
+            this.SpouseID = character.sid;
+            this.Dead = character.dead;
+
+        }
+
     }
 
     class Character
@@ -537,7 +550,9 @@ namespace CharByDNA
 
             }
 
-            return string.Format("{0}, {1} {2}",gender,this.Fname,this.Lname);
+            GDate bdate = new GDate(this.BirthTime);
+
+            return string.Format("{0}: {1}, {2} {3}",bdate.ToString(),gender,this.Fname,this.Lname);
 
         }
 

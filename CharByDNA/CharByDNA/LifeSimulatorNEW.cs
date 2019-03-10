@@ -50,7 +50,9 @@ namespace CharByDNA
         public LifeSimulatorNEW(Database database, int startpop, int maxyears) : this(db)
         {
 
-            this.Date = new GDate();
+            //this.Date = new GDate();
+
+            GDate date = new GDate();
             this.TotalCharacters = 0;
 
             List<CharTemp> characters = new List<CharTemp>();
@@ -58,7 +60,7 @@ namespace CharByDNA
             for (int i = 0; i < startpop; i++)
             {
 
-                if (i % 2 == 0)
+                if (i % 2 == 1)
                 {
 
                     this.TotalCharacters++;
@@ -78,16 +80,16 @@ namespace CharByDNA
 
             }
 
-            this.Date = new GDate(AGE18);
+            date = new GDate(AGE18);
             int tempyear = 18;
 
             do
             {
 
-                if (this.Date.Year > tempyear)
+                if (date.Year > tempyear)
                 {
 
-                    tempyear = this.Date.Year;
+                    tempyear = date.Year;
 
                 }
 
@@ -96,100 +98,19 @@ namespace CharByDNA
                 for (int i = 0; i < characters.Count; i++)
                 {
 
-                    GetPregnant(this.Date,characters[i]);
-                    HaveChild(this.Date,characters[i]);
+                    GetPregnant(date,characters[i]);
+                    HaveChild(date,characters[i]);
                     //Death(characters[i]);
 
                 }
 
-            } while (this.Date.Year <= maxyears && !AllDead(characters));
+                date++;
 
-        }
+            } while (date.Year <= maxyears && !AllDead(characters));
 
-        public LifeSimulator(Database db, int startpop, int maxyears) : this(db)
-        {
+            CreateCharactersFromStruct(characters,this.NDB);
 
-            this.Date = new GTime();
-
-            List<Character> characters = new List<Character>();
-
-            for (int i = 0; i < startpop; i++)
-            {
-
-                if (i % 2 == 0)
-                {
-
-                    Character chara = new Character(db, new DNA(false), Date, TotalCharacters);
-                    TotalCharacters++;
-                    characters.Add(chara);
-                    Console.WriteLine("{0}: {1},{2} was created.", this.Date.ToString(), chara.Fname,chara.Gender);
-
-                }
-
-                else
-                {
-
-                    Character chara = new Character(db, new DNA(true), Date, TotalCharacters);
-                    TotalCharacters++;
-                    characters.Add(chara);
-                    Console.WriteLine("{0}: {1},{2} was created.", this.Date.ToString(), chara.Fname,chara.Gender);
-
-                }
-
-            }
-
-            this.CDB.SaveListOfCharacters(characters);
-
-            characters.Clear();
-
-            this.Date = AGE18;
-
-            int tempyear = 18;
-
-            do
-            {
-
-                //Console.WriteLine(this.Time.ToString() + " New Day");
-
-                if (this.Date.Year > tempyear)
-                {
-
-                    ShowStats();
-
-                    Console.WriteLine(this.Date.ToString() + " New Year!");
-
-                    tempyear = this.Date.Year;
-
-                }
-
-                characters.AddRange(this.CDB.FillListWithViableCharacters(this.Date));
-
-                if (!OnlyOneGenderAndSingle(characters))
-                {
-
-                    Marriage(characters);
-
-                    GetPregnant(this.Date.ToString(), characters);
-
-                    HaveChild(characters);
-
-                }
-
-                //Death();
-
-                this.Date = GTime.IncrementByDays(this.Date);
-
-                //this.Time = this.Time++;
-
-                //CleanLists();
-
-                this.CDB.SaveListOfCharacters(characters);
-
-                characters.Clear();
-
-            } while (this.Date.Year != maxyears+1 && !AllDead(characters));
-
-            Console.WriteLine("{0} characters have been created", this.TotalCharacters);
+            Console.Write("{0} characters have been created",this.TotalCharacters);
 
         }
 
@@ -273,7 +194,7 @@ namespace CharByDNA
                 if (chara.SpouseID >= 0)
                 {
 
-                    CharTemp spouse = GetCharByID(chara.SpouseID,chars);
+                    CharTemp spouse = GetCharTempByID(chara.SpouseID,chars);
 
                     if (!spouse.Dead)
                     {
@@ -298,11 +219,18 @@ namespace CharByDNA
                 if (chara.DueDate.Equals(date))
                 {
 
-                    CharTemp spouse = GetCharByID(chara.SpouseID,chars);
+                    CharTemp spouse = GetCharTempByID(chara.SpouseID,chars);
                     this.TotalCharacters++;
-                    CharTemp child = new CharTemp(this.TotalCharacters,DNAStatic.CreateChildsDNA(DNAStatic.Miosis(chara.Dna,rngesus),
-                                                                                                DNAStatic.Miosis(spouse.Dna,rngesus)),
-                                                                                    )
+                    string cdna = DNAStatic.CreateChildsDNA(DNAStatic.Miosis(chara.Dna,rngesus),DNAStatic.Miosis(spouse.Dna,rngesus));
+                    CharTemp child = new CharTemp(this.TotalCharacters,cdna,Convert.ToBoolean(DNAStatic.GetGenePairValue(cdna,0)),date,
+                        new GDate(true),-1,false);
+                    this.FamTree.SetChild(chara,child);
+                    this.FamTree.SetChild(spouse,child);
+
+                    int chararef = GetCharTempByIDPostion(chara.CID,chars);
+
+                    chars[chararef].DueDate = new GDate(true);
+                    chars.Add(child);
 
                 }
 
@@ -310,47 +238,86 @@ namespace CharByDNA
 
         }
 
-        public void HaveChild(List<Character> chars)
+        public void CreateCharactersFromStruct(List<CharTemp> chars, NameDB NDB)
         {
 
-            if (ContainsWomen(chars))
+            string lname;
+
+            List<Character> characters = new List<Character>();
+
+            foreach (CharTemp chara in chars)
             {
 
-                for (int i = 0; i < chars.Count; i++)
+                if (chara.Gender)
                 {
 
-                    if (chars[i].IsPregnent())
+                    lname = NDB.GenLName();
+
+                }
+
+                string fname = NDB.GenFName(chara.Gender);
+
+                characters.Add(new Character(chara,fname,lname));
+
+            }
+
+            chars.Clear();
+
+            foreach (Character chara in characters)
+            {
+
+                lname = chara.Lname;
+
+                if (this.FamTree.HasParent(chara.CID))
+                {
+
+                    List<int> parents = this.FamTree.GetParents(chara.CID);
+                    Character parent1 = GetCharsByID(parents[0],chars);
+                    Character parent2 = GetCharsByID(parents[1],chars);
+
+                    if (parent1.Gender)
                     {
 
-                        if (chars[i].DueDate.Year == this.Date.Year && chars[i].DueDate.Month == this.Date.Month && chars[i].DueDate.Day == this.Date.Day)
-                        {
+                        lname = parent1.Lname;
 
-                            Character spouse = this.CDB.GetCharacter(this.FamTree.GetSpouse(chars[i]));
+                    }
 
-                            Character child = new Character(this.CDB, spouse, chars[i], this.Date, this.TotalCharacters);
+                    else
+                    {
 
-                            Console.WriteLine("{0}: {1} and {2} have had a child, {3}",this.Date,spouse.Fname,chars[i].Fname,child.Fname);
-
-                            chars[i].DueDate = new GTime(true);
-
-                            this.FamTree.SetChild(chars[i], child);
-                            this.FamTree.SetChild(spouse, child);
-
-                            chars.Add(child);
-
-                            this.TotalCharacters++;
-
-                        }
+                        lname = parent2.Lname;
 
                     }
 
                 }
 
+                if (!chara.gender)
+                {
+
+                    if (chara.SpouseID > 0)
+                    {
+
+                        int sref = this.FamTree.GetSpouse(chara.CID);
+                        Character spouse = GetCharsByID(sref,chars);
+                        lname = spouse.Lname;
+
+                    }
+
+                }
+
+                int charref = GetCharByIDPostion(chara.CID,chars);
+                characters[charref].Lname = lname;
+                chara.Lname = lname;
+                
+                Console.Write("{0} was born",chara.ToString());
+
+                this.CDB.SaveListOfCharacters(characters);
+
             }
 
         }
 
-        public CharTemp GetCharByID(int id, List<CharTemp> chars)
+        public CharTemp GetCharTempByID(int id, List<CharTemp> chars)
         {
 
             foreach (CharTemp chara in chars)
@@ -369,7 +336,26 @@ namespace CharByDNA
 
         }
 
-        public int GetCharByIDPostion(int id, List<CharTemp> chars)
+        public CharTemp GetCharTempByID(int id, List<Character> chars)
+        {
+
+            foreach (Character chara in chars)
+            {
+
+                if (chara.CID == id)
+                {
+
+                    return new CharTemp(chara);
+
+                }
+
+            }
+
+            return null;
+
+        }
+
+        public int GetCharTempByIDPostion(int id, List<CharTemp> chars)
         {
 
             int counter = 0;
@@ -392,55 +378,64 @@ namespace CharByDNA
 
         }
 
-        public bool ContainsMen(List<Character> chars)
+        public Character GetCharsByID(int id, List<CharTemp> chars)
         {
 
-            for (int i = 0; i < chars.Count; i++)
+            foreach (CharTemp chara in chars)
             {
 
-                if (chars[i].Gender)
+                if (chara.CID == id)
                 {
 
-                    return true;
+                    return new Character(chara,"","");
 
                 }
 
             }
 
-            return false;
+            return null;
 
         }
 
-        public bool ContainsWomen(List<Character> chars)
+        public CharTemp GetCharByID(int id, List<Character> chars)
         {
 
-            for (int i = 0; i < chars.Count; i++)
+            foreach (Character chara in chars)
             {
 
-                if (!chars[i].Gender)
+                if (chara.CID == id)
                 {
 
-                    return true;
+                    return chara;
 
                 }
 
             }
 
-            return false;
+            return null;
 
         }
 
-        public bool ContainsMenAndWomen(List<Character> chars)
+        public int GetCharByIDPostion(int id, List<Character> chars)
         {
 
-            if (ContainsMen(chars) && ContainsWomen(chars))
+            int counter = 0;
+
+            foreach (Character chara in chars)
             {
 
-                return true;
+                if (chara.CID == id)
+                {
+
+                    return counter;
+
+                }
+
+                counter++;
 
             }
 
-            return false;
+            return -1;
 
         }
 

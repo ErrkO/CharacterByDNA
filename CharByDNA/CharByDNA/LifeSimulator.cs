@@ -326,32 +326,13 @@ namespace CharByDNA
 
         }
 
-        public bool ContainsMen(List<Character> chars)
+        public bool ContainsGender(List<Character> characters, bool gender)
         {
 
             for (int i = 0; i < chars.Count; i++)
             {
 
-                if (chars[i].Gender)
-                {
-
-                    return true;
-
-                }
-
-            }
-
-            return false;
-
-        }
-
-        public bool ContainsWomen(List<Character> chars)
-        {
-
-            for (int i = 0; i < chars.Count; i++)
-            {
-
-                if (!chars[i].Gender)
+                if (chars[i].Gender == gender)
                 {
 
                     return true;
@@ -367,7 +348,7 @@ namespace CharByDNA
         public bool ContainsMenAndWomen(List<Character> chars)
         {
 
-            if (ContainsMen(chars) && ContainsWomen(chars))
+            if (ContainsGender(chars,true) && ContainsGender(chars,false))
             {
 
                 return true;
@@ -377,6 +358,7 @@ namespace CharByDNA
             return false;
 
         }
+
 
         public bool AllDead(List<Character> chars)
         {
