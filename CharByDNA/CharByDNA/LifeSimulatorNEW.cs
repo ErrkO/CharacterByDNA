@@ -24,7 +24,7 @@ namespace CharByDNA
         ///<remarks>
         /// All Praise RNGESUS!!!
         ///</remarks>
-        private Random rngesus = new Random(Guid.NewGuid().GetHashCode());
+        private Random Rngesus { get; set; }
 
         public GDate Date { get; set; }
 
@@ -44,6 +44,7 @@ namespace CharByDNA
             this.CDB = new CharacterDB(db);
             this.FamTree = new FamilyTreeDB(db);
             this.NDB = new NameDB(db);
+            this.Rngesus  = new Random(Guid.NewGuid().GetHashCode());
 
         }
 
@@ -98,8 +99,8 @@ namespace CharByDNA
                 for (int i = 0; i < characters.Count; i++)
                 {
 
-                    GetPregnant(date,characters[i]);
-                    HaveChild(date,characters[i]);
+                    GetPregnant(date,characters[i],characters,this.Rngesus);
+                    HaveChild(date,characters[i],characters,this.Rngesus);
                     //Death(characters[i]);
 
                 }
@@ -185,7 +186,7 @@ namespace CharByDNA
 
         } */
 
-        public void GetPregnent(GDate date, CharTemp chara, List<CharTemp> chars, Random rngesus)
+        public void GetPregnant(GDate date, CharTemp chara, List<CharTemp> chars, Random rngesus)
         {
 
             if (!chara.Gender && !Character.IsPregnent())
@@ -336,25 +337,6 @@ namespace CharByDNA
 
         }
 
-        public CharTemp GetCharTempByID(int id, List<Character> chars)
-        {
-
-            foreach (Character chara in chars)
-            {
-
-                if (chara.CID == id)
-                {
-
-                    return new CharTemp(chara);
-
-                }
-
-            }
-
-            return null;
-
-        }
-
         public int GetCharTempByIDPostion(int id, List<CharTemp> chars)
         {
 
@@ -388,25 +370,6 @@ namespace CharByDNA
                 {
 
                     return new Character(chara,"","");
-
-                }
-
-            }
-
-            return null;
-
-        }
-
-        public CharTemp GetCharByID(int id, List<Character> chars)
-        {
-
-            foreach (Character chara in chars)
-            {
-
-                if (chara.CID == id)
-                {
-
-                    return chara;
 
                 }
 
@@ -452,63 +415,6 @@ namespace CharByDNA
             }
 
             return false;
-
-        }
-
-        public bool OnlyOneGenderAndSingle(List<Character> chars)
-        {
-
-            if (chars.Count == 0)
-            {
-
-                return true;
-
-            }
-
-            bool gender = chars[0].Gender;
-
-            for (int i = 0; i < chars.Count; i++)
-            {
-
-                if (chars[i].Gender != gender)
-                {
-
-                    return false;
-
-                }
-
-                if (!chars[i].SpouseID)
-                {
-
-                    return false;
-
-                }
-
-            }
-
-            return true;
-
-        }
-
-        public void ShowStats()
-        {
-
-            int aliveC = this.CDB.GetNumberOfAliveCharacters();
-
-            int singleC = this.CDB.GetNumberOfSingleCharacters();
-
-            int deadC = this.CDB.GetNumberOfDeadCharacters();
-
-            Console.WriteLine();
-            Console.WriteLine("|---------------------------|");
-            Console.WriteLine("|     END OF YEAR STATS     |");
-            Console.WriteLine("|---------------------------|");
-            Console.WriteLine("|  Total Characters = {0}   |",this.TotalCharacters);
-            Console.WriteLine("|        Alive = {0}        |", aliveC);
-            Console.WriteLine("|       Single = {0}        |",singleC);
-            Console.WriteLine("|         Dead = {0}        |",deadC);
-            Console.WriteLine("|---------------------------|");
-            Console.WriteLine();
 
         }
 
