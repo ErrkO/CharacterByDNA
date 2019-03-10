@@ -1,0 +1,226 @@
+<Documentation>
+    <members name="character">
+        <CharTemp>
+            <summary>Struct that holds a simplified version of the <c>Character</c> class</summary>
+        </CharTemp>
+        <Character></Character>
+        <CID>
+            <summary>Gets or sets the ID Property</summary>
+            <value>Int: Unique identifier for the character</value>
+        </CID>
+        <Fname>
+            <summary>Gets or sets the Fname Property</summary>
+            <value>String: First name of the character</value>
+        </Fname>
+        <Lname>
+            <summary>Gets or sets the Lname Property</summary>
+            <value>String: Last name of the character</value>
+        </Lname>
+        <DNA>
+            <summary>Gets or sets the DNA Property</summary>
+            <value>String: string containing character info</value>    
+        </DNA>
+        <Gender>
+            <summary>Gets or sets the Gender Property</summary>
+            <value>Bool: True->Male, False->Female</value>
+        </Gender>
+        <BirthTime>
+            <summary>Gets or sets the birthtime Property</summary>
+            <value>Double: In-simulation creation time</value>
+        </BirthTime>
+        <DueDate>
+            <summary>Gets or sets the Duedate Property</summary>
+            <value>Double: In-simulation date when pregnancy ends</value>
+        </DueDate>
+        <SpouseID> 
+            <summary>Gets or sets the SpouseID Property</summary>
+            <value>Int: Identifier reference for another character</value>
+            <remarks>Holds the identifier for the characters spouse</remarks>
+        </SpouseID>
+        <Dead>
+            <summary>Gets or sets the Dead boolean Property</summary>
+            <value>Bool: True-> character is dead</value>
+        </Dead>
+        <Racee>
+            <summary>Gets or sets the Race property</summary>
+            <value>Race: Object that contains <c>Race</c> information</value>
+        </Racee>
+        <Strength>
+            <summary>Gets the strength value</summary>
+            <value>Int: Gets the average of the DNA values that represent this attribute</value>
+        </Strength>
+        <StrMod>
+            <summary>Gets the Strength modifier</summary>
+            <value>Int: Value of the modifier</value>
+            <example>
+                See <see cref="Character.GetMod(int)"> for the function
+            </see>
+        </StrMod>
+        <Intelligence>
+            <summary>Gets the Intelligence value</summary>
+            <value>Int: Gets the average of the DNA values that represent this attribute</value>
+        </Intelligence>
+        <IntMod>
+            <summary>Gets the Intelligence modifier</summary>
+            <value>Int: Value of the modifier</value>
+            <example>
+                See <see cref="Character.GetMod(int)"/> for the function
+            </example>
+        </IntMod>
+        <Dexterity>
+            <summary>Gets the Dexterity value</summary>
+            <value>Int: Gets the average of the DNA values that represent this attribute</value>
+        </Dexterity>
+        <DexMod>
+            <summary>Gets the Dexterity modifier</summary>
+            <value>Int: Value of the modifier</value>
+            <example>
+                See <see cref="Character.GetMod(int)"/> for the function
+            </example>
+        </DexMod>
+        <Constitution>
+            <summary>Gets the Constitution value</summary>
+            <value>Int: Gets the average of the DNA values that represent this attribute</value>
+        </Constitution>
+        <ConMod>
+            <summary>Gets the Constitution modifier</summary>
+            <value>Int: Value of the modifier</value>
+            <example>
+                See <see cref="Character.GetMod(int)"/> for the function
+            </example>
+        </ConMod>
+        <Wisdom>
+            <summary>Gets the Wisdom value</summary>
+            <value>Int: Gets the average of the DNA values that represent this attribute</value>
+        </Wisdom>
+        <WisMod>
+            <summary>Gets the Wisdom modifier</summary>
+            <value>Int: Value of the modifier</value>
+            <example>
+                See <see cref="Character.GetMod(int)"/> for the function
+            </example>
+        </WisMod>
+        <Luck>
+            <summary>Gets the Luck value</summary>
+            <value>Int: Gets the average of the DNA values that represent this attribute</value>
+        </Luck>
+        <LukMod>
+            <summary>Gets the Luck modifier</summary>
+            <value>Int: Value of the modifier</value>
+            <example>
+                See <see cref="Character.GetMod(int)"/> for the function
+            </example>
+        </LukMod>
+        <Charisma>
+            <summary>Gets the Charisma value</summary>
+            <value>Int: Gets the average of the DNA values that represent this attribute</value>
+        </Charisma>
+        <ChaMod>
+            <summary>Gets the Charisma modifier</summary>
+            <value>Int: Value of the modifier</value>
+            <example>
+                See <see cref="Character.GetMod(int)"/> for the function
+            </example>
+        </ChaMod>
+        <Height>
+            <summary>Gets the height value</summary>
+            <value>Int: Gets the height value from the DNA information and from the race object</value>
+        </Height>
+        <HairColor>
+            <summary>Gets the hair color from the DNA information</summary>
+            <value>String: Name of the hair color</value>
+            <example>
+                See <see cref="Character.GetProperty(int,int,List<string>)"/> for the function
+            </example>
+        </HairColor>
+        <EyeColor>
+            <summary>Gets the eye color from the DNA information</summary>
+            <value>String: Name of the eye color</value>
+            <example>
+                See <see cref="Character.GetProperty(int,int,List<string>)"/> for the function
+            </example>
+        </EyeColor>
+        <SkinColor>
+            <summary>Gets the skin color from the DNA information</summary>
+            <value>String: Name of the skin color</value>
+            <example>
+                See <see cref="Character.GetProperty(int,int,List<string>)"/> for the function
+            </example>
+        </SkinColor>
+        <CharTempC1>
+            <summary>Constructor for the CharTemp Struct. Sets all of the values</summary>
+            <param name="cid">Int: Identifer</param>
+            <param name="dna">String: Encoded Information</param>
+            <param name="gender">Bool: True -> Male</param>
+            <param name="birth">Double: Creation time</param>
+            <param name="due">Double: Time when pregnancy comes to fruition</param>
+            <param name="sid">Int: Reference to another character</param>
+            <param name="dead">Bool: True -> Is dead</param>
+        </CharTempC1>
+        <CharTempC2>
+            <summary>Constructor for the CharTemp Struct. Sets values based on an existion character</summary>
+            <param name="character">Character: </param>
+        </CharTempC2>
+        <CharacterC1>
+            <summary>Constructor that Sets all values</summary>
+            <param name="id">Int: Character identifier</param>
+            <param name="fname">String: First name</param>
+            <param name="lname">String: Last name</param>
+            <param name="dna">String: Dna information</param>
+            <param name="gender">Bool: True -> Male</param>
+            <param name="btime">Double: Birth time in numeric form</param>
+            <param name="dtime">Double: Due date in numeric form</param>
+            <param name="sid">Int: Spouse reference id</param>
+            <param name="dead">Bool: True -> is dead</param>
+        </CharacterC1>
+        <CharacterC2>
+            <summary>Constructor to intilize a new character from DNA</summary>
+            <param name="dna">String: DNA information</param>
+            <param name="time">Double: Current time in numeric form</param>
+            <param name="id">Int: Unique identifier</param>
+            <param name="NDB">NameDB: Database connection for Names</param>
+        </CharacterC2>
+        <CharacterC3>
+            <summary>Constructor to create new character from parents</summary>
+            <param name="dad">Character: Object for the father</param>
+            <param name="mom">Character: Object for the mother</param>
+            <param name="time"></param>
+            <param name="id"></param>
+            <param name="NDB"></param>
+            <returns></returns>
+        </CharacterC3>
+        <CharacterC4>
+            <summary></summary>
+            <param name="chart"></param>
+            <param name="fname"></param>
+            <param name="lname"></param>
+        </CharacterC4>
+        <GetProperty>
+            <summary></summary>
+            <param name="value"></param>
+            <param name="valuetwo"></param>
+            <param name="properties"></param>
+            <returns></returns>
+        </GetProperty>
+        <GetMod>
+            <summary></summary>
+            <param name="score"></param>
+            <returns></returns>
+        </GetMod>
+        <IsPregnent1>
+            <summary></summary>
+            <returns></returns>
+        </IsPregnent1>
+        <IsPregennt2>
+            <summary>
+        
+            </summary>
+            <param name="character"></param>
+            <returns></returns>
+        </IsPregennt2>
+        <ToString>
+            <summary></summary>
+            <returns></returns>
+        </ToString>
+    </members>
+</Documentation>
