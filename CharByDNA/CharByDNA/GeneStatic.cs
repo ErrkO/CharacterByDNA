@@ -140,14 +140,21 @@ namespace CharByDNA
         public static int ToValue(string gene, int position)
         {
 
-            return CodonStatic.TranslateCodon(GetGene(gene,position));
+            return CodonStatic.TranslateCodon(IGetGene(gene,position));
 
         }
 
-        public static string GetGene(string Gene, int position)
+        public static string SGetGene(string Gene, int position)
         {
 
             return Gene[position] + Gene[position+1] + Gene[position+2];
+
+        }
+
+        public static int IGetGene(string gene, int position)
+        {
+
+            return Convert.ToInt32(IGetGene(gene,position));
 
         }
 

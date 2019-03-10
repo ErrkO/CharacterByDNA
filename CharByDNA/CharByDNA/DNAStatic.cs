@@ -149,6 +149,59 @@ namespace CharByDNA
 
         }
 
+        public static int GetGenePairValue(string dna, int position)
+        {
+
+            int gene1, gene2;
+
+            if (position % 2 == 0)
+            {
+
+                gene1 = GeneStatic.IGetGene(dna,position);
+                gene2 = GeneStatic.IGetGene(dna,position + 1);
+
+            }
+
+            else
+            {
+
+                gene1 = GeneStatic.IGetGene(dna,position - 1);
+                gene2 = GeneStatic.IGetGene(dna,position);
+
+            }
+
+            if (position == 1 || position == 2)
+            {
+
+                
+				if (gene1 % 2 == 0 && gene2 % 2 == 0)
+				{
+
+					return 0;
+
+				}
+
+				else if ((gene1 % 2 == 1 && gene2 % 2 == 0) || (gene1 % 2 == 0 && gene2 % 2 == 1))
+				{
+
+					return 1;
+
+				}
+
+				else
+				{
+
+					return -1;
+
+				}
+
+
+            }
+
+			return (Math.Floor((gene1 + gene2)/2));
+
+        }
+
         ///<summary>
         /// The getter method for constant length
         ///</summary>

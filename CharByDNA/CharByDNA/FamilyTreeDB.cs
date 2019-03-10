@@ -143,6 +143,37 @@ namespace CharByDNA
 
         }
 
+        public List<int> GetParents(int id)
+        {
+
+            string query = string.Format("SELECT * FROM FamilyTree WHERE Relation_ID = {0} AND Rt_ID = 2",id);
+
+            List<int> parentids = new List<int>();
+            List<FTree> qresults = Query(query);
+
+            parentids.Add(qresults[0].Person);
+            parentids.Add(qresults[1].Person);
+
+            return parentids;
+
+        }
+
+        public bool HasParent(int id)
+        {
+
+            string query = string.Format("SELECT * FROM FamilyTree WHERE Relation_ID = {0} AND Rt_ID = 2",id);
+
+            if (Query(query).Count >= 1)
+            {
+
+                return true;
+
+            }
+
+            return false;
+
+        }
+
         public List<int> GetListOfSingleCharacters(int size)
         {
 

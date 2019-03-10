@@ -315,7 +315,7 @@ namespace CharByDNA
         ///<summary>
         /// Used to build a new Character
         ///</summary>
-        public Character(string dna, double time, int id, NameDB NDB)
+        public Character(Database db, string dna, double time, int id, NameDB NDB)
         {
 
             List<string> genes = DNAStatic.ToList(dna);
@@ -325,6 +325,7 @@ namespace CharByDNA
             this.DueDate = 0;
             this.SpouseID = true;
             this.Dna = dna;
+            this.Racee = new Race(db,0);
 
             // Gene Pair 1
             int gone = genes[0].ToInt() % 2;
@@ -362,6 +363,20 @@ namespace CharByDNA
 
             this.Fname = NDB.GenFname(this.Gender);
             this.Lname = dad.Lname;
+
+        }
+
+        public Character(CharTemp chart, string fname, string lname)
+        {
+
+            this.CID = chart.CID;
+            this.BirthTime = chart.BirthTime;
+            this.Gender = chart.Gender;
+            this.Dead = chart.Dead;
+            this.DueDate = chart.DueDate;
+            this.SpouseID = chart.SpouseID;
+            this.Dna = chart.Dna;
+            this.Racee = new Race(db,0);
 
         }
 
