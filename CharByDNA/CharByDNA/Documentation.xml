@@ -3,7 +3,9 @@
         <CharTemp>
             <summary>Struct that holds a simplified version of the <c>Character</c> class</summary>
         </CharTemp>
-        <Character></Character>
+        <Character>
+            <summary>The Character class. Stores information for the character</summary>
+        </Character>
         <CID>
             <summary>Gets or sets the ID Property</summary>
             <value>Int: Unique identifier for the character</value>
@@ -182,45 +184,44 @@
         </CharacterC2>
         <CharacterC3>
             <summary>Constructor to create new character from parents</summary>
-            <param name="dad">Character: Object for the father</param>
-            <param name="mom">Character: Object for the mother</param>
-            <param name="time"></param>
-            <param name="id"></param>
-            <param name="NDB"></param>
+            <param name="dad"><c>Character</c>: Object for the father</param>
+            <param name="mom"><c>Character</c>: Object for the mother</param>
+            <param name="time">Double: date value</param>
+            <param name="id">Int: Unique Identifier</param>
+            <param name="NDB"><c>NameDB</c>: Name Database object</param>
             <returns></returns>
         </CharacterC3>
         <CharacterC4>
-            <summary></summary>
-            <param name="chart"></param>
-            <param name="fname"></param>
-            <param name="lname"></param>
+            <summary>Constructor to create a character from the struct</summary>
+            <param name="chart">CharTemp: Temporary character struct</param>
+            <param name="fname">String: First name</param>
+            <param name="lname">String: Last name</param>
         </CharacterC4>
         <GetProperty>
-            <summary></summary>
-            <param name="value"></param>
-            <param name="valuetwo"></param>
-            <param name="properties"></param>
-            <returns></returns>
+            <summary>Gets the property from the Race database</summary>
+            <param name="value">Int: Integer value for the first gene that is held by the DNA</param>
+            <param name="valuetwo">Int: Integer value for the second gene that is held by the DNA</param>
+            <param name="properties">List<string>: The list of property strings</param>
+            <returns>The string of the property</returns>
         </GetProperty>
         <GetMod>
-            <summary></summary>
-            <param name="score"></param>
-            <returns></returns>
+            <summary>Gets The modifier value from the attribute score</summary>
+            <param name="score">Int: The value of the attribute</param>
+            <returns>The modier value</returns>
+            <example>Round Down((score)/2)-5)</example>
         </GetMod>
         <IsPregnent1>
-            <summary></summary>
-            <returns></returns>
+            <summary>Checks to see if the current character is pregnent</summary>
+            <returns>Bool: True -> is pregnent</returns>
         </IsPregnent1>
         <IsPregennt2>
-            <summary>
-        
-            </summary>
-            <param name="character"></param>
-            <returns></returns>
+            <summary>Checks to see if a Character is pregnent</summary>
+            <param name="character">Character: The character object</param>
+            <returns>Bool: True -> is pregnent</returns>
         </IsPregennt2>
         <ToString>
-            <summary></summary>
-            <returns></returns>
+            <summary>The Tostring method for this class</summary>
+            <returns>string of character information</returns>
         </ToString>
     </members>
 </Documentation>

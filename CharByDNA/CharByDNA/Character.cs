@@ -8,32 +8,32 @@ using System.Threading.Tasks;
 namespace CharByDNA
 {
     
-    /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+    /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/CharTemp/*'/>
     public struct CharTemp
     {
 
         /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/CID/*'/>
         public int CID { get; set; }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/DNA/*'/>
         public string Dna { get; set; }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Gender/*'/>
         public bool Gender { get; set; }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/BirthTime/*'/>
         public double BirthTime { get; set; }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/DueDate/*'/>
         public double DueDate { get; set; }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/SpouseID/*'/>
         public int SpouseID { get; set; }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Dead/*'/>
         public bool Dead { get; set; }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/CharTempC1/*'/>
         public CharTemp(int cid, string dna, bool gender, double birth, double due, int sid, bool dead)
         {
 
@@ -47,7 +47,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/CharTempC2/*'/>
         public CharTemp(Character character)
         {
 
@@ -63,43 +63,43 @@ namespace CharByDNA
 
     }
 
-    /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+    /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Character/*'/>
     class Character
     {
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/CID/*'/>
         public int CID { get; private set; }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Fname/*'/>
         public string Fname { get; private set; }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Lname/*'/>
         public string Lname { get; set; }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/DNA/*'/>
         public string Dna { get; private set; }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Gender/*'/>
         public bool Gender { get; set; }
 
         //public GTime BirthTime { get; private set; }
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/BirthTime/*'/>
         public double BirthTime { get; private set; }
 
         //public GTime DueDate { get; set; }
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/DueDate/*'/>
         public double DueDate { get; set; }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/SpouseID/*'/>
         public int SpouseID { get; set; }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Dead/*'/>
         public bool Dead { get; set; }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Racee/*'/>
         public Race Racee { get; set; }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Strength/*'/>
         public int Strength
         {
             get
@@ -111,7 +111,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/StrMod/*'/>
         public int StrMod
         {
 
@@ -124,7 +124,7 @@ namespace CharByDNA
 
         }
         
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Intelligence/*'/>
         public int Intelligence
         {
 
@@ -137,7 +137,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/IntMod/*'/>
         public int IntMod
         {
 
@@ -150,7 +150,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Dexterity/*'/>
         public int Dexterity
         {
 
@@ -163,7 +163,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/DexMod/*'/>
         public int DexMod
         {
 
@@ -176,7 +176,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Constitution/*'/>
         public int Constitution
         {
 
@@ -189,7 +189,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/ConMod/*'/>
         public int ConMod
         {
 
@@ -202,7 +202,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Wisdom/*'/>
         public int Wisdom
         {
 
@@ -215,7 +215,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/WisMod/*'/>
         public int WisMod
         {
 
@@ -228,7 +228,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Luck/*'/>
         public int Luck
         {
 
@@ -241,7 +241,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/LukMod/*'/>
         public int LukMod
         {
 
@@ -254,7 +254,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Charisma/*'/>
         public int Charisma
         {
 
@@ -267,7 +267,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/ChaMod/*'/>
         public int ChaMod
         {
 
@@ -280,7 +280,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Height/*'/>
         public int Height
         {
 
@@ -305,7 +305,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/HairColor/*'/>
         public string HairColor
         {
 
@@ -318,7 +318,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/EyeColor/*'/>
         public string EyeColor
         {
 
@@ -331,7 +331,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/SkinColor/*'/>
         public string SkinColor
         {
 
@@ -344,7 +344,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/CharacterC1/*'/>
         public Character(int id, string fname, string lname, string dna, bool gender, double btime, double dtime,
             int sid, bool dead)
         {
@@ -362,8 +362,8 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
-        public Character(Database db, string dna, double time, int id, NameDB NDB)
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/CharacterC2/*'/>
+        public Character(string dna, double time, int id, NameDB NDB)
         {
 
             List<string> genes = DNAStatic.ToList(dna);
@@ -406,7 +406,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/CharacterC3/*'/>
         public Character(Character dad, Character mom, double time, int id, NameDB NDB) : this(DNAStatic.CreateChildsDNA(dad,mom),time, id,NDB)
         {
 
@@ -415,7 +415,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/CharacterC4/*'/>
         public Character(CharTemp chart, string fname, string lname)
         {
 
@@ -430,7 +430,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/GetProperty/*'/>
         public string GetProperty(int value, int valuetwo, List<string> properties)
         {
 
@@ -522,7 +522,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/GetMod/*'/>
         public int GetMod(int score)
         {
 
@@ -534,7 +534,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/IsPregnent1/*'/>
         public bool IsPregnent()
         {
 
@@ -542,7 +542,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/IsPregnent2/*'/>
         public bool IsPregnent(Character character)
         {
 
@@ -569,7 +569,7 @@ namespace CharByDNA
 
         }
 
-        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]//*'/>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/ToString/*'/>
         public override string ToString()
         {
 
