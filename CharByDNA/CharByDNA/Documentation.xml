@@ -224,4 +224,58 @@
             <returns>string of character information</returns>
         </ToString>
     </members>
+    <members name="characterdb">
+
+    </members>
+    <members name="codon">
+
+    </members>
+    <members name="codonstatic">
+
+    </members>
+    <members name="database">
+
+    </members>
+    <members name="dna">
+
+    </members>
+    <members name="dnastatic">
+
+    </members>
+    <members name="event">
+
+    </members>
+    <members name="familytreedb">
+
+    </members>
+    <members name="gdate">
+
+    </members>
+    <members name="gene">
+
+    </members>
+    <members name="genestatic">
+
+    </members>
+    <members name="gtime">
+
+    </members>
+    <members name="lifesimulator">
+
+    </members>
+    <members name="lifesimulatornew">
+
+    </members>
+    <members name="namedb">
+    
+    </members>
+    <members name="nucleotide">
+
+    </members>
+    <members name="program">
+
+    </members>
+    <members name="race">
+
+    </members>
 </Documentation>
