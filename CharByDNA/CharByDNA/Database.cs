@@ -6,28 +6,38 @@ using System.IO;
 namespace CharByDNA
 {
 
+    /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/Database/*'/>
     class Database
     {
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/BadChars/*'/>
         private char[] badchars = {' ','/','>','<','?','"',':','\\','|','*'};
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/Extension/*'/>
         private string extension = ".db";
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/Version/*'/>
         private string version = "Version=3";
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/UncompleteConn/*'/>
         private string UncompleteConn = "URI=file:D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\";
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/RecreateDbSql/*'/>
         private string RecreateDbsql = "D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\RecreateDB.sql";
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/InitDbSql/*'/>
         private string InitDbsql = "D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\InitializeDB.sql";
 
-        // Desktop Conn
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/SqlConn/*'/>
         private string sqlconn = "URI=file:D:\\Users\\erico\\Code_Projects\\CharacterByDNA\\Database\\Game.db;Version=3";
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/SQLCONN/*'/>
         public SQLiteConnection SQLCONN { get; set; }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/DbName/*'/>
         public string DbName { get; set; }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/DatabaseC1/*'/>
         public Database()
         {
 
@@ -38,6 +48,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/DatabaseC2/*'/>
         public Database(string filename, bool isCreated)
         {
 
@@ -102,6 +113,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/NumOfRowsInTable/*'/>
         public virtual int NumOfRowsInTable()
         {
 
@@ -109,6 +121,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/CheckExtension/*'/>
         private bool CheckExtension(string str)
         {
 
@@ -123,6 +136,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/CheckFilename/*'/>
         private bool CheckFilename(string str)
         {
 
@@ -147,6 +161,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/InitDB/*'/>
         private void InitDB()
         {
 
@@ -162,6 +177,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/ReInitDB/*'/>
         private void ReInitDB()
         {
 
@@ -177,6 +193,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/CountQuery/*'/>
         protected int CountQuery(string query)
         {
 
@@ -219,6 +236,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/NonQuery/*'/>
         protected void NonQuery(string nonquery)
         {
 
@@ -250,6 +268,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="database"]/InTable/*'/>
         protected virtual bool InTable(int id)
         {
 

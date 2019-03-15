@@ -318,7 +318,96 @@
         </ToList>
     </members>
     <members name="database">
-
+        <Database>
+            <summary>The Database class handles all of the connections to the tables and other database tasks</summary>
+        </Database>
+        <BadChars>
+            <summary>An Array of the bad characters that cannot be in strings</summary>
+            <value>" ",/,>,<,?,",',:,\,|,*</value>
+        </BadChars>
+        <Extension>
+            <summary>Holds the file extension for the database file</summary>
+            <value>".db"</value>
+        </Extension>
+        <Version>
+            <summary>Version of the database</summary>
+            <value>"Version=3"</value>
+        </Version>
+        <UncompleteConn>
+            <summary>The Uncomplete connection string to connect to the database</summary>
+            <value>"URI=file:D:\Users\erico\Code_Projects\CharacterByDNA\Database\"</value>
+            <remarks>Need to change this to be more dynamic</remarks>
+        </UncompleteConn>
+        <RecreateDbSql>
+            <summary>Connection string to the RecreateDB.sql file</summary>
+            <value>"D:\Users\erico\Code_Projects\CharacterByDNA\Database\RecreateDB.sql"</value>
+            <remarks>Need to make this more dynamic</remarks>
+        </RecreateDbSql>
+        <InitDbSql>
+            <summary>Connection string to the InitDB.sql file</summary>
+            <value>"D:\Users\erico\Code_Projects\CharacterByDNA\Database\InitializeDB.sql"</value>
+            <remarks>Need to make this more dynamic</remarks>
+        </InitDbSql>
+        <SqlConn>
+            <summary>Connection string for the database for my desktop</summary>
+            <value>"URI=file:D:\Users\erico\Code_Projects\CharacterByDNA\Database\Game.db;Version=3"</value>
+            <remarks>Need to make this more dynamic</remarks>
+        </SqlConn>
+        <SQLCONN>
+            <summary>The SQLiteConection object for the database class</summary>
+            <value>Sqlite connection information</value>
+        </SQLCONN>
+        <DbName>
+            <summary>Get or set the databases name</summary>
+            <value>String: Name of the database</value>
+            <remarks>I don't rememeber why this is here</remarks>
+        </DbName>
+        <DatabaseC1>
+            <summary>The Default Constructor for the Database class</summary>
+        </DatabaseC1>
+        <DatabaseC2>
+            <summary>Constructor that takes a filename and checks to see if that database was created if not it creates a new database</summary>
+            <param name="filename">String: Name of the database file</param>
+            <param name="isCreated">Bool: True -> is created</param>
+        </DatabaseC2>
+        <NumOfRowsInTable>
+            <summary>Virtual function for getting all of the items in a child table</summary>
+            <return>Int: The number of items returned</return>
+            <remarks>Virtual function, this one does nothing</remarks>
+        </NumOfRowsInTable>
+        <CheckExtension>
+            <summary>Checks the string to see if it contains the file extension</summary>
+            <param name="str">String: To be checked</param>
+            <returns>Bool: True -> has the extension</returns>
+        </CheckExtension>
+        <CheckFilename>
+            <summary>Checks the string to see if it contains any of the bad characters</summary>
+            <param name="str">String: To be checked</param>
+            <returns>Bool: True -> the string does not contain any bad characters</returns>
+        </CheckFilename>
+        <InitDB>
+            <summary>Runs the InitDb.sql script</summary>
+            <remarks>The script initializes a new database</remarks>
+        </InitDB>
+        <ReInitDB>
+            <summary>Runs the RecreateDb.sql script</summary>
+            <remarks>The script recreates the database</remarks>
+        </ReInitDB>
+        <CountQuery>
+            <summary>Returns an integer count based on the requirements of the supplied query</summary>
+            <param name="query">String: Contains requirements needed from the database</param>
+            <returns>Int: Total of whatever is returned from the database</returns>
+        </CountQuery>
+        <NonQuery>
+            <summary>Executes a query that doesnt return anything</summary>
+            <param name="nonquery">Query that Inserts, Updates, Or Deletes from the database</param>
+        </NonQuery>
+        <InTable>
+            <summary>Virtual Function that checks to see if a row is in the table</summary>
+            <param name="id">Int: Unique Row Identifier</param>
+            <returns>Bool: True -> is in the table</returns>
+            <remarks>Virtual function, does not work</remarks>
+        </InTable>
     </members>
     <members name="dna">
 
