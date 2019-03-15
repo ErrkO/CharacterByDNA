@@ -9,11 +9,14 @@ using System.IO;
 namespace CharByDNA
 {
 
+    /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/CharacterDB/*'/>
     class CharacterDB : Database
     {
-
+        
+        /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/FamTree/*'/>
         private FamilyTreeDB FamTree { get; set; }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/CharacterDBC/*'/>
         public CharacterDB(Database db)
         {
 
@@ -22,6 +25,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/GetCharacter/*'/>
         public Character GetCharacter(int id)
         {
 
@@ -31,6 +35,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/Query/*'/>
         private List<Character> Query(string query)
         {
 
@@ -83,6 +88,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/GetAllCharacters/*'/>
         public List<Character> GetAllCharacters()
         {
 
@@ -92,6 +98,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/FillListWithViableCharacters/*'/>
         public List<Character> FillListWithViableCharacters(GTime time)
         {
 
@@ -111,6 +118,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/SaveCharacter/*'/>
         public void SaveCharacter(Character character)
         {
 
@@ -130,6 +138,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/SaveListOfCharacters/*'/>
         public void SaveListOfCharacters(List<Character> characters)
         {
 
@@ -142,6 +151,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/InsertCharacter/*'/>
         private void InsertCharacter(Character character)
         {
 
@@ -152,6 +162,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/UpdateCharacter/*'/>
         private void UpdateCharacter(Character character)
         {
 
@@ -162,6 +173,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/GetNumberOfAliveCharacters/*'/>
         public int GetNumberOfAliveCharacters()
         {
 
@@ -171,6 +183,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/GetNumberOfDeadCharacters/*'/>
         public int GetNumberOfDeadCharacters()
         {
 
@@ -180,6 +193,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/GetNumberOfSingleCharacters/*'/>
         public int GetNumberOfSingleCharacters()
         {
 
@@ -189,6 +203,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/NumOfRowsInTable/*'/>
         public override int NumOfRowsInTable()
         {
 
@@ -198,6 +213,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="characterdb"]/InTable/*'/>
         protected override bool InTable(int id)
         {
 

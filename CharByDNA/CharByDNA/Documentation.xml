@@ -225,7 +225,79 @@
         </ToString>
     </members>
     <members name="characterdb">
-
+        <CharacterDB>
+            <summary>The Child class for <c>Database</c> that conects to the character table. Also has specific functions for use with characters</summary>
+        </CharacterDB>
+        <FamTree>
+            <summary>Gets or sets the FamTree property</summary>
+            <value>FamilyTreeDB: Family Tree database object</value>
+            <remarks>To Be Deprecated (?)</remarks>
+        </FamTree>
+        <CharacterDBC>
+            <summary>Creates a database object that is specific to the character table</summary>
+            <param name="db">Database: Database object that holds the character table</param>
+        </CharacterDBC>
+        <GetCharacter>
+            <summary>Gets a character from the table with an id</summary>
+            <param name="id">Int: Unique identifier for the character to be found</param>
+            <returns>Character: Character object that matches the identifier</returns>
+            <remarks>This function already exists in the parent class - To Be Deprecated</remarks>
+        </GetCharacter>
+        <Query>
+            <summary>Private method to run a query</summary>
+            <param name="query">String: Prebuilt SQL query</param>
+            <returns>List<Character>: List of characters that meet the query specifications</returns>
+            <remarks>I'm thinking about refactoring this function into a few different functions so I can get more specific information from the database</remarks>
+        </Query>
+        <GetAllCharacters>
+            <summary>Gets all of the character objects in the table</summary>
+            <returns>List<Character>: list of character ojects</returns>
+        </GetAllCharacters>
+        <FillListWithViableCharacters>
+            <summary>Gets all of the characters that the life simulator requires</summary>
+            <param name="time">GTime: Current time of the simulator</param>
+            <returns>List<Character>: List of character objects</returns>
+            <remarks>Function needs to be reworked</remarks>
+        </FillListWithViableCharacters>
+        <SaveCharacter>
+            <summary>Saves a character object into the table</summary>
+            <param name="character">Character: Character to be saved</param>
+        </SaveCharacter>
+        <SaveListOfCharacters>
+            <summary>Uses the SaveCharacter function to save a list of characters</summary>
+            <param name="characters">List<Characters>: List of characters to be saved into the table</param>
+        </SaveListOfCharacters>
+        <InsertCharacter>
+            <summary>Inserts a new character into the table</summary>
+            <param name="character">Character: Character object to be inserted</param>
+        </InsertCharacter>
+        <UpdateCharacter>
+            <summary>Updates an existing character in the table</summary>
+            <param name="character">Character: Character object to be updated</param>
+        </UpdateCharacter>
+        <GetNumberOfAliveCHaracters>
+            <summary>Gets the number of characters in the table that are alive</summary>
+            <returns>Int: number of characters that are alive</returns>
+        </GetNumberOfAliveCHaracters>
+        <GetNumberOfDeadCharacters>
+            <summary>Gets the number of characters in the table that are dead</summary>
+            <returns>Int: number of characters that are dead</returns>
+        </GetNumberOfDeadCharacters>
+        <GetNumberOfSingleCharacters>
+            <summary>Gets the number of characters in the table that are single</summary>
+            <returns>Int: number of characters that are single</returns>
+        </GetNumberOfSingleCharacters>
+        <NumOfRowsInTable>
+            <summary>Returns the number of characters in the table</summary>
+            <returns>Int: Number of characters in the table</returns>
+            <remarks>This is an overridden function from the parent <c>Database</c> class</remarks>
+        </NumOfRowsInTable>
+        <InTable>
+            <summary>Gets a character from the table with an id</summary>
+            <param name="id">Int: Unique identifier for the character to be found</param>
+            <returns>Character: Character object that matches the identifier</returns>
+            <remarks>overridden function from the parent <c>Database</c> class</remarks>
+        </InTable>
     </members>
     <members name="codon">
 
