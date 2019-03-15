@@ -413,7 +413,63 @@
 
     </members>
     <members name="dnastatic">
-
+        <DNAStatic>
+            <summary>Class that contains the information for DNA</summary>
+        </DNAStatic>
+        <Length>
+            <summary>Gets the Length of the DNA strand</summary>
+            <value>Int: 78</value>
+            <remarks>The number of <see cref="Nucleotide"/> in a strand of DNA</remarks>
+        </Length>
+        <Numgenes>
+            <summary>Gets the Number of genes in a strand of DNA</summary>
+            <value>Int: 26</value>
+            <remarks>The number of <see cref="GeneStatic"/> in a strand of DNA</remarks>
+        </Numgenes>
+        <CreateChildsDNA>
+            <summary>Creates a child strand of DNA from two parent strands</summary>
+            <param name="parent1">String: DNA information for the first parent </param>
+            <param name="parent2">String: DNA information for the second parent</param>
+            <returns>String: Child DNA information</returns>
+        </CreateChildsDNA>
+        <NewDNA1>
+            <summary>Creates a new strand of dna</summary>
+            <param name="rngesus">Random: random number generator</param>
+            <returns>String: New DNA strand</returns>
+            <remarks>ALL HAIL RNGESUS!!!</remarks>
+        </NewDNA1>
+        <NewDNA2>
+            <summary>Creates a new strand of dna</summary>
+            <param name="gender">Bool: True -> Male</param>
+            <param name="rngesus">Random: random number generator</param>
+            <returns>String: New DNA strand</returns>
+            <remarks>ALL HAIL RNGESUS!!!</remarks>
+        </NewDNA2>
+        <Miosis>
+            <summary>Splits a Gene Pair into a half sized DNA strand that contains half of the information</summary>
+            <param name="dna">String: DNA to be split</param>
+            <param name="rngesus">Random: random number generator</param>
+            <returns>String: half of the information from the original DNA strand</returns>
+            <remarks>ALL HAIL RNGESUS!!!</remarks>
+        </Miosis>
+        <GetGeneValues>
+            <summary>Turns a DNA strand into a list of int genes</summary>
+            <param name="dna">String: DNA information</param>
+            <returns>List<Int>: Genes as integers</returns>
+            <remarks>No references - To Be Deprecated (?)</remarks>
+        </GetGeneValues>
+        <GetGenePairValue>
+            <summary>Gets the average value of the Gene pair</summary>
+            <param name="dna">String: DNA information</param>
+            <param name="position">Int: Gene Position</param>
+            <returns>Int: Average value of the gene pair</returns>
+            <remarks>If the position is either 1 or 2 it will return 0 or 1 for the gender bool</remarks>
+        </GetGenePairValue>
+        <ToList>
+            <summary>Turns the DNA information into a list of genes</summary>
+            <param name="dna">String: DNA information</param>
+            <returns>List<String>: list of genes</returns>
+        </ToList>
     </members>
     <members name="event">
 
