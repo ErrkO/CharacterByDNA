@@ -8,15 +8,20 @@ using System.Threading.Tasks;
 namespace CharByDNA
 {
 
+    /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/FTree/*'/>
     struct FTree
     {
-
+        
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/Person/*'/>
         public int Person { get; set; }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/Relationship/*'/>
         public int Relationship { get; set; }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/Relation/*'/>
         public int Relation { get; set; }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/FTree/*'/>
         public FTree(int p, int r, int rid)
         {
 
@@ -27,30 +32,32 @@ namespace CharByDNA
         }
 
     }
-
-    class FamilyTreeDB
+    
+    /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/FamilyTreeDB/*'/>
+    class FamilyTreeDB : Database
     {
-
-        private SQLiteConnection SqlConn { get; set; }
         
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/DB/*'/>
         private Database DB { get; set; }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/FamilyTreeDBC/*'/>
         public FamilyTreeDB(Database db)
         {
-
+            
+            this.SQLCONN = db.SQLCONN;
             this.DB = db;
-            this.SqlConn = db.SQLCONN;
 
         }
-
+        
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/Query/*'/>
         private List<FTree> Query(string query)
         {
 
             List<FTree> relations = new List<FTree>();
 
-            this.SqlConn.Open();
+            this.SQLCONN.Open();
 
-            SQLiteCommand command = new SQLiteCommand(query, this.SqlConn);
+            SQLiteCommand command = new SQLiteCommand(query, this.SQLCONN);
             SQLiteDataReader reader = command.ExecuteReader();
 
             while (reader.Read())
@@ -64,24 +71,27 @@ namespace CharByDNA
 
             }
 
-            this.SqlConn.Close();
+            this.SQLCONN.Close();
 
             return relations;
 
         }
 
+        /*
         private void NonQuery(string nonquery)
         {
 
-            this.SqlConn.Open();
+            this.SQLCONN.Open();
 
-            SQLiteCommand command = new SQLiteCommand(nonquery, this.SqlConn);
+            SQLiteCommand command = new SQLiteCommand(nonquery, this.SQLCONN);
             command.ExecuteNonQuery();
 
-            this.SqlConn.Close();
+            this.SQLCONN.Close();
 
         }
+        /* */
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/GetAllRelationsToID/*'/>
         public List<FTree> GetAllRelationsToID(int id)
         {
 
@@ -90,6 +100,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/HasSpouse1/*'/>
         public bool HasSpouse(Character character)
         {
 
@@ -97,6 +108,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/HasSpouse2/*'/>
         public bool HasSpouse(int id)
         {
 
@@ -115,34 +127,76 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/SetChild1/*'/>
         public void SetChild(Character parent, Character child)
         {
             
-            string nonquery = string.Format("INSERT INTO FamilyTree VALUES ({0},3,{1})",parent.CID,child.CID);
+            SetChild(parent.CID,child.CID);
+
+        }
+
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/SetChild2/*'/>
+        public void SetChild(CharTemp parent, CharTemp child)
+        {
+            
+            SetChild(parent.CID,child.CID);
+
+        }
+
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/SetChild3/*'/>
+        public void SetChild(int parentid, int childid)
+        {
+            
+            string nonquery = string.Format("INSERT INTO FamilyTree VALUES ({0},3,{1})",parentid,childid);
             NonQuery(nonquery);
 
         }
 
-        public void SetSpouses(Character s1, Character s2)
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/SetSpouses1/*'/>
+        public void SetSpouses(Character spouse1, Character spouse2)
         {
 
-            string nonquery1 = string.Format("INSERT INTO FamilyTree VALUES ({0},1,{1})",s1.CID,s2.CID);
-            string nonquery2 = string.Format("INSERT INTO FamilyTree VALUES ({0},1,{1})", s2.CID, s1.CID);
+            SetSpouses(spouse1.CID,spouse2.CID);
+
+        }
+
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/SetSpouses2/*'/>
+        public void SetSpouses(CharTemp spouse1, CharTemp spouse2)
+        {
+
+            SetSpouses(spouse1.CID,spouse2.CID);
+
+        }
+
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/SetSpouses3/*'/>
+        public void SetSpouses(int spouse1id, int spouse2id)
+        {
+
+            string nonquery1 = string.Format("INSERT INTO FamilyTree VALUES ({0},1,{1})",spouse1id,spouse2id);
+            string nonquery2 = string.Format("INSERT INTO FamilyTree VALUES ({0},1,{1})", spouse2id, spouse1id);
 
             NonQuery(nonquery1);
             NonQuery(nonquery2);
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/GetSpouses1/*'/>
         public int GetSpouse(Character character)
         {
 
-            string query = string.Format("SELECT * FROM FamilyTree WHERE Person_ID = {0} AND Rt_ID = 1",character.CID);
-
-            return Query(query)[0].Relation;
+            GetSpouse(character.CID);
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/GetSpouses2/*'/>
+        public int GetSpouse(CharTemp character)
+        {
+
+            GetSpouse(character.CID);
+
+        }
+
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/GetSpouses3/*'/>
         public int GetSpouse(int id)
         {
 
@@ -152,6 +206,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/GetParents/*'/>
         public List<int> GetParents(int id)
         {
 
@@ -167,6 +222,23 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/HasParent1/*'/>
+        public bool HasParent(Character character)
+        {
+
+            HasParent(character.CID);
+
+        }
+
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/HasParent2/*'/>
+        public bool HasParent(CharTemp character)
+        {
+
+            HasParent(character.CID);
+
+        }
+
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/HasParent3/*'/>
         public bool HasParent(int id)
         {
 
@@ -183,6 +255,7 @@ namespace CharByDNA
 
         }
 
+        /// <include file='Documentation.xml' path='Documentation/members[@name="familytreedb"]/GetListOfSingleCharacters/*'/>
         public List<int> GetListOfSingleCharacters(int size)
         {
 

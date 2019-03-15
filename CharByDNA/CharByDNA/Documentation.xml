@@ -201,7 +201,7 @@
             <summary>Gets the property from the Race database</summary>
             <param name="value">Int: Integer value for the first gene that is held by the DNA</param>
             <param name="valuetwo">Int: Integer value for the second gene that is held by the DNA</param>
-            <param name="properties">List<string>: The list of property strings</param>
+            <param name="properties">List[string]: The list of property strings</param>
             <returns>The string of the property</returns>
         </GetProperty>
         <GetMod>
@@ -246,17 +246,17 @@
         <Query>
             <summary>Private method to run a query</summary>
             <param name="query">String: Prebuilt SQL query</param>
-            <returns>List<Character>: List of characters that meet the query specifications</returns>
+            <returns>List[Character] List of characters that meet the query specifications</returns>
             <remarks>I'm thinking about refactoring this function into a few different functions so I can get more specific information from the database</remarks>
         </Query>
         <GetAllCharacters>
             <summary>Gets all of the character objects in the table</summary>
-            <returns>List<Character>: list of character ojects</returns>
+            <returns>List[Character]: list of character ojects</returns>
         </GetAllCharacters>
         <FillListWithViableCharacters>
             <summary>Gets all of the characters that the life simulator requires</summary>
             <param name="time">GTime: Current time of the simulator</param>
-            <returns>List<Character>: List of character objects</returns>
+            <returns>List[Character]: List of character objects</returns>
             <remarks>Function needs to be reworked</remarks>
         </FillListWithViableCharacters>
         <SaveCharacter>
@@ -265,7 +265,7 @@
         </SaveCharacter>
         <SaveListOfCharacters>
             <summary>Uses the SaveCharacter function to save a list of characters</summary>
-            <param name="characters">List<Characters>: List of characters to be saved into the table</param>
+            <param name="characters">List[Characters]: List of characters to be saved into the table</param>
         </SaveListOfCharacters>
         <InsertCharacter>
             <summary>Inserts a new character into the table</summary>
@@ -455,7 +455,7 @@
         <GetGeneValues>
             <summary>Turns a DNA strand into a list of int genes</summary>
             <param name="dna">String: DNA information</param>
-            <returns>List<Int>: Genes as integers</returns>
+            <returns>List[Int]: Genes as integers</returns>
             <remarks>No references - To Be Deprecated (?)</remarks>
         </GetGeneValues>
         <GetGenePairValue>
@@ -468,14 +468,142 @@
         <ToList>
             <summary>Turns the DNA information into a list of genes</summary>
             <param name="dna">String: DNA information</param>
-            <returns>List<String>: list of genes</returns>
+            <returns>List[String]: list of genes</returns>
         </ToList>
     </members>
     <members name="event">
 
     </members>
     <members name="familytreedb">
-
+        <FTree>
+            <summary>Struct that contains the information for the tree</summary>
+        </FTree>
+        <FamilyTreeDB>
+            <summary>Class that handles the table interaction for the Family Tree</summary>
+        </FamilyTreeDB>
+        <Person>
+            <summary>Gets or sets the Person ID</summary>
+            <value>Int: The identifier for the person</value>
+        </Person>
+        <Relationship>
+            <summary>Gets or sets the relationship type</summary>
+            <value>Int: The identifier for the relationship type</value>
+        </Relationship>
+        <Relation>
+            <summary>Gets or sets the Relation id (the person being realted to)</summary>
+            <value>Int: The identifier for the relation</value>
+        </Relation>
+        <FTreeC>
+            <summary>Constructor for the FTree struct</summary>
+            <param name="p">Int: The person id</param>
+            <param name="r">Int: The relationship id</param>
+            <param name="rid">Int: The realtion id</param>
+        </FTreeC>
+        <DB>
+            <summary>Gets or sets the database connection</summary>
+            <value>Database: the database object</value>
+        </DB>
+        <FamilyTreeDBC>
+            <summary>The constructor for the family tree class</summary>
+            <param name="db">Database: The database to use</param>
+        </FamilyTreeDBC>
+        <Query>
+            <summary>Gets a list of relationships that match the supplied query</summary>
+            <param name="query">String: Query in string form</param>
+            <returns>List[FTree]: list of relationships</returns>
+        </Query>
+        <NonQuery>
+            <summary>executes a query that doesn't return anything</summary>
+            <param name="nonquery">String: </param>
+        </NonQuery>
+        <GetAllRelationsToID>
+            <summary>Gets all of the relations to the given ID</summary>
+            <param name="id">Int: Identifier for the character</param>
+            <returns>List[FTree]: List of relations to the character</returns>
+        </GetAllRelationsToID>
+        <HasSpouse1>
+            <summary>Checks to see if a character has a spouse</summary>
+            <param name="character">Character: Character object</param>
+            <returns>Bool: True -> Has spouse</returns>
+            <remarks>Seems redundant since the characters store a bool value for if they have a spouse</remarks>
+        </HasSpouse1>
+        <HasSpouse2>
+            <summary>Checks to see if a character has a spouse</summary>
+            <param name="id">Int: Identifier for the character</param>
+            <returns>Bool: True -> Has Spouse</returns>
+            <remarks>Seems redundant since the characters store a bool value for if they have a spouse</remarks>
+        </HasSpouse2>
+        <SetChild1>
+            <summary>Sets a relationship between a parent and a child</summary>
+            <param name="parent">Character: Parent character</param>
+            <param name="child">Character: Child character</param>
+        </SetChild1>
+        <SetChild2>
+            <summary>Sets a relationship between a parent and a child</summary>
+            <param name="parent">CharTemp: Parent character</param>
+            <param name="child">CharTemp: Child character</param>
+        </SetChild2>
+        <SetChild3>
+            <summary>Sets a relationship between a parent and a child</summary>
+            <param name="parentid">Int: Parent character id</param>
+            <param name="childid">Int: Child character id</param>
+        </SetChild3>
+        <SetSpouses1>
+            <summary>Sets the relationship between two spouses</summary>
+            <param name="spouse1">Character: Spouse one</param>
+            <param name="spouse2">Character: Spouse two</param>
+        </SetSpouses1>
+        <SetSpouses2>
+            <summary>Sets the relationship between two spouses</summary>
+            <param name="spouse1">CharTemp: Spouse one</param>
+            <param name="spouse2">CharTemp: Spouse two</param>
+        </SetSpouses2>
+        <SetSpouses3>
+            <summary>Sets the relationship between two spouses</summary>
+            <param name="spouse1id">Int: Spouse one id</param>
+            <param name="spouse2id">Int: Spouse two id</param>
+        </SetSpouses3>
+        <GetSpouse1>
+            <summary>Gets the id of the spouse from the character given</summary>
+            <param name="character">Character: character object</param>
+            <returns>Int: Id of the spouse</returns>
+        </GetSpouse1>
+        <GetSpouse2>
+            <summary>Gets the id of the spouse from the character given</summary>
+            <param name="character">CharTemp: character object</param>
+            <returns>Int: Id of the spouse</returns>
+        </GetSpouse2>
+        <GetSpouse3>
+            <summary>Gets the id of the spouse from the character given</summary>
+            <param name="id">Int: character object id</param>
+            <returns>Int: Id of the spouse</returns>
+        </GetSpouse3>
+        <GetParents>
+            <summary>Gets the parent ids from a character</summary>
+            <param name="id">Int: Identider for the child</param>
+            <returns>List[Int]: two ids for the parents </returns>
+        </GetParents>
+        <HasParent1>
+            <summary>CHecks to see if a character has a parent</summary>
+            <param name="character">Character: character to check</param>
+            <returns>Bool: True -> has parent</returns>
+        </HasParent1>
+        <HasParent2>
+            <summary>CHecks to see if a character has a parent</summary>
+            <param name="character">CharTemp: character to check</param>
+            <returns>Bool: True -> has parent</returns>
+        </HasParent2>
+        <HasParent3>
+            <summary>CHecks to see if a character has a parent</summary>
+            <param name="id">Int: character id to check</param>
+            <returns>Bool: True -> has parent</returns>
+        </HasParent3>
+        <GetListOfSingleCharacters>
+            <summary></summary>
+            <param name="size"></param>
+            <returns></returns>
+            <remarks>This should be depracated</remarks>
+        </GetListOfSingleCharacters>
     </members>
     <members name="gdate">
 
