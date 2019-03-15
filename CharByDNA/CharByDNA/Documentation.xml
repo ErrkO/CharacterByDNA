@@ -303,7 +303,19 @@
 
     </members>
     <members name="codonstatic">
-
+        <CodonStatic>
+            <summary>Static class that contains lookup information for the genes</summary>
+            <remarks>A Gene consists of 3 <see cref="Nucleotide"/> , it is an encoded value</remarks>
+        </CodonStatic>
+        <TranslateCodon>
+            <summary>Translates a codon into its respective value</summary>
+            <param name="codon">Int: codon value to be translated</param>
+            <returns>Int: decoded value</returns>
+        </TranslateCodon>
+        <ToList>
+            <summary>This method returns the allele in the form of a list</summary>
+            <returns>Returns a list of the alleles in their positions</returns>
+        </ToList>
     </members>
     <members name="database">
 

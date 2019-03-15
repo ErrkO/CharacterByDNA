@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace CharByDNA
 {
+
+    /// <include file='Documentation.xml' path='Documentation/members[@name="codonstatic"]/CodonStatic/*'/>
     public static class CodonStatic
     {
-
+        
+        /// <include file='Documentation.xml' path='Documentation/members[@name="codonstatic"]/TranslateCodon/*'/>
         public static int TranslateCodon(int codon)
         {
 
@@ -140,12 +143,7 @@ namespace CharByDNA
 
         }
 
-        ///<summary>
-        /// This method returns the allele in the form of a list
-        ///</summary>
-        ///<returns>
-        /// Returns a list of the alleles in their positions
-        ///</returns>
+        /// <include file='Documentation.xml' path='Documentation/members[@name="codonstatic"]/ToList/*'/>
         public static List<int> ToList(string gene)
         {
 
