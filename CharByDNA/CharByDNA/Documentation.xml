@@ -606,7 +606,136 @@
         </GetListOfSingleCharacters>
     </members>
     <members name="gdate">
-
+        <GDate>
+            <summary>Class that stores handles Game Date information</summary>
+        </GDate>
+        <Seperators>
+            <summary>Contains the text seperator characters</summary>
+            <value>'-'</value>
+        </Seperators>
+        <Year>
+            <summary>Gets or sets the Year value</summary>
+            <value>Int: the value of the year</value>
+        </Year>
+        <Month>
+            <summary>Gets or sets the Month value</summary>
+            <value>Int: The value of the month</value>
+        </Month>
+        <Day>
+            <summary>Gets or sets the day</summary>
+            <value>Int: The value of the day</value>
+        </Day>
+        <GDateC1>
+            <summary>Constructor to create a Game Date Object</summary>
+            <param name="isnegative">Bool: True -> Sets a negative date</param>
+        </GDateC1>
+        <GDateC2>
+            <summary>Constructor to create a Game Date Object</summary>
+            <param name="year">Int: value for the year</param>
+            <param name="month">Int: Value for the month</param>
+            <param name="day">Int: Value for the day</param>
+        </GDateC2>
+        <GDateC3>
+            <summary>Chain Constructor for Game Date</summary>
+            <param name="year">Int: value for the year</param>
+            <param name="month">Int: Value for the month</param>
+        </GDateC3>
+        <GDateC4>
+            <summary>Chain Constructor for Game Date</summary>
+            <param name="year">Int: value for the year</param>
+        </GDateC4>
+        <GDateC5>
+            <summary>Chain Constructor for the Game Date</summary>
+        </GDateC5>
+        <GDateC6>
+            <summary>Copy Constructor for the Game Date</summary>
+            <param name="date">GDate: Game date to be copied</param>
+        </GDateC6>
+        <GDateC7>
+            <summary>Constructor to take a string and create a date object</summary>
+            <param name="datestring">String: Date in string form</param>
+        </GDateC7>
+        <GDateC8>
+            <summary>Constructor to build a GDate object from  a date in double form</summary>
+            <param name="datecode">Double: Date in double form</param>
+        </GDateC8>
+        <Equals>
+            <summary>Equal method override</summary>
+            <param name="obj">Object: GDate object to be compared</param>
+            <returns>Bool: True -> if the two objects are equal to eachother</returns>
+        </Equals>
+        <Operatorpp>
+            <summary>++ Operator overload</summary>
+            <param name="GDate">GDate: date to incremented</param>
+            <returns>Increments the given date</returns>
+        </Operatorpp>
+        <OperatorMinus>
+            <summary>- Operator overload</summary>
+            <param name="gd1">GDate: Date object to subtract</param>
+            <param name="gd2">GDate: Date object to be subtracted</param>
+            <returns>GDate: Returns a new Date that is gd1 - gd2</returns>
+        </OperatorMinus>
+        <OperatorGreater>
+            <summary>> Operator Overload</summary>
+            <param name="gd1">GDate: Object to be Compared</param>
+            <param name="gd2">GDate: Object to be compared against</param>
+            <returns>Bool: True -> gd1 > gd2</returns>
+        </OperatorGreater>
+        <OperatorLess>
+            <summary>< Operator Overload</summary>
+            <param name="gd1">GDate: Object to be Compared</param>
+            <param name="gd2">GDate: Object to be compared against</param>
+            <returns>Bool: True -> gd1 < gd2</returns>
+        </OperatorLess>
+        <OperatorGreaterEqual>
+            <summary>>= Operator Overload</summary>
+            <param name="gd1">GDate: Object to be Compared</param>
+            <param name="gd2">GDate: Object to be compared against</param>
+            <returns>Bool: True -> gd1 >= gd2</returns>
+        </OperatorGreaterEqual>
+        <OperatorLessEqual>
+            <summary><= Operator Overload</summary>
+            <param name="gd1">GDate: Object to be Compared</param>
+            <param name="gd2">GDate: Object to be compared against</param>
+            <returns>Bool: True -> gd1 <= gd2</returns>
+        </OperatorLessEqual>
+        <OperatorEquality>
+            <summary>== Operator Overload</summary>
+            <param name="gd1">GDate: Object to be Compared</param>
+            <param name="gd2">GDate: Object to be compared against</param>
+            <returns>Bool: True -> gd1 == gd2</returns>
+        </OperatorEquality>
+        <OperatorNotEqual>
+            <summary>!= Operator Overload</summary>
+            <param name="gd1">GDate: Object to be Compared</param>
+            <param name="gd2">GDate: Object to be compared against</param>
+            <returns>Bool: True -> gd1 != gd2</returns>
+        </OperatorNotEqual>
+        <CheckForValidDate>
+            <summary>Checks to see if the given date is a valid date</summary>
+            <param name="date">GDate: Object for the date to be checked</param>
+            <returns>Bool: True -> if the date is valid</returns>
+        </CheckForValidDate>
+        <AddDays1>
+            <summary>Creates a new date from the old date with the number of days added</summary>
+            <param name="date">GDate: Object of the date to be added to</param>
+            <param name="days">Int: Number of days to add</param>
+            <returns>GDate: New date with added days</returns>
+        </AddDays1>
+        <AddDays2>
+            <summary>Creates a new date from the old date with the number of days added</summary>
+            <param name="date">Double: Date in numeric form to be added to</param>
+            <param name="days">Int: Number of days to add</param>
+            <returns>GDate: New date with added days</returns>
+        </AddDays2>
+        <ToString>
+            <summary>To String method for the GDate clas</summary>
+            <returns>String: Date in string form</returns>
+        </ToString>
+        <ToDouble>
+            <summary>Change the current date into a double</summary>
+            <returns>Double: GDate as a double</returns>
+        </ToDouble>
     </members>
     <members name="gene">
 
