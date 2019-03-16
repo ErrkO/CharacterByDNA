@@ -64,7 +64,7 @@ namespace CharByDNA
     }
 
     /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/Character/*'/>
-    class Character
+    public class Character
     {
 
         /// <include file='Documentation.xml' path='Documentation/members[@name="character"]/CID/*'/>

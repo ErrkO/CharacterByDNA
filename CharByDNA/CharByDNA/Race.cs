@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CharByDNA
 {
 
-    class Race
+    public class Race
     {
 
         // Desktop Conn
